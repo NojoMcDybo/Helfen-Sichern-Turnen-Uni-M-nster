@@ -17,7 +17,23 @@
     --card: #FFFDF8;
     --muted: #8A7B68;
     --radius: 14px;
+    --head1: #3B2C1E; --head2: #33261A; --head3: #2C2015;
+    --head-accent: #D8B47E; --head-sub: #CBB99F; --head-line: #5A4630;
   }
+  /* Studienleistung: warmes Terrakotta */
+  body.view-sl {
+    --chalk: #F8F1E9;
+    --ink: #3A2420;
+    --matte: #AE5230;
+    --matte-dark: #8C3F23;
+    --signal: #E8935F;
+    --line: #EBD9CB;
+    --card: #FFFBF6;
+    --muted: #97796A;
+    --head1: #4A2C22; --head2: #3E241C; --head3: #341F18;
+    --head-accent: #F0A67E; --head-sub: #D8B4A3; --head-line: #6E4434;
+  }
+  body, header, .card, .vorgaben, nav { transition: background-color 0.35s ease, background 0.35s ease, border-color 0.35s ease; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) {
@@ -33,7 +49,7 @@
 
   /* ---------- Header ---------- */
   header {
-    background: linear-gradient(160deg, #3B2C1E 0%, #33261A 60%, #2C2015 100%);
+    background: linear-gradient(160deg, var(--head1) 0%, var(--head2) 60%, var(--head3) 100%);
     color: var(--chalk);
     padding: 44px 24px 36px;
   }
@@ -44,7 +60,7 @@
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 0.85rem;
-    color: #D8B47E;
+    color: var(--head-accent);
   }
   h1 {
     font-family: 'Barlow Condensed', sans-serif;
@@ -56,7 +72,7 @@
     margin: 6px 0 10px;
   }
   h1 .amp { color: var(--signal); }
-  .header-sub { color: #CBB99F; font-size: 0.95rem; max-width: 60ch; }
+  .header-sub { color: var(--head-sub); font-size: 0.95rem; max-width: 60ch; }
 
   /* Fortschritt */
   .progress-wrap { margin-top: 22px; max-width: 480px; }
@@ -76,6 +92,88 @@
     transition: width 0.4s ease;
   }
 
+  .view-tabs {
+    display: flex; gap: 10px; margin-top: 24px;
+  }
+  .view-tabs button {
+    border-color: var(--head-line) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 1.05rem;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--head-line);
+    background: transparent;
+    color: var(--head-sub);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .view-tabs button:hover { color: #fff; }
+  .view-tabs button.active {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: var(--head2);
+  }
+  .vorgaben {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--signal);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+  .vorgaben .vorgaben-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    color: var(--matte);
+    margin-bottom: 4px;
+  }
+  .vorgaben p { font-size: 0.95rem; white-space: pre-line; }
+  .vorgaben-liste {
+    margin: 2px 0 0 18px;
+    font-size: 0.92rem;
+  }
+  .vorgaben-liste li { margin-bottom: 3px; }
+  .elemente-liste {
+    margin: 2px 0 0 22px;
+    font-size: 0.95rem;
+  }
+  .elemente-liste li { margin-bottom: 5px; padding-left: 4px; }
+  .elemente-liste li::marker { font-weight: 600; color: var(--matte); }
+  .sl-kern {
+    font-weight: 600;
+    font-size: 0.98rem;
+    margin-bottom: 10px;
+  }
+  .sl-intro { font-size: 0.8rem; color: var(--muted); margin-top: 10px; }
+  .sl-allgemein { margin-bottom: 36px; }
+  .pflicht-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    color: #fff; background: var(--matte);
+    padding: 3px 12px; border-radius: 999px;
+    align-self: center;
+  }
+  .sl-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .sl-videos .card { box-shadow: 0 2px 10px rgba(51,38,26,0.06); }
+  .video-slot.playlist-slot button.thumb {
+    display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, var(--head1), var(--head1) 14px, var(--head2) 14px, var(--head2) 28px);
+  }
+  .video-slot.playlist-slot .pl-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.95rem; color: var(--chalk);
+    background: rgba(51,38,26,0.85);
+    padding: 8px 18px; border-radius: 999px;
+    border: 1px solid var(--head-line);
+  }
   /* ---------- Sticky Nav ---------- */
   nav {
     position: sticky; top: 0; z-index: 50;
@@ -287,16 +385,13 @@
 <header>
   <div class="header-inner">
     <div class="eyebrow">Turnseminar · IFS Münster</div>
-    <h1>Helfen <span class="amp">&amp;</span> Sichern</h1>
-    <p class="header-sub">Prüfungselemente der A+B-Kurse — nach Geräten sortiert, nummeriert nach der offiziellen Elementeliste, mit Ablauf und besonderen Merkmalen.</p>
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Beschreibungen ausgearbeitet</span>
-        <span id="progress-text">0 / 0</span>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <h1>Turnseminar</h1>
+    <p class="header-sub">Helfen &amp; Sichern (Prüfung) und Studienleistung — alle Videos, Griffe und Vorgaben an einem Ort.</p>
+    <div class="view-tabs" id="view-tabs">
+      <button type="button" data-view="hs" class="active">Helfen &amp; Sichern</button>
+      <button type="button" data-view="sl">Studienleistung</button>
     </div>
-  </div>
+      </div>
 </header>
 
 <nav>
@@ -308,6 +403,7 @@
 </nav>
 
 <main id="content"></main>
+<main id="content-sl" hidden></main>
 <p class="no-results" id="no-results">Kein Element gefunden. Tippfehler oder falsches Gerät?</p>
 
 <footer>Videos: Playlist „Helfen und Sichern" · Struktur &amp; Beschreibungen: Noah</footer>
@@ -530,10 +626,6 @@ function render() {
   mkChip("Alle", VIDEOS.length, null);
   geraete.forEach(g => mkChip(g, VIDEOS.filter(v => v.geraet === g).length, g));
 
-  // Fortschritt
-  const done = VIDEOS.filter(v => v.ablauf.trim() && v.merkmale.trim()).length;
-  document.getElementById("progress-text").textContent = `${done} / ${VIDEOS.length}`;
-  document.getElementById("progress-fill").style.width = (done / VIDEOS.length * 100) + "%";
   applyFilter();
 }
 
@@ -549,13 +641,16 @@ function applyFilter() {
   document.getElementById("no-results").style.display = any ? "none" : "block";
 }
 
-/* Click-to-Load: Thumbnail → Iframe erst bei Klick */
-content.addEventListener("click", e => {
+/* Click-to-Load: Thumbnail → Iframe erst bei Klick (beide Ansichten, Videos + Playlists) */
+document.addEventListener("click", e => {
   const btn = e.target.closest("button.thumb");
   if (!btn) return;
   const slot = btn.closest(".video-slot");
+  const id = slot.dataset.id, list = slot.dataset.list;
   const iframe = document.createElement("iframe");
-  iframe.src = `https://www.youtube-nocookie.com/embed/${slot.dataset.id}?autoplay=1&rel=0`;
+  iframe.src = id
+    ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${list ? "&list=" + list : ""}`
+    : `https://www.youtube-nocookie.com/embed/videoseries?list=${list}`;
   iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
   iframe.allowFullscreen = true;
   iframe.title = "YouTube-Video";
@@ -563,6 +658,181 @@ content.addEventListener("click", e => {
 });
 
 searchBox.addEventListener("input", applyFilter);
+
+
+/* ==========================================================================
+   STUDIENLEISTUNG — Vorgaben transkribiert aus "Studienleistung Vorgaben.pdf".
+   vorgaben-Texte hier editieren. videos: type "video" (mit optionaler list für
+   Playlist-Navigation im Player) oder "playlist" (ganze Playlist einbetten).
+   ========================================================================== */
+const SL_ALLGEMEIN = {
+  intro: "Die dargelegten Aufgaben gelten ab dem SoSe 2025 laut Beschlussfassung der Fachkonferenz Turnen vom 26.03.2025.",
+  kern: "An den folgenden sechs Geräten müssen 4 Übungen gezeigt werden. Der Bereich Sprung ist Pflicht. Zwei Geräte können weggelassen werden. Eines dieser beiden Geräte muss dann in der Prüfung im Bereich Geräte Technik Kür live vor Ort demonstriert werden.",
+  regeln: [
+    "Bewertet wird die Demonstrationsfähigkeit der einzelnen Fertigkeiten. Die Übungen müssen dazu annähernd fehlerfrei gezeigt werden.",
+    "Die Übung muss flüssig ohne Leerschwünge oder Zwischenschritte geturnt werden.",
+    "Die beiden Prüfungsaufgaben müssen als Video in Teams eingereicht werden. Eine Anleitung findet man in der Ordnung (Link im Original-PDF)."
+  ]
+};
+
+const STUDIENLEISTUNG = [
+  { geraet: "Sprung", pflicht: true,
+    bedingungen: [
+      "Brettabstand von mindestens 1 m (Lotrechte vom Gerät)",
+      "Höhe des Tisches beträgt mind. 1,30 m",
+      "Es sind keine weiteren Hilfsmittel für den Absprung erlaubt (Matten etc.)",
+      "Es werden alle Phasen bewertet (Absprung, 1. Flugphase, Stützphase, 2. Flugphase, Landung)",
+      "Die Stützphase muss innerhalb des vorderen Drittels am Ergojet erfolgen",
+      "Es muss eine deutliche erste und zweite Flugphase gezeigt werden"
+    ],
+    elemente: [
+      "Handstützsprungüberschlag über den Ergojet mit Landung auf Mattenberg in der Schiffchenposition (mit Absprung vom Minitrampolin)",
+      "oder: Sprunghocke / Sprunggrätsche mit Absprung vom Reutherbrett",
+      "oder: Handstützsprungüberschlag mit Absprung vom Reutherbrett oder Minitrampolin"
+    ],
+    elementeHinweis: "Ein Sprung nach Wahl:",
+    videos: [
+      { type: "video", id: "0aMQSvM1b_w", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 1" },
+      { type: "video", id: "lRDscI1f7Nc", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 2" },
+      { type: "video", id: "kaG6HV6IjeU", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 3" } ] },
+  { geraet: "Schwingende Ringe",
+    bedingungen: [
+      "Ringe müssen reichhoch eingestellt werden: Greifen der Ringe im Zehenstand unter der Lotrechten (Hacken dürfen im Hang in der Lotrechten den Boden nicht berühren)",
+      "Für den Fußaufsatz ist eine Querlinie unter der Lotrechten der Ringe einzuzeichnen",
+      "Der Fußaufsatz beim Schwingen muss jeweils kurz vor und hinter der Linie erfolgen"
+    ],
+    elemente: [
+      "Schwungverstärkung 3-mal (Vor- und Rückschwung zählt als eine Schwungverstärkung)",
+      "Einlegen in die Kipplage am Ende des Vorschwungs",
+      "Schwingen im Beugesturzhang (zurück und vor)",
+      "Auslegen am Ende des Vorschwungs in den Langhang",
+      "Schwungverstärkung",
+      "Abgang am Ende des Rückschwunges"
+    ],
+    videos: [ { type: "video", id: "cAxAYmpj_bE", list: "PL2Xx0Y9OxlDowa6rVvcfccfmbvjFIVOiz", titel: "Ringe — Übungsverbindung (Playlist im Player)" } ] },
+  { geraet: "Reck",
+    bedingungen: [ "Reckstange mind. schulterhoch" ],
+    elemente: [
+      "Aufschwung",
+      "eine Umschwungbewegung (vl. vw. / vl. rw. / Spreizumschwung, halbe Drehung)",
+      "Hohes Rückschwingen in den freien Stütz",
+      "Absprung in den Seitstand mit Griff am Reck",
+      "Unterschwung aus dem Stand in den Seitstand"
+    ],
+    videos: [ { type: "video", id: "xuFRkY_p27I", list: "PL2Xx0Y9OxlDq7VHtfSjqFyFky0yeSxjIE", titel: "Reck — Übungsverbindung (Playlist im Player)" } ] },
+  { geraet: "Schwebebalken",
+    bedingungen: [
+      "Gerätehöhe mind. hüfthoch (gemessen ab Mattenoberkante bis Gerätoberkante)",
+      "Die Landung beim Abgang muss hinter der vorgegebenen Markierung erfolgen (nah am Balken, da nach oben und nicht nach vorne gesprungen werden soll)",
+      "Keine unnötigen Schritte — die Übung muss passend geplant werden"
+    ],
+    elemente: [
+      "Aufhocken nach Anlauf und Absprung vom Reutherbrett in den Hockstand, Aufrichten in den einbeinigen Stand (Gewicht auf dem hinteren Bein)",
+      "Standwaage",
+      "2 Schritte",
+      "Halbe Drehung im Ballenstand",
+      "Halbe Drehung auf einem Bein mit Schwungbeineinsatz (Rückschwingen des vorderen Beines) und Halten des nach vorne geführten Beines",
+      "Pferdchensprung",
+      "Abgang Hocksprung"
+    ],
+    videos: [ { type: "playlist", list: "PL2Xx0Y9OxlDqW2tdOP7raBMZPs61QhoY7", titel: "Balken — komplette Playlist (Elemente im Player auswählbar)" } ] },
+  { geraet: "Parallelbarren",
+    bedingungen: [
+      "Gerätehöhe: mind. schulterhoch beim Stand in der Barrengasse",
+      "Brettabstand: das Brett darf nicht unter den Holmen stehen"
+    ],
+    elemente: [
+      "Außenquerstand auf dem Reutherbrett",
+      "Sprung in den Stütz und direktes Durchschwingen der Beine nach vorne in den Grätschsitz",
+      "Aufschwingen aus dem Grätschsitz in den Oberarmstand",
+      "Absenken in den Grätschsitz",
+      "Zusammenführen der Beine und Schwungverstärkung (Rück-, Vor-, Rückschwingen)",
+      "Wende als Abgang am Ende"
+    ],
+    videos: [ { type: "playlist", list: "PL2Xx0Y9OxlDpLgsUqPOHL8YMhpgu9TwS-", titel: "Barren — komplette Playlist (Elemente im Player auswählbar)" } ] },
+  { geraet: "Kombi",
+    bedingungen: [
+      "Bis Körpergröße 1,60 m: Kastenhöhe 4,5-teilig · Körpergröße 1,61–1,89 m: Kastenhöhe 5-teilig · ab Körpergröße 1,90 m: Kastenhöhe 6-teilig"
+    ],
+    elemente: [
+      "Aufrollen auf den Längskasten vom Hallenboden aus",
+      "Hocksprung aus dem Minitrampolin heraus (Landung im ersten Drittel der Matte)",
+      "Strecksprung mit Drehung in Richtung Niedersprungmatten",
+      "Rad von der Matte runter auf den Hallenboden (Hände werden auf dem Boden aufgesetzt)",
+      "Rolle vw. auf die Niedersprungmatte (ohne zusätzliche Schritte)",
+      "Strecksprung ¼-Drehung in Richtung Kasten",
+      "Von der Landestelle Anlauf zur Fechterkehre über den Querkasten in den Querstand zum Kasten"
+    ],
+    videos: [ { type: "video", id: "4QsBSyfj8p4", list: "PL2Xx0Y9OxlDqHEyPtaGHn1puxHfOrALjA", titel: "Kombi/Boden — Übungsverbindung (Playlist im Player)" } ] },
+];
+
+function renderSL() {
+  const el = document.getElementById("content-sl");
+  el.innerHTML = `
+    <div class="vorgaben sl-allgemein">
+      <div class="vorgaben-label">Studienleistung Turnen Teil A+B · L2, LH, LF · Stand 01.05.2025</div>
+      <p class="sl-kern">${SL_ALLGEMEIN.kern}</p>
+      <ul class="vorgaben-liste">${SL_ALLGEMEIN.regeln.map(r => `<li>${r}</li>`).join("")}</ul>
+      <p class="sl-intro">${SL_ALLGEMEIN.intro}</p>
+    </div>
+    ${STUDIENLEISTUNG.map(s => `
+      <section>
+        <div class="section-head">
+          <h2>${s.geraet}</h2>
+          ${s.pflicht ? '<span class="pflicht-badge">Pflicht</span>' : ''}
+        </div>
+        <div class="vorgaben">
+          <div class="vorgaben-label">Geräteaufbau &amp; Bedingungen</div>
+          <ul class="vorgaben-liste">${s.bedingungen.map(b => `<li>${b}</li>`).join("")}</ul>
+          <div class="vorgaben-label" style="margin-top:12px">Elemente${s.elementeHinweis ? " — " + s.elementeHinweis : ""}</div>
+          <ol class="elemente-liste">${s.elemente.map(x => `<li>${x}</li>`).join("")}</ol>
+        </div>
+        <div class="sl-videos">
+          ${s.videos.map(v => v.type === "video" ? `
+            <article class="card">
+              <div class="video-slot" data-id="${v.id}" data-list="${v.list || ""}">
+                <button class="thumb" aria-label="Video abspielen: ${v.titel}">
+                  <img loading="lazy" referrerpolicy="no-referrer"
+                       src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"
+                       onerror="if(!this.dataset.alt){this.dataset.alt=1;this.src='https://img.youtube.com/vi/${v.id}/mqdefault.jpg';}else{this.style.display='none';}"
+                       alt="Vorschaubild: ${v.titel}">
+                  <span class="play-badge"></span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="card-title-row"><h3>${v.titel}</h3></div>
+                <a class="yt-link" href="https://www.youtube.com/watch?v=${v.id}${v.list ? "&list=" + v.list : ""}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>
+              </div>
+            </article>` : `
+            <article class="card">
+              <div class="video-slot playlist-slot" data-list="${v.list}">
+                <button class="thumb" aria-label="Playlist laden: ${v.titel}">
+                  <span class="pl-label">▶ Playlist laden</span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="card-title-row"><h3>${v.titel}</h3></div>
+                <a class="yt-link" href="https://youtube.com/playlist?list=${v.list}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>
+              </div>
+            </article>`).join("")}
+        </div>
+      </section>`).join("")}`;
+}
+
+/* Tab-Wechsel */
+document.getElementById("view-tabs").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-view]");
+  if (!btn) return;
+  document.querySelectorAll("#view-tabs button").forEach(b => b.classList.toggle("active", b === btn));
+  const sl = btn.dataset.view === "sl";
+  document.body.classList.toggle("view-sl", sl);
+  document.getElementById("content").hidden = sl;
+  document.getElementById("content-sl").hidden = !sl;
+  document.querySelector("nav").style.display = sl ? "none" : "";
+  window.scrollTo({ top: 0 });
+});
+
+renderSL();
 
 render();
 </script>
