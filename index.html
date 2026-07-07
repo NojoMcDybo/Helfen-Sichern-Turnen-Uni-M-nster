@@ -156,6 +156,46 @@
     padding: 3px 12px; border-radius: 999px;
     align-self: center;
   }
+  .tracklist {
+    grid-column: 1 / -1;
+    background: linear-gradient(170deg, var(--head1), var(--head2) 45%, var(--head3));
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    color: var(--chalk);
+  }
+  .tracklist-head h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.5rem; text-transform: uppercase;
+  }
+  .tracklist-hinweis { font-size: 0.85rem; color: var(--head-sub); margin-top: 2px; }
+  .tracklist-player { margin-top: 14px; }
+  .tracklist-player iframe {
+    width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 10px; display: block;
+  }
+  .tracks { list-style: none; margin-top: 14px; }
+  .track {
+    all: unset;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .track:hover, .track:focus-visible { background: rgba(255,255,255,0.08); }
+  .track.active { background: rgba(255,255,255,0.14); }
+  .track.active .track-titel { color: var(--signal); font-weight: 600; }
+  .track-nr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; color: var(--head-sub); text-align: center;
+  }
+  .track-titel { font-size: 0.95rem; }
+  .track-play { text-align: center; color: var(--head-sub); font-size: 0.8rem; opacity: 0; transition: opacity 0.12s; }
+  .track:hover .track-play, .track.active .track-play { opacity: 1; color: var(--signal); }
   .sl-videos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -692,9 +732,9 @@ const STUDIENLEISTUNG = [
     ],
     elementeHinweis: "Ein Sprung nach Wahl:",
     videos: [
-      { type: "video", id: "0aMQSvM1b_w", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 1" },
-      { type: "video", id: "lRDscI1f7Nc", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 2" },
-      { type: "video", id: "kaG6HV6IjeU", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 3" } ] },
+      { type: "video", id: "0aMQSvM1b_w", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 1 (P3)" },
+      { type: "video", id: "lRDscI1f7Nc", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 2 (P4)" },
+      { type: "video", id: "kaG6HV6IjeU", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 3 (P7)" } ] },
   { geraet: "Schwingende Ringe",
     bedingungen: [
       "Ringe müssen reichhoch eingestellt werden: Greifen der Ringe im Zehenstand unter der Lotrechten (Hacken dürfen im Hang in der Lotrechten den Boden nicht berühren)",
@@ -709,7 +749,8 @@ const STUDIENLEISTUNG = [
       "Schwungverstärkung",
       "Abgang am Ende des Rückschwunges"
     ],
-    videos: [ { type: "video", id: "cAxAYmpj_bE", list: "PL2Xx0Y9OxlDowa6rVvcfccfmbvjFIVOiz", titel: "Ringe — Übungsverbindung (Playlist im Player)" } ] },
+    videos: [
+      { type: "video", id: "cAxAYmpj_bE", list: "PL2Xx0Y9OxlDowa6rVvcfccfmbvjFIVOiz", titel: "Ringe — Übungsverbindung" } ] },
   { geraet: "Reck",
     bedingungen: [ "Reckstange mind. schulterhoch" ],
     elemente: [
@@ -719,7 +760,8 @@ const STUDIENLEISTUNG = [
       "Absprung in den Seitstand mit Griff am Reck",
       "Unterschwung aus dem Stand in den Seitstand"
     ],
-    videos: [ { type: "video", id: "xuFRkY_p27I", list: "PL2Xx0Y9OxlDq7VHtfSjqFyFky0yeSxjIE", titel: "Reck — Übungsverbindung (Playlist im Player)" } ] },
+    videos: [
+      { type: "video", id: "xuFRkY_p27I", list: "PL2Xx0Y9OxlDq7VHtfSjqFyFky0yeSxjIE", titel: "Reck — Übungsverbindung" } ] },
   { geraet: "Schwebebalken",
     bedingungen: [
       "Gerätehöhe mind. hüfthoch (gemessen ab Mattenoberkante bis Gerätoberkante)",
@@ -735,7 +777,12 @@ const STUDIENLEISTUNG = [
       "Pferdchensprung",
       "Abgang Hocksprung"
     ],
-    videos: [ { type: "playlist", list: "PL2Xx0Y9OxlDqW2tdOP7raBMZPs61QhoY7", titel: "Balken — komplette Playlist (Elemente im Player auswählbar)" } ] },
+    videos: [
+      { type: "tracklist", titel: "Balken — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["PMW20eZ-j9U","Balken P3"],["CKdJe6FRZcY","Balken P4"],["Jyd9acmABi4","Balken P5"],
+          ["7Yq248A4FSY","Balken P6"],["2iiIlbRhI_I","Balken P7"],["R0aRLI1rq0M","Balken P8"]] } ] },
   { geraet: "Parallelbarren",
     bedingungen: [
       "Gerätehöhe: mind. schulterhoch beim Stand in der Barrengasse",
@@ -749,7 +796,12 @@ const STUDIENLEISTUNG = [
       "Zusammenführen der Beine und Schwungverstärkung (Rück-, Vor-, Rückschwingen)",
       "Wende als Abgang am Ende"
     ],
-    videos: [ { type: "playlist", list: "PL2Xx0Y9OxlDpLgsUqPOHL8YMhpgu9TwS-", titel: "Barren — komplette Playlist (Elemente im Player auswählbar)" } ] },
+    videos: [
+      { type: "tracklist", titel: "Barren — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["9czGUKHxunY","Barren P3"],["5Ubigx3e9bw","Barren P4"],["98rtJneYGe4","Barren P5"],
+          ["wClUcroG9oc","Barren P6"],["GD-PiFk42gM","Barren P7"],["Q2vcp29IWdY","Barren P8"]] } ] },
   { geraet: "Kombi",
     bedingungen: [
       "Bis Körpergröße 1,60 m: Kastenhöhe 4,5-teilig · Körpergröße 1,61–1,89 m: Kastenhöhe 5-teilig · ab Körpergröße 1,90 m: Kastenhöhe 6-teilig"
@@ -763,7 +815,12 @@ const STUDIENLEISTUNG = [
       "Strecksprung ¼-Drehung in Richtung Kasten",
       "Von der Landestelle Anlauf zur Fechterkehre über den Querkasten in den Querstand zum Kasten"
     ],
-    videos: [ { type: "video", id: "4QsBSyfj8p4", list: "PL2Xx0Y9OxlDqHEyPtaGHn1puxHfOrALjA", titel: "Kombi/Boden — Übungsverbindung (Playlist im Player)" } ] },
+    videos: [
+      { type: "tracklist", titel: "Boden — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["4QsBSyfj8p4","Boden Pflicht"],["lNU4pcqbIwI","Boden P3"],["hGQOpk2Y5lI","Boden P4"],
+          ["zdyZPJz5vMQ","Boden P5"],["xxJui4m6mTw","Boden P6"],["G5fAYwPruW0","Boden P7"],["CJOEVQ7u5tQ","Boden P8"]] } ] },
 ];
 
 function renderSL() {
@@ -804,20 +861,36 @@ function renderSL() {
                 <a class="yt-link" href="https://www.youtube.com/watch?v=${v.id}${v.list ? "&list=" + v.list : ""}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>
               </div>
             </article>` : `
-            <article class="card">
-              <div class="video-slot playlist-slot" data-list="${v.list}">
-                <button class="thumb" aria-label="Playlist laden: ${v.titel}">
-                  <span class="pl-label">▶ Playlist laden</span>
-                </button>
+            <article class="tracklist">
+              <div class="tracklist-head">
+                <h3>${v.titel}</h3>
+                <p class="tracklist-hinweis">${v.hinweis}</p>
               </div>
-              <div class="card-body">
-                <div class="card-title-row"><h3>${v.titel}</h3></div>
-                <a class="yt-link" href="https://youtube.com/playlist?list=${v.list}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>
-              </div>
+              <div class="tracklist-player" hidden></div>
+              <ol class="tracks">
+                ${v.tracks.map(([id, t], i) => `
+                  <li><button type="button" class="track" data-track-id="${id}">
+                    <span class="track-nr">${i + 1}</span>
+                    <span class="track-titel">${t}</span>
+                    <span class="track-play">▶</span>
+                  </button></li>`).join("")}
+              </ol>
             </article>`).join("")}
         </div>
       </section>`).join("")}`;
 }
+
+/* Tracklist: Klick auf Track lädt den Player oben in der Box */
+document.addEventListener("click", e => {
+  const btn = e.target.closest("button.track");
+  if (!btn) return;
+  const box = btn.closest(".tracklist");
+  const player = box.querySelector(".tracklist-player");
+  player.hidden = false;
+  player.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${btn.dataset.trackId}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube-Video"></iframe>`;
+  box.querySelectorAll(".track").forEach(t => t.classList.toggle("active", t === btn));
+  player.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
 
 /* Tab-Wechsel */
 document.getElementById("view-tabs").addEventListener("click", e => {
