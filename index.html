@@ -590,6 +590,152 @@
     font-style: italic;
     font-size: 0.85rem;
   }
+  .card { transform-style: preserve-3d; }
+  .card-reveal { position: relative; display: flex; flex-direction: column; flex: 1; }
+  .quiz-head {
+    display: none;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .quiz-head h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.25rem; line-height: 1.15;
+  }
+  body.quiz-mode #content .quiz-head { display: block; }
+  .card-cover {
+    display: none;
+    position: absolute; inset: 0;
+    z-index: 5;
+    cursor: pointer;
+    overflow: hidden; /* Nebel-Panels enden exakt an der Cover-Kante (= Oberkante Player) */
+    background: rgba(255,255,255,0.01); /* Hit-Test-Dichtung an den Panel-Nähten */
+    --mx: -9999px; --my: -9999px;
+  }
+  body.quiz-mode #content .card-cover { display: block; }
+  .card-cover.open { pointer-events: none; }
+  .cp {
+    position: absolute; inset: -4%;
+    backdrop-filter: blur(24px) saturate(135%);
+    -webkit-backdrop-filter: blur(24px) saturate(135%);
+    background:
+      radial-gradient(ellipse 60% 45% at 28% 30%, rgba(255,255,255,0.42), transparent 70%),
+      radial-gradient(ellipse 55% 50% at 72% 62%, rgba(255,255,255,0.34), transparent 72%),
+      radial-gradient(ellipse 70% 55% at 50% 85%, rgba(255,255,255,0.26), transparent 75%),
+      linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.10));
+  }
+  .cp-t { clip-path: polygon(-5% -5%, 105% -5%, 50% 50%); }
+  .cp-r { clip-path: polygon(105% -5%, 105% 105%, 50% 50%); }
+  .cp-b { clip-path: polygon(-5% 105%, 105% 105%, 50% 50%); }
+  .cp-l { clip-path: polygon(-5% -5%, -5% 105%, 50% 50%); }
+  @keyframes fog-t {
+    40% { transform: translate(-6%, -45%) rotate(-4deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(10%, -125%) rotate(-9deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-r {
+    40% { transform: translate(45%, 5%) rotate(5deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(125%, -8%) rotate(11deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-b {
+    40% { transform: translate(7%, 45%) rotate(3deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(-10%, 125%) rotate(8deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-l {
+    40% { transform: translate(-45%, -6%) rotate(-5deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(-125%, 9%) rotate(-10deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  .card-cover.open .cp-t { animation: fog-t 0.9s ease-out 0s forwards; }
+  .card-cover.open .cp-r { animation: fog-r 0.9s ease-out 0.08s forwards; }
+  .card-cover.open .cp-b { animation: fog-b 0.9s ease-out 0.05s forwards; }
+  .card-cover.open .cp-l { animation: fog-l 0.9s ease-out 0.12s forwards; }
+    .quiz-toggle {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    font-size: 1rem;
+    padding: 8px 14px 8px 16px;
+    border-radius: 999px;
+    background: var(--signal);
+    color: var(--head2);
+    box-shadow: 0 2px 10px rgba(51,38,26,0.22);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .quiz-toggle:hover, .quiz-toggle:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(51,38,26,0.3);
+  }
+  .qt-track {
+    width: 38px; height: 20px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.22);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .qt-knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+    transition: left 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  .quiz-toggle[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--chalk);
+  }
+  .quiz-toggle[aria-pressed="true"] .qt-track { background: var(--signal); }
+  .quiz-toggle[aria-pressed="true"] .qt-knob { left: 20px; }
+  .quiz-toggle[aria-pressed="true"] .qt-eye { opacity: 0.55; }
+    .reck-note {
+    grid-column: 1 / -1;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: #111;
+    font-size: 0.92rem;
+    font-style: italic;
+    padding: 2px 4px 0;
+    margin-bottom: -6px;
+  }
+  .reck-note svg { flex-shrink: 0; margin-top: 2px; }
+  .feedback-bar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .feedback-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.9rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .feedback-bar input {
+    flex: 1;
+    font: inherit; font-size: 0.95rem;
+    padding: 11px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink);
+    outline-offset: 2px;
+  }
+  .feedback-bar input:focus-visible { outline: 2px solid var(--matte); }
+  .feedback-bar button {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    width: 44px; height: 44px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--matte); color: #fff;
+    font-size: 1.05rem;
+    transition: background 0.15s;
+  }
+  .feedback-bar button:hover, .feedback-bar button:focus-visible { background: var(--matte-dark); }
+  @media (max-width: 640px) {
+    .feedback-bar { flex-wrap: wrap; }
+    .feedback-label { width: 100%; }
+  }
   .quelle {
     font-size: 0.72rem;
     color: var(--muted);
@@ -638,6 +784,11 @@
 
 <nav>
   <div class="nav-inner" id="nav-chips">
+    <button type="button" id="quiz-toggle" class="quiz-toggle" aria-pressed="false" title="Ablauf & Merkmale abdecken — zum Selbstabfragen">
+      <svg class="qt-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span class="qt-label">Abfragemodus</span>
+      <span class="qt-track"><span class="qt-knob"></span></span>
+    </button>
     <div class="search-box">
       <input type="search" id="search" placeholder="Element suchen …" aria-label="Videos durchsuchen">
     </div>
@@ -649,6 +800,11 @@
 <main id="content-lz" hidden></main>
 <p class="no-results" id="no-results">Kein Element gefunden. Tippfehler oder falsches Gerät?</p>
 
+<div class="feedback-bar">
+  <span class="feedback-label">Anmerkungen und Korrekturen hier:</span>
+  <input type="text" id="feedback-input" placeholder="Nachricht schreiben …" aria-label="Anmerkung oder Korrektur">
+  <button type="button" id="feedback-send" aria-label="Per E-Mail senden">➤</button>
+</div>
 <footer>Interne Lernhilfe für Teilnehmende des Turnseminars (IFS Münster) · nicht zur öffentlichen Verbreitung · Videos: IFS-YouTube-Playlists (nur verlinkt/eingebettet) · Quellen je Lernzettel angegeben</footer>
 
 <script>
@@ -665,133 +821,139 @@
 const VIDEOS = [
   // ---------- Boden ----------
   { id: "P0NiU8Nr5dw", geraet: "Boden", titel: "1 · Handstand abrollen",
-    ablauf: "1. Zwei Helfer beidseits: ganzer Klammergriff am Oberschenkel.\n2. Übenden im Handstand halten – Zeit zur Orientierung geben.\n3. Kleiner Schritt in Rollrichtung, Beine mitnehmen (Vorverlagern des Körpers).\n4. Beim Abrollen die Beine oben halten → langsames, kontrolliertes Abrollen.",
+    ablauf: "1. Zwei Helfer beidseits: ganzer Klammergriff am Oberschenkel.\n2. Übenden im Handstand halten – Zeit zur Orientierung geben.\n3. Kleiner Schritt in Rollrichtung, Beine mitnehmen (Vorverlagern des Körpers).\n4. Beim Abrollen die Beine oben halten → langsames, kontrolliertes Abrollen.\n5. Beim Aufstehen helfen: Stand vor dem Turnenden, innere Hand an der Hand, äußere am Ellenbogen.",
     merkmale: "Aktives Entgegengehen, Zugreifen und Mitgehen. Das Obenhalten verhindert zu frühes Anhocken – nimmt dem Übenden aber das eigene Vorverlagern ab: Hilfe konsequent abbauen.",
-    quelle: "Script van Bentem, Handstand abrollen" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "BNHEPU33ejA", geraet: "Boden", titel: "2 · Rad in den Handstand",
-    ablauf: "1. Helfer steht versetzt neben dem Turner — das Rad wird vor dem Helfer geturnt (Blick des Turners weg vom Helfer).\n2. Turnernahe Hand greift vor Bewegungsbeginn seitlich an die Hüfte (Seite des vorderen Beins).\n3. Mit dem Handaufsatz greift die zweite Hand auf der gegenüberliegenden Hüftseite — ganzer Klammergriff.\n4. Die Hände bleiben an der Hüfte, der Griff öffnet sich mit der Bewegung: Rotation führen, Wegklappen verhindern.\n5. Körper gerade über die Unterstützungsfläche bringen, bis zum sicheren Stand begleiten.",
+    ablauf: "1. Helfer steht versetzt neben dem Turner — das Rad wird vor dem Helfer geturnt (Blick des Turners weg vom Helfer).\n2. Turnernahe Hand greift vor Bewegungsbeginn seitlich an die Hüfte — halber gedrehter Klammergriff (Seite des vorderen Beins).\n3. Mit dem Handaufsatz greift die zweite Hand auf der gegenüberliegenden Hüftseite — ganzer Klammergriff.\n4. Die Hände bleiben an der Hüfte, der Griff öffnet sich mit der Bewegung: Rotation führen, Wegklappen verhindern.\n5. Körper gerade über die Unterstützungsfläche bringen, bis zum sicheren Stand begleiten.",
     merkmale: "Helferstand: fest, schulterbreit, Beine leicht gebeugt — der Griff FÜHRT das Rad. Zweck: Rotationshilfe um die Tiefenachse + Gleichgewichtshilfe (aufrechte Position erhalten).",
-    quelle: "IFS-Seminarprotokoll Rad 21.05. (7-Fragen-Helferschema)" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "CnCs30cFPFk", geraet: "Boden", titel: "3 · Rolle rückwärts in den Handstand",
-    ablauf: "1. Aus der Rolle rw. die Hände neben dem Kopf aufsetzen (Finger zu den Schultern).\n2. Helfer stehen seitlich, Blick zueinander.\n3. Im Moment des Überrollens: Beine senkrecht nach oben ziehen (Zughilfe Unterschenkel/Fußgelenke oder Klammergriff Oberschenkel).\n4. Handstand sichern, bis der Übende stabil steht.",
+    ablauf: "1. Aus der Rolle rw. die Hände neben dem Kopf aufsetzen (Finger zu den Schultern).\n2. Helfer stehen seitlich, Blick zueinander.\n3. Im Moment des Überrollens: Beine senkrecht nach oben ziehen (Zughilfe im Klammergriff am Oberschenkel).\n4. Handstand sichern.\n5. Mit einer Hand am Bauch den Turnenden absetzen lassen und aufrichten.",
     merkmale: "Reihenfolge aus dem Script: erst dynamische Hüftstreckung (vor der Lotrechten!), dann Armstreckung – im Moment der Armstreckung muss die Hüfte gestreckt sein. Zug erst geben, wenn die Arme aktiv drücken, sonst Nackenbelastung.",
-    quelle: "Script van Bentem (Felgbewegungen) + Standardgriff" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "tFY30RneLko", geraet: "Boden", titel: "5 · Kippe in den Handstand",
-    ablauf: "1. Übender nimmt die Kipplage ein, Helfer stehen seitlich bereit.\n2. Explosiver Kippstoß: Hüfte, Arme und BWS gleichzeitig strecken → KSP hebt über die Stützstellen.\n3. Helfer sichern den Handstand mit Klammergriff an den Oberschenkeln.",
+    ablauf: "1. Übender nimmt die Kipplage ein, Helfer stehen seitlich bereit.\n2. Explosiver Kippstoß: Hüfte, Arme und BWS gleichzeitig strecken → KSP hebt über die Stützstellen.\n3. Helfer sichern den Handstand mit Klammergriff an den Oberschenkeln — schnelle und deutliche Entlastung als Ziel.",
     merkmale: "Der KSP muss während der gesamten Kippbewegung senkrecht über den Stützstellen bleiben; Beinspannung ist Voraussetzung für die Impulsübertragung.",
-    quelle: "Script van Bentem (Kippbewegungen); Griff: Standard – mit Video abgleichen" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "88aqVLqw_K8", geraet: "Boden", titel: "6 · Überschlag Zielübung (HSÜ vorwärts)",
     ablauf: "1. Zwei Helfer beidseits in Position gehen.\n2. Sobald die Hände aufsetzen: innere Hand stützt im LWS-Bereich (Finger zeigen zu den Füßen).\n3. Äußere Hand fasst im ½ Drehklammergriff den Oberarm nahe des Schultergelenks.\n4. Dreh-Zug-Schubhilfe durch den Überschlag geben.\n5. Mitgehen bis in den sicheren Stand.",
-    merkmale: "Dem KSP entgegengehen, nicht erst tief fallen lassen. Bei guter Körperspannung können sich die Helfer die Hände reichen (Brücke) – dann mitgehen, nicht abbremsen. Fortgeschritten: 1/1 Klammergriff an den Oberarmen.",
-    quelle: "Script van Bentem, Handstützüberschlag vw." },
+    merkmale: "Dem KSP entgegengehen, nicht erst tief fallen lassen. Früher Kontakt am Oberarm, um eine Schultervorverlagerung zu unterbinden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "tgR8qActv3k", geraet: "Boden", titel: "8 · Flick Flack",
     ablauf: "1. Helfer kniet seitlich neben dem Übenden.\n2. Turnernahe Hand unter den unteren Rücken (LWS), turnerferne unter die Oberschenkelrückseite.\n3. Beim Absprung nach hinten-oben heben.\n4. Über die eigenen Hände drehen lassen (Dreh-Stützhilfe) und die Landung sichern.",
-    merkmale: "Absprung geht nach hinten-oben aus der Rücklage. Die Hilfe muss die stützlose Phase komplett tragen können – bei Schülern grundsätzlich zu zweit helfen.",
-    quelle: "Standardgriff (Gerling) – mit Video abgleichen" },
+    merkmale: "Absprung geht nach hinten-oben aus der Rücklage. Sicheres Halten im 'Toilettensitz'. Fokus auf die Einnahme der Sitzhaltung vor der Flugphase.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "2EAWjfjJdtE", geraet: "Boden", titel: "29 · Wandsalto",
-    ablauf: "1. Übender steht ca. eine halbe Beinlänge vor der Wand/Sprossenwand.\n2. Zwei Helfer fassen im 1/1-Drehklammergriff rw. an den Oberarmen.\n3. Wand hochlaufen, bis die Hüfte über Schulterhöhe der Helfer ist.\n4. Abdrücken und rückwärts überschlagen.\n5. Griff erst im sicheren Stand lösen.",
-    merkmale: "Der Griff wird bis zum sicheren Stand zu keinem Zeitpunkt gelöst. Ansatz des Drehklammergriffs rw. vorher separat üben.",
-    quelle: "Script van Bentem, Salto rw. (Wandsalto)" },
+    ablauf: "1. Übender steht ca. eine halbe Beinlänge vor der Wand/Sprossenwand.\n2. Zwei Helfer fassen im 1/1-Drehklammergriff rw. an den Oberarmen.\n3. Wand 1–2 Schritte hochlaufen: erster Schritt auf Hüfthöhe, Absprungschritt kräftig.\n4. Abdrücken und rückwärts überschlagen.\n5. Griff erst im sicheren Stand lösen.",
+    merkmale: "Der Griff wird bis zum sicheren Stand zu keinem Zeitpunkt gelöst. Ansatz des Drehklammergriffs rw. vorher separat üben. Seitliche Bewegung an die des Turnenden anpassen, um Raum für den Salto zu geben.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "", geraet: "Boden", titel: "4 · Handstandabrollen über die Brust",
+    ablauf: "1. Zwei Helfer beidseits: ganzer Klammergriff am Oberschenkel.\n2. Übenden im Handstand halten.\n3. Leicht vertikal herablassen — Tempo des Turners beachten.\n4. Horizontale Bewegung im Herablassen dazunehmen.",
+    merkmale: "Auf die Bewegung des Turners achten: Neben dem vertikalen Herablassen die horizontale Komponente einbringen, damit der Turner in die Überstreckung im Rücken gehen kann, ohne dass der Handstützaufsatz im Weg ist.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "", geraet: "Boden", titel: "7 · Tragen über die Schulter (HSÜ-Vorübung)",
+    ablauf: "1. Zwei Helfer Schulter an Schulter, kniend mit Blickrichtung zum Turnenden.\n2. Sobald die Hände aufsetzen: innere Hand stützt im LWS-Bereich (Finger zeigen zu den Füßen).\n3. Äußere Hand fasst im ½ Drehklammergriff den Oberarm nahe des Schultergelenks.\n4. Die Hand an der LWS trägt den Turnenden über die Schulter.\n5. Mitgehen am Oberarm bis in den sicheren Stand.",
+    merkmale: "Höhe des Oberkörpers der Sichernden an die Körpergröße des Turnenden anpassen. Früher Kontakt am Oberarm (nicht an der Schulter), um eine Schultervorverlagerung zu unterbinden. Erst bremsender, dann tragender Kontakt an der LWS. Füße der Sichernden zur Seite schieben — schafft eine Landefläche.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   // ---------- Sprung ----------
   { id: "4SRr5AJiKec", geraet: "Sprung", titel: "23 · Hocke — Einführung Hilfestellung",
     ablauf: "1. Zwei Helfer positionieren sich an der Landeseite des Kastens.\n2. Griffansatz zuerst in Ruhe/Zeitlupe am Übenden üben.\n3. Beim Sprung: ganzen Klammergriff am Oberarm ansetzen, sobald die Hände stützen.\n4. Griff bis zur sicheren Landung halten, in Bewegungsrichtung mitgehen.",
-    merkmale: "Gefahrenmomente bei Stützsprüngen (Bruckmann): mangelhafte Übungsstätte, unsachgemäße Absprunghilfen, unzureichende Hilfestellung, fehlende Selbsteinschätzung, fehlende Lernvoraussetzungen.",
-    quelle: "Script van Bentem, Stützsprünge" },
+    merkmale: "Gefahrenmomente bei Stützsprüngen (Bruckmann): Übungsstätte · Absprunghilfen · unzureichende Hilfe · Selbstüberschätzung · fehlende Voraussetzungen. Schneller Kontakt beim Handaufsatz ist wichtig — gerade bei erhöhter Geschwindigkeit. Schultervorverlagerung mit der turnernahen Hand kontrollieren.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "m0-31Q-uCD8", geraet: "Sprung", titel: "23 · Hocke Zielübung",
     ablauf: "1. Kräftiger beidbeiniger Absprung vom Brett, weites Vorgreifen der Hände.\n2. Helfer beidseits an der Landeseite: ganzer Klammergriff am Oberarm beim Stützen.\n3. Abstemmen von den Händen mit Anhocken begleiten.\n4. Mitgehen bis zur Landung, dann Griff lösen.",
     merkmale: "Hände müssen deutlich abdrücken (Gegenrotation) – nicht „durchhocken“. Hilfestellung nur langsam abbauen und in eine Bewegungssicherung übergehen lassen.",
     quelle: "Script van Bentem, Hocke über den Kasten" },
   { id: "LDpHSBOI5Ug", geraet: "Sprung", titel: "24 · Handstandsprungüberschlag",
-    ablauf: "1. Zwei Helfer stehen auf Erhöhungen (kleine Kästen) an der Landeseite.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Stützphase und zweite Flugphase begleiten.\n4. Landehilfe bis zum sicheren Stand.",
-    merkmale: "Einflugwinkel und Entfernung der Stützstelle langsam steigern, ebenso Flughöhe/-weite der zweiten Flugphase. Hilfe nur langsam abbauen → Bewegungssicherung.",
-    quelle: "Script van Bentem, Handstützsprungüberschlag" },
+    ablauf: "1. Zwei Helfer stehen sich gegenüber an der Landeseite des Kastens.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Stützphase und zweite Flugphase begleiten.\n4. Landehilfe bis zum sicheren Stand — Griff am Oberarm bis zum Stillstand halten.",
+    merkmale: "Schultervorverlagerung mit der turnernahen Hand vermeiden. Deutlich bremsende Wirkung der Hand an der LWS, um ein Überdrehen zu verhindern.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   // ---------- Reck ----------
   { id: "NqQQB6SNzHU", geraet: "Reck", titel: "9 · Aufschwung",
-    ablauf: "1. Helfer steht seitlich am Reck.\n2. Eine Hand hebt/stützt unter Gesäß bzw. unterem Rücken.\n3. Andere Hand führt die Oberschenkel zur Stange, bis die Hüfte anliegt.\n4. Aufrichten in den Stütz begleiten.",
-    merkmale: "Konstanten sind nur Festhalten und Hüftbeugung – Armzug, Schwungbein, Abdruck sind variabel. Hilfe am Bewegungseffekt orientieren, nicht an der Normtechnik; den Schüler dort abholen, wo er steht.",
-    quelle: "Script van Bentem (Hüftaufschwung); Griff: Standard" },
+    ablauf: "1. Helfer steht seitlich am Reck.\n2. Eine Hand hebt/stützt am unteren Rücken.\n3. Andere Hand führt die Oberschenkel zur Stange, bis die Hüfte anliegt.\n4. Aufrichten in den Stütz begleiten.\n5. Sanftes Herablassen an Oberschenkel und LWS nach der Vorwärtsrolle um die Stange.",
+    merkmale: "In Phase 2 unterstützt die Hand am Oberschenkel das Aufrichten bis in den neutralen Stütz. Die Hand am Oberarm sichert primär vor dem Überdrehen — zum Aufrichten des Oberkörpers nur nutzen, wenn keine Überdreh-Gefahr besteht.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "iS1d5hHhxvA", geraet: "Reck", titel: "10 · Umschwung rückwärts",
-    ablauf: "1. Vorstufe: Rückschwung in den freien Stütz – zwei Hilfen halten Oberschenkel und Bauch im toten Punkt.\n2. Zielübung: Helfer seitlich, turnernahe Hand drückt im Hüft-/LWS-Bereich die Hüfte an die Stange.\n3. Hüftkontakt während der gesamten Rotation halten.\n4. Turnerferne Hand unterstützt das Aufrichten an Schulter/Rücken.",
-    merkmale: "Eine dritte Hilfe auf der Gegenseite kann Stützhilfe an den Schultern geben, damit der Übende nicht über die Stange gedrückt wird. Alternative: Seilhilfe (siehe eigenes Video).",
-    quelle: "Script van Bentem, Umschwung vl. rw." },
+    ablauf: "1. Phase 1: Helfer seitlich — Umschwung an Oberschenkel (turnerferne Hand) und LWS (turnernahe Hand) geleiten und Richtung Stange drücken.\n2. Hüftkontakt während der gesamten Rotation halten.\n3. Phase 2: Turnerferne Hand sichert am Oberarm vor Überdrehung; turnernahe Hand unterstützt am Oberschenkel das Aufrichten und hält den Körper an der Stange.",
+    merkmale: "Die Hand am Oberarm sichert in Phase 2 primär vor dem Überdrehen — Aufrichten nur, wenn keine Gefahr besteht. Ohne Körperspannung des Turnenden ist die Bewegung kaum zu unterstützen. Immer vor der Stange sichern, Arm unter der Stange.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "Sm2lcUQarYE", geraet: "Reck", titel: "11 · Umschwung vorwärts",
-    ablauf: "1. Helfer steht seitlich, spiegelbildlich zum Umschwung rw.\n2. Turnernahe Hand hält die Hüfte im Hüftbereich an der Stange.\n3. Vorwärtsrotation an Schulter/Rücken begleiten.\n4. Aufrichten in den Stütz unterstützen.",
-    merkmale: "Kritisch ist der Hüft-Stangen-Kontakt während der gesamten Drehung – geht er verloren, kippt der Übende ab. Vorstufe mit Seilhilfe (siehe eigenes Video).",
-    quelle: "Standard, analog Script Umschwung rw. – mit Video abgleichen" },
+    ablauf: "1. W — Helfer steht seitlich, Arme in W-Position: turnernahe Hand mit der Handkante am Oberarm/Schultergelenk.\n2. M — Turnerferne Hand am Oberschenkel, wandert Richtung LWS.\n3. C — Turnenden in gleicher Handstellung um die Stange führen und aufrichten; der Sichernde geht NICHT unter die Stange!\n4. A — Abgang: nach der Vorwärtsrolle in die Sitzhaltung.",
+    merkmale: "WMCA-Sicherung. Kritisch ist der Hüft-Stangen-Kontakt während der gesamten Drehung — geht er verloren, kippt der Übende ab. Schnelles Umgreifen, kein Unterlaufen der Stange.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "9kDeahmWY3w", geraet: "Reck", titel: "12 · Spreizumschwung",
-    ablauf: "",
-    merkmale: "",
-    quelle: "" },
+    ablauf: "1. Turnender nimmt die Spreizposition ein — aufhelfen, Ausbalancieren unterstützen.\n2. Sichernde stehen seitlich zueinander hinter Stange und Turnendem: turnernahe Hand im halben gedrehten Klammergriff unter der Stange her ans Handgelenk.\n3. Turnerferne Hand ebenfalls unter die Stange — bereit für frühen Kontakt am Oberarm.\n4. Beim Umschwung: früher Kontakt der turnerfernen Hand hinten am Oberarm, um den Turnenden auszurichten.\n5. Beim Überschwung: turnerferne Hand umgreifen — gedrehter Klammergriff am vorderen Oberarm bremst die Rotation.",
+    merkmale: "Gesichert wird, solange die Handgelenke des Turnenden an der Stange gehalten werden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "D9m3T1y0ieg", geraet: "Reck", titel: "13 · Unterschwung Stand",
-    ablauf: "1. Helfer steht seitlich an der Landeseite.\n2. In der Streckphase: eine Hand stützt unter LWS/Gesäß (Hub in Flugrichtung).\n3. Andere Hand gibt Landehilfe an Schulter/Oberarm.\n4. Mitgehen bis zum sicheren Stand.",
-    merkmale: "Erst die Hüftstreckung nach vorne-oben, dann das Grifflösen – Hilfe nicht zu früh ansetzen, sonst wird die Streckung blockiert.",
-    quelle: "Standardgriff – mit Video abgleichen" },
+    ablauf: "1. Helfer steht seitlich an der Landeseite.\n2. In der Streckphase: turnernahe Hand stützt an der BWS, turnerferne am Oberschenkel (Hub in Flugrichtung).\n3. Mitgehen bis zum sicheren Stand.",
+    merkmale: "Erst die Hüftstreckung nach vorne-oben, dann das Grifflösen — Hilfe nicht zu früh ansetzen, sonst wird die Streckung blockiert. Lange Tragezeit für ein positives Turngefühl.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "Xq4-MZ54BpA", geraet: "Reck", titel: "14 · Kombination Auf-, Um-, Unterschwung",
     ablauf: "1. Aufschwung: Hub an Gesäß/Oberschenkeln zur Stange.\n2. Umschwung: Hüfte an der Stange halten.\n3. Unterschwung: Stütz in der Streckphase, dann Landehilfe.\n4. Griffe in den Übergängen wechseln, ohne die Bewegung zu unterbrechen.",
-    merkmale: "Griffwechsel vorher trocken durchgehen; ein zweiter Helfer entlastet die Übergänge deutlich.",
-    quelle: "Abgeleitet aus den Einzelelementen (Script van Bentem)" },
+    merkmale: "Elemente einzeln üben. Griffwechsel vorher trocken durchgehen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "WkwRnygUDsE", geraet: "Reck", titel: "15 · Schub an den Beinen (Vorübung Kippe)",
-    ablauf: "1. Zwei Helfer im Querstand (Blick zueinander) auf je einem Kasten.\n2. Turnernahe Hand sichert im Klammergriff unter der Stange hindurch die Handgelenke (Grifffestigkeit im Rückschwung).\n3. Nach Passieren der Lotrechten: ½ Klammergriff am Oberarm mit Schubhilfe (Stemmaktivität).\n4. Weitere Hilfe fängt den Beinschwung an den Oberschenkeln ab – der Schub an den Beinen.",
-    merkmale: "Der Handgelenk-Klammergriff verhindert, dass der Griff des Übenden im Rückschwung gelöst wird.",
-    quelle: "Script van Bentem, Stemmaufschwung" },
+    ablauf: "1. Helfer mit Blickrichtung ('Leuchten') zur Stange, breiter Stand.\n2. Ganzer Klammergriff am Fußgelenk.\n3. 1–3-mal Schwung aufbauen, dann horizontal schieben.\n4. Griff halten, um eine Überdrehung zu vermeiden.",
+    merkmale: "Ohne Körperspannung, gestreckte Beine und gestreckte Arme keine Chance.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "5n4ElunKsCM", geraet: "Reck", titel: "16 · Liegehangkippe",
-    ablauf: "1. Übender nimmt Rücklage/Liegehang auf dem Kasten ein, Griff an der Stange.\n2. Einrollen in die Kipplage.\n3. Kippstoß aus dem Liegehang – Hüftwinkel erst spät öffnen.\n4. Helfer geben Schubhilfe an Gesäß/Oberschenkeln in den Stütz.",
-    merkmale: "Der Kasten nimmt die Schwungproblematik heraus – volle Konzentration auf den Kippstoß. Hüftwinkel erst spät öffnen.",
-    quelle: "Standard/Elementeliste – mit Video abgleichen" },
+    ablauf: "1. Übender nimmt Rücklage/Liegehang auf dem Längskasten ein, Griff an der Stange.\n2. Klappmesser in die Kipplage (Schienbeine an die Stange).\n3. Kippstoß aus dem Liegehang — Hüftwinkel erst spät öffnen ('Rasur' der Schienbeine).\n4. Helfer geben Schubhilfe an LWS/Oberschenkeln in den Stütz (C-Sicherung).",
+    merkmale: "Der Kasten nimmt die Schwungproblematik heraus — volle Konzentration auf den Kippstoß. Hüftwinkel erst spät öffnen. Helfer unterqueren die Stange nicht.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "MyqvTBfqtgM", geraet: "Reck", titel: "17 · Kippe Zielübung (Laufkippe)",
-    ablauf: "1. Nach dem Fußabdruck schwingen die Beine vor-hoch in die Kipplage.\n2. Helfer steht seitlich bereit.\n3. Im Kippstoß: Schubhilfe an Gesäß/unterem Rücken Richtung Stütz – genau in den toten Punkt hinein.\n4. Aufrichten in den Stütz begleiten.",
+    ablauf: "1. Turner schwingt nach vorne in die Überstreckung — erster Kontakt der Helfer an Oberschenkel & LWS.\n2. Schienbeine an die Stange führen.\n3. Im Kippstoß: Schubhilfe an Gesäß/unterem Rücken Richtung Stütz.\n4. Aufrichten in den Stütz begleiten.",
     merkmale: "Kippstoß = dynamische Hüftstreckung mit anschließender Fixierung des Hüftwinkels; die Hilfe genau in den toten Punkt hinein geben.",
-    quelle: "Script (Biomechanik Kippaufschwung); Griff: Standard – mit Video abgleichen" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   // ---------- Barren ----------
   { id: "cbxsYEbDI4M", geraet: "Barren", titel: "18 · Kehre",
-    ablauf: "1. Helfer steht im Außenquerstand an der Landeseite.\n2. ½ bzw. 1/1 Klammergriff am turnernahen Oberarm ansetzen.\n3. Beine schwingen im Vorschwung über den Holm zur Landeseite.\n4. Mitgehen bis zur Landung; zweite Hand ggf. als Bremshilfe am LWS.",
-    merkmale: "Der Oberarmgriff gibt Stütz- und Gleichgewichtshilfe, ohne die Beinbewegung zu stören; die zweite Hand kann Bremshilfe am LWS-Bereich geben.",
-    quelle: "Standard, Griffe analog Script (Kreishockwende) – mit Video abgleichen" },
+    ablauf: "1. Helfer steht im Außenquerstand an der Landeseite.\n2. ½ Klammergriff der turnerfernen Hand am Trizeps ansetzen; turnernahe Hand an die LWS, Finger Richtung Gesäß — Unterstützung im Schwung.\n3. Beine schwingen im Vorschwung über den Holm zur Landeseite: tragender Moment an der LWS, die turnerferne Hand dient als Zughilfe für die Seitwärtsbewegung.\n4. Mitgehen bis zur Landung.",
+    merkmale: "Der Oberarmgriff gibt Stütz- und Gleichgewichtshilfe, ohne die Beinbewegung zu stören; die zweite Hand kann Bremshilfe im LWS-Bereich geben. Im Schulkontext die Hand an der LWS seitlich drehen. Barrenhöhe anpassen, damit der Helfer Kraft übertragen kann.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "9F8QbYuWQJU", geraet: "Barren", titel: "18 · Wende",
-    ablauf: "1. Helfer steht an der Landeseite, Klammergriff am Oberarm.\n2. Übender dreht die Brust zum Holm.\n3. Drehung begleiten, ohne die Längsachsen-Rotation zu blockieren.\n4. Landung sichern.",
-    merkmale: "Griff so ansetzen, dass die Drehung um die Längsachse nicht blockiert wird; Mitgehen zur Landestelle.",
-    quelle: "Standard – mit Video abgleichen" },
+    ablauf: "1. Helfer steht an der Landeseite: turnerferne Hand im Klammergriff am Oberarm, turnernahe am unteren Bauch, Finger zeigen nach unten.\n2. Beim Schwingen unterstützt die Bauchhand die Bewegungshöhe, die Armhand stabilisiert in alle vier Richtungen.\n3. Beim Abgang: Bauchhand hebt, Armhand zieht.\n4. Mitgehen, Landung sichern.",
+    merkmale: "Der Oberarmgriff gibt Stütz- und Gleichgewichtshilfe, ohne die Beinbewegung zu stören. Im Schulkontext die Hand am Bauch seitlich drehen. Barrenhöhe anpassen, damit der Helfer Kraft übertragen kann.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "wYDbFS1tGkc", geraet: "Barren", titel: "19 · Oberarmkippe",
     ablauf: "1. Aus dem Vorschwung auf die Oberarme ablegen, Kipplage einnehmen (KSP über den Holmen).\n2. Helfer positioniert sich seitlich/unterhalb.\n3. Kippstoß: schnellkräftige Hüftstreckung nach vorne-oben, Hüftwinkel fixieren, Hände drücken auf die Holme.\n4. Schubhilfe an Gesäß/unterem Rücken in den Stütz geben.",
     merkmale: "Hüftwinkel fixieren, nicht in die Überstreckung gehen (Unterschied zum Nackenüberschlag!). Das Ablegen vorher separat mit Hilfe üben; für Vorstufen Matte über die Holme legen.",
     quelle: "Script van Bentem, Oberarmkippe" },
   // ---------- Balken ----------
   { id: "ExFR0SIZN0Q", geraet: "Balken", titel: "20 · Rolle vorwärts (Balken)",
-    ablauf: "1. Zwei Helfer beidseits des Balkens, Blick zueinander.\n2. Turnernahe Hand im ½-Drehgriff am Oberarm (Zug-, Dreh-, Gleichgewichtshilfe).\n3. Turnerferne Hand unterstützt am Rücken das richtungsgenaue Einrollen.\n4. Beim Überrollen des Rückens: turnernahe Hand wechselt in den 1/1 Klammergriff am Oberarm.\n5. Aufrichten unterstützen.",
-    merkmale: "Methodik nach dem Prinzip der verminderten Lernhilfe: Bank → umgedrehte Bank/Übungsbalken → Balken mit Mattenberg, Höhe langsam reduzieren. Anfangs können die Füße oben gehalten werden (verzögertes, linientreues Abrollen).",
-    quelle: "Script van Bentem, Rolle vw. Schwebebalken" },
+    ablauf: "1. Zwei Helfer beidseits des Balkens, Blick zueinander.\n2. Turnernahe Hand im ½-Drehklammergriff am Oberarm (Zug-, Dreh-, Gleichgewichtshilfe).\n3. Turnerferne Hand unterstützt am Rücken das richtungsgenaue Einrollen.\n4. Beim Überrollen des Rückens: turnernahe Hand wechselt in den 1/1 Klammergriff am Oberarm; die turnerferne Hand bremst erst die Rotation und wandert dann zur Stabilisierung seitlich an die Hüfte.\n5. Aufrichten unterstützen: Armhand am Oberarm/Ellenbogen, turnerferne Hand als Zughilfe am Unterarm.",
+    merkmale: "Methodik nach dem Prinzip der verminderten Lernhilfe: Bank → umgedrehte Bank/Übungsbalken → Balken mit Mattenberg, Höhe langsam reduzieren. Höhe des Balkens und Körperausrichtung während der Sicherung für optimale Kraftübertragung anpassen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "U74yhngYBpI", geraet: "Balken", titel: "21 · Rad (Minibalken)",
-    ablauf: "1. Helfer steht im Querstand hinter dem Balken auf Höhe der Stützphase.\n2. Gekreuzter Stützgriff an Hüfte/Beckenkamm.\n3. Drehung über dem Balken begleiten.\n4. Gleichgewicht bis zum sicheren Stand sichern.",
+    ablauf: "1. Helfer steht im Querstand hinter dem Balken auf Höhe der Stützphase.\n2. Turnernahe Hand greift seitlich an die Hüfte — halber gedrehter Klammergriff.\n3. Mit dem Handaufsatz greift die zweite Hand auf der gegenüberliegenden Hüftseite — ganzer Klammergriff.\n4. Die Hände bleiben an der Hüfte, der Griff öffnet sich mit der Bewegung: Rotation führen, Wegklappen verhindern.\n5. Gleichgewicht bis zum sicheren Stand sichern.",
     merkmale: "Aufbau analog zur Rolle vw. nach dem Prinzip der verminderten Lernhilfe (Linie am Boden → Bank → Balken).",
-    quelle: "Standard (vgl. Becker/Bockhorst/Haberstroh, 110–113) – mit Video abgleichen" },
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
   { id: "1oRkvJRaNB4", geraet: "Balken", titel: "22 · Überschlag Abgang (Balken)",
-    ablauf: "1. Helfer steht an der Landeseite neben dem Balkenende.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Überschlag vom Balkenende begleiten, in Bewegungsrichtung mitgehen.\n4. Landehilfe bis zum Stand.",
-    merkmale: "Erhöhte Ausgangslage gibt mehr Zeit zum Überschlagen, verlangt aber exaktes Mitgehen der Helfer in Bewegungsrichtung.",
-    quelle: "Standard, Griffe analog Script HSÜ – mit Video abgleichen" },
-  // ---------- Gerätekombination ----------
-  { id: "7tRMXyDBUQ4", geraet: "Gerätekombination", titel: "25 · Nackenüberschlag Zielübung",
-    ablauf: "1. Einrollen in die Kipplage am Kastenende – zunächst nur das Einrollen üben, Helfer üben dabei den Griffansatz.\n2. Griff in der Bewegung ansetzen: turnernahe Hand im ½-Drehklammergriff am Oberarm (Daumen zum Übenden), andere Hand stützt an der LWS.\n3. Dynamische Hüftstreckung nach vorne-oben, Hände drücken vom Kasten ab.\n4. Oberarmgriff erst im sicheren Stand lösen; andere Hand ggf. als Bremshilfe an den Bauch umsetzen, mitgehen.",
-    merkmale: "Griff nicht vorab ansetzen, sondern im Einrollen – zuvor am einrollenden Übenden üben. Aus dem Anlauf: Die LWS-Hand nimmt den Schwung aus dem Aufrollen, damit die Kipplage sauber steht; eine zweite Hilfe gibt Schubhilfe an den Oberschenkeln.",
-    quelle: "Script van Bentem, Nackenüberschlag" },
-  { id: "gLm719xatTU", geraet: "Gerätekombination", titel: "26 · Hechtüberschlag Zielübung",
-    ablauf: "1. Vom Kasten ins Minitrampolin eingehen – leichte Hüftbeugung schon auf dem Kasten.\n2. Im Tuch starke Hüftbeugung einnehmen.\n3. Beine schnellen dynamisch nach vorne in die Überstreckung, dann dynamischer Handabdruck.\n4. Zwei Helfer beidseits mit den HSÜ-Griffen (½ Drehklammergriff Oberarm + LWS-Stütz).\n5. Ggf. dritte Hilfe: kräftiger Schub an der Oberschenkelvorderseite (Drehhilfe).",
-    merkmale: "Häufigster Fehler: zu starkes Einspringen ins Minitrampolin – der Übende wird zu hoch herausgeschleudert und eine Stützphase mit Handabdruck ist nicht mehr möglich.",
-    quelle: "Script van Bentem, Hechtüberschlag" },
-  { id: "vcApyHBe52A", geraet: "Gerätekombination", titel: "27 · Hechtüberschlag — Vorübung (Springen in den Handstand)",
-    ablauf: "1. Dreimal im Minitrampolin federn, Hüfte gebeugt halten.\n2. Beim dritten Federn: Rumpfwinkel dynamisch auflösen – Beine schnellen nach vorne bis in die Überstreckung.\n3. Zwei Helfer sichern beidseits mit den HSÜ-Griffen.",
-    merkmale: "Schult isoliert die kritische Aktion des Hechtüberschlags: die Hüftstreckung aus der Beugung in die Überstreckung.",
-    quelle: "Script van Bentem, Hechtüberschlag (Vorübung)" },
-  { id: "p7LDUMoBbkA", geraet: "Gerätekombination", titel: "28 · Salto mit Handfassung",
-    ablauf: "1. Griffansatz vorab aus einer Rolle vw. (z. B. Minitrampolin auf Weichboden) üben.\n2. Zwei Hilfen reichen dem Übenden die turnernahe Hand (Handfassung).\n3. Turnerferne Hand geht bei der Auftaktbewegung mit nach oben.\n4. Rotationshilfe an der Schulter, Landehilfe am Bauch.\n5. Handfassung nie lösen, in Bewegungsrichtung mitgehen.",
-    merkmale: "Handfassung während der Saltobewegung nie lösen. In Bewegungsrichtung mitgehen – nicht stehen bleiben und den Turnenden zurückziehen. Die turnerferne Hand geht bei der Auftaktbewegung mit nach oben, sonst wird der Absprung nach unten gezogen.",
-    quelle: "Script van Bentem, Salto vw." },
-  // ---------- Ohne Video in der Playlist ----------
-  { id: "", geraet: "Boden", titel: "4 · Handstandabrollen über die Brust", ablauf: "", merkmale: "", quelle: "" },
-  { id: "", geraet: "Boden", titel: "7 · Tragen über die Schulter", ablauf: "", merkmale: "", quelle: "" },
+    ablauf: "1. Helfer steht an der Landeseite neben dem Balkenende.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Überschlag vom Balkenende begleiten, in Bewegungsrichtung mitgehen — die Hand an der LWS wirkt deutlich bremsend.\n4. Landehilfe bis zum Stand.",
+    merkmale: "Erhöhte Ausgangslage gibt mehr Zeit zum Überschlagen, verlangt aber exaktes Mitgehen in Bewegungsrichtung. Durch die größere Höhe steigt das Überdreh-Risiko — die Hand an der LWS muss deutlich bremsender und kontrollierender wirken. Schultervorverlagerung mit der turnernahen Hand vermeiden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  // ---------- Ringe ----------
   { id: "", geraet: "Ringe", titel: "30 · Abgang Salto an den Ringen",
     ablauf: "1. Vorübung: Aus dem Beugesitz auf dem Mattenberg überdrehen rw., Hände an den kopfhohen Ringen; zwei Helfer unterstützen im Drehklammergriff rw.\n2. Zielübung: Übender läuft mit gestreckten Armen und Griff an den reichhohen Ringen an und turnt den Salto rw.\n3. Zwei Helfer erfassen beidseits die Oberarme im 1/1-Klammergriff.\n4. Mitlaufen, ohne den Griff zu lösen – bis zum sicheren Stand.",
     merkmale: "Griffwahl ist ein Tradeoff: 1/1-Klammergriff = bessere Schubhilfe und sicherer Halt in der ersten Bewegungsphase; 1/1-Klammerdrehgriff rw. = bessere Rotationshilfe und besserer Halt in der zweiten Phase. Griff wird zu keinem Zeitpunkt gelöst – die Helfer laufen mit.",
     quelle: "Script van Bentem, Salto rw. als Abgang von den schwingenden Ringen" },
+  // ---------- Gerätekombination ----------
+  { id: "7tRMXyDBUQ4", geraet: "Gerätekombination", titel: "25 · Nackenüberschlag Zielübung",
+    ablauf: "1. Einrollen in die Kipplage am Kastenende — zunächst nur das Einrollen üben, Helfer üben dabei den Griffansatz.\n2. Griff in der Bewegung ansetzen: turnernahe Hand im ½-Drehklammergriff am Oberarm, andere Hand stützt an der LWS.\n3. Hüfte des Turnenden absinken lassen; dann dynamische Hüftstreckung nach vorne-oben, die Hände drücken vom Kasten ab.\n4. Oberarmgriff erst im sicheren Stand lösen.",
+    merkmale: "Beim Einrollen Balancehilfe über den Griff geben. Wieder gilt: lange, getragene Flugphase ermöglichen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "gLm719xatTU", geraet: "Gerätekombination", titel: "26 · Hechtüberschlag Zielübung",
+    ablauf: "1. Vom Kasten ins Minitrampolin eingehen — leichte Hüftbeugung schon auf dem Kasten.\n2. Im Tuch starke Hüftbeugung einnehmen; der Handaufsatz erfolgt erst NACH dem Verlassen des Trampolins.\n3. Beine schnellen dynamisch nach vorne in die Überstreckung, dann dynamischer Handabdruck.\n4. Zwei Helfer beidseits mit den HSÜ-Griffen (½ Drehklammergriff Oberarm + LWS-Stütz).",
+    merkmale: "Häufigster Fehler: Hände werden zu nah vor dem Trampolin aufgesetzt — das Beweglichkeits-Kraft-Verhältnis stimmt nicht mehr, es entsteht das Fehlerbild Rolle. Ziel: gleichmäßiger 3er-Rhythmus Sprung–Handaufsatz–Landung, gestreckte Beine & Arme.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "vcApyHBe52A", geraet: "Gerätekombination", titel: "27 · Hechtüberschlag — Vorübung (Springen in den Handstand)",
+    ablauf: "1. Dreimal im Minitrampolin federn, Hüfte gebeugt halten.\n2. Beim dritten Federn: Rumpfwinkel dynamisch auflösen – Beine schnellen nach vorne bis in die Überstreckung.\n3. Zwei Helfer sichern beidseits mit den HSÜ-Griffen.",
+    merkmale: "Schult isoliert die kritische Aktion des Hechtüberschlags: die Hüftstreckung aus der Beugung in die Überstreckung. Kommt kein Überschlag zustande: aus dem Handstand zurückstoßen. Richtige Entfernung des Handaufsatzes berücksichtigen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "p7LDUMoBbkA", geraet: "Gerätekombination", titel: "28 · Salto mit Handfassung",
+    ablauf: "1. Zwei Hilfen reichen dem Übenden die turnernahe Hand (Handfassung) und begleiten die Sprunghöhe.\n2. Die turnerferne Hand geht bei der Auftaktbewegung mit nach oben und bremst an der LWS.\n3. Handfassung nie lösen, in Bewegungsrichtung mitgehen.",
+    merkmale: "Mitgehen, damit der Turnende nicht in Rücklage landen muss. Spannung in der Handfassung; beim Springen in der Höhe begleiten, um keine Sprungenergie einzuschränken. Zielrichtung ca. 45° ansetzen, um eine Rollbewegung zu vermeiden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
 ];
 
 /* Reihenfolge der Geräte-Abschnitte */
@@ -834,7 +996,7 @@ function render() {
       <span class="sec-count">${sorted.length} Videos · ${new Set(sorted.map(nrOf)).size} Elemente</span>
     </div>
     <div class="grid">
-      ${sorted.map(v => `
+      ${sorted.map(v => `${v.geraet === "Reck" && nrOf(v) === 9 ? `<div class="reck-note"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M4 2 C 10 14, 16 20, 20 27" stroke="#111" stroke-width="1.6" stroke-linecap="round"/><path d="M13 24 L20 27 L19 19" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Wenn möglich vom Reck immer Vorwärtsrolle-Sitzabgang ermöglichen.</span></div>` : ""}${nrOf(v) === 22 ? `<div class="reck-note note-ueberschlag"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M4 2 C 10 14, 16 20, 20 27" stroke="#111" stroke-width="1.6" stroke-linecap="round"/><path d="M13 24 L20 27 L19 19" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Schultervorverlagerung ist das häufigste Fehlerbild — beim Sichern am Arm gegenwirken!</span></div>` : ""}
         <article class="card" data-geraet="${v.geraet}" data-search="${(v.geraet + " " + v.titel).toLowerCase()}">
           ${v.id ? `<div class="video-slot" data-id="${v.id}">${thumbHTML(v)}</div>` : `<div class="video-slot no-video"><span>Kein Video in der Playlist</span></div>`}
           <div class="card-body">
@@ -873,6 +1035,7 @@ function render() {
 }
 
 function applyFilter() {
+  decorateCards();
   const q = searchBox.value.trim().toLowerCase();
   let any = false;
   document.querySelectorAll(".card").forEach(card => {
@@ -881,6 +1044,16 @@ function applyFilter() {
     card.style.display = hit ? "" : "none";
     if (hit) any = true;
   });
+  const note2 = document.querySelector(".note-ueberschlag");
+  if (note2) {
+    const relevant = [...document.querySelectorAll('.card[data-geraet="Balken"], .card[data-geraet="Sprung"]')].some(c => c.style.display !== "none");
+    note2.style.display = relevant ? "" : "none";
+  }
+  const note = document.querySelector(".reck-note:not(.note-ueberschlag)");
+  if (note) {
+    const reckVisible = [...document.querySelectorAll('.card[data-geraet="Reck"]')].some(c => c.style.display !== "none");
+    note.style.display = reckVisible ? "" : "none";
+  }
   document.getElementById("no-results").style.display = any ? "none" : "block";
 }
 
@@ -1361,6 +1534,131 @@ renderLZ();
 renderSL();
 
 render();
+
+/* ---------- Karten-Kippen + Peephole mit Schweif ---------- */
+const canHover = window.matchMedia("(hover: hover)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let tiltCard = null;
+
+/* Peephole-Engine: Canvas-generierte Masken — läuft parallel auf beliebig vielen Karten.
+   Jede Karte behält ihren eigenen Schweif (2 s offen, dann Rückvernebelung). */
+const peep = {
+  map: new Map(), raf: null,
+  canvas: document.createElement("canvas"),
+  HOLD: 2000, FADE: 650, R: 26, SCALE: 0.25
+};
+function peepReset(cover, entry) {
+  const panels = entry ? entry.panels : [...cover.querySelectorAll(".cp")];
+  panels.forEach(p => { p.style.maskImage = ""; p.style.webkitMaskImage = ""; });
+  peep.map.delete(cover);
+}
+function peepClearAll() {
+  for (const [cover, entry] of [...peep.map]) peepReset(cover, entry);
+}
+function peepLoop() {
+  peep.raf = null;
+  const now = performance.now();
+  for (const [cover, entry] of [...peep.map]) {
+    entry.points = entry.points.filter(pt => now - pt.t < peep.HOLD + peep.FADE);
+    const cr = cover.isConnected ? cover.getBoundingClientRect() : { width: 0 };
+    if (!entry.points.length || cover.classList.contains("open") || cr.width < 2) { peepReset(cover, entry); continue; }
+    const s = peep.SCALE, W = Math.max(2, Math.round(cr.width * s)), H = Math.max(2, Math.round(cr.height * s));
+    const A = peep.canvas;
+    A.width = W; A.height = H;
+    const a = A.getContext("2d");
+    a.fillStyle = "#000"; a.fillRect(0, 0, W, H);
+    a.globalCompositeOperation = "destination-out";
+    const r = peep.R * s * 2.2;
+    for (const pt of entry.points) {
+      const age = now - pt.t;
+      const al = age < peep.HOLD ? 1 : Math.max(0, 1 - (age - peep.HOLD) / peep.FADE);
+      const x = pt.x * s, y = pt.y * s;
+      const g = a.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, `rgba(0,0,0,${al})`);
+      g.addColorStop(0.55, `rgba(0,0,0,${al * 0.9})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      a.fillStyle = g;
+      a.beginPath(); a.arc(x, y, r, 0, 6.2832); a.fill();
+    }
+    const uA = `url(${A.toDataURL()})`;
+    for (const p of entry.panels) {
+      p.style.webkitMaskImage = uA; p.style.maskImage = uA;
+      p.style.webkitMaskSize = "100% 100%"; p.style.maskSize = "100% 100%";
+    }
+  }
+  if (peep.map.size) peep.raf = requestAnimationFrame(peepLoop);
+}
+
+if (canHover) {
+  document.addEventListener("pointermove", e => {
+    const card = e.target.closest(".card");
+    if (tiltCard && tiltCard !== card) { tiltCard.style.transform = ""; tiltCard = null; }
+    if (!card) return;
+    tiltCard = card;
+    const cover = card.querySelector(".card-cover");
+    const covered = cover && document.body.classList.contains("quiz-mode") && !cover.classList.contains("open");
+    if (covered) {
+      card.style.transform = "";
+      let entry = peep.map.get(cover);
+      if (!entry) { entry = { panels: [...cover.querySelectorAll(".cp")], points: [] }; peep.map.set(cover, entry); }
+      const cr = cover.getBoundingClientRect();
+      const x = e.clientX - cr.left, y = e.clientY - cr.top;
+      const last = entry.points[entry.points.length - 1];
+      if (!last || Math.hypot(x - last.x, y - last.y) > 5) entry.points.push({ x, y, t: performance.now() });
+      else last.t = performance.now();
+      if (!peep.raf) peep.raf = requestAnimationFrame(peepLoop);
+      return;
+    }
+    const rct = card.getBoundingClientRect();
+    const px = (e.clientX - rct.left) / rct.width - 0.5;
+    const py = (e.clientY - rct.top) / rct.height - 0.5;
+    card.style.transform = `perspective(800px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg)`;
+  });
+}
+
+/* ---------- Abdecken-Modus: Quiz-Head + Liquid-Glass-Cover ---------- */
+function decorateCards() {
+  document.querySelectorAll("#content .card").forEach(card => {
+    if (card.querySelector(".card-reveal")) return;
+    const reveal = document.createElement("div");
+    reveal.className = "card-reveal";
+    while (card.firstChild) reveal.appendChild(card.firstChild);
+    const head = document.createElement("div");
+    head.className = "quiz-head";
+    const titel = reveal.querySelector("h3") ? reveal.querySelector("h3").textContent : "";
+    head.innerHTML = `<span class="card-geraet">${card.dataset.geraet || ""}</span><h3>${titel}</h3>`;
+    const cover = document.createElement("div");
+    cover.className = "card-cover";
+    cover.innerHTML = '<div class="cp cp-t"></div><div class="cp cp-r"></div><div class="cp cp-b"></div><div class="cp cp-l"></div>';
+    reveal.appendChild(cover);
+    card.append(head, reveal);
+  });
+}
+
+document.getElementById("quiz-toggle").addEventListener("click", () => {
+  const on = document.body.classList.toggle("quiz-mode");
+  document.getElementById("quiz-toggle").setAttribute("aria-pressed", on);
+  document.querySelectorAll(".card-cover.open").forEach(c => c.classList.remove("open"));
+  peepClearAll();
+});
+
+/* Klick aufs Cover: zu allen vier Seiten verfließen */
+document.addEventListener("click", e => {
+  const cover = e.target.closest(".card-cover");
+  if (cover && document.body.classList.contains("quiz-mode")) {
+    peepReset(cover, peep.map.get(cover));
+    cover.classList.add("open");
+  }
+});
+
+/* Feedback: öffnet das Mailprogramm mit vorbefüllter Nachricht */
+function sendFeedback() {
+  const inp = document.getElementById("feedback-input");
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  location.href = "mailto:nojomcdybo@icloud.com?subject=" + encodeURIComponent("Anmerkung Turnseminar-Website") + "&body=" + encodeURIComponent(text);
+}
+document.getElementById("feedback-send").addEventListener("click", sendFeedback);
+document.getElementById("feedback-input").addEventListener("keydown", e => { if (e.key === "Enter") sendFeedback(); });
 </script>
 </body>
 </html>
