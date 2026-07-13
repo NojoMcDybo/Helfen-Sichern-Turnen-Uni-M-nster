@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helfen &amp; Sichern — Videosammlung Turnseminar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chalk: #F6EFE3;        /* warmes Hallenlicht */
+    --ink: #33261A;          /* dunkles Holzbraun */
+    --matte: #8C5A2B;        /* Leder / Pauschenpferd */
+    --matte-dark: #6E4520;
+    --signal: #D98E32;       /* warmes Gold für Status & Fortschritt */
+    --line: #E4D9C6;
+    --card: #FFFDF8;
+    --muted: #8A7B68;
+    --radius: 14px;
+    --head1: #3B2C1E; --head2: #33261A; --head3: #2C2015;
+    --head-accent: #D8B47E; --head-sub: #CBB99F; --head-line: #5A4630;
+  }
+  /* Studienleistung: warmes Terrakotta */
+  body.view-sl {
+    --chalk: #F8F1E9;
+    --ink: #3A2420;
+    --matte: #AE5230;
+    --matte-dark: #8C3F23;
+    --signal: #E8935F;
+    --line: #EBD9CB;
+    --card: #FFFBF6;
+    --muted: #97796A;
+    --head1: #4A2C22; --head2: #3E241C; --head3: #341F18;
+    --head-accent: #F0A67E; --head-sub: #D8B4A3; --head-line: #6E4434;
+  }
+  /* Klausur-Lernzettel: warmes Ocker/Honig */
+  body.view-lz {
+    --chalk: #F9F3E3;
+    --ink: #3A2F16;
+    --matte: #9C7A2A;
+    --matte-dark: #7C5F1E;
+    --signal: #DDB44C;
+    --line: #EADFC2;
+    --card: #FFFCF3;
+    --muted: #92845F;
+    --head1: #46391A; --head2: #3B3015; --head3: #322810;
+    --head-accent: #E4C878; --head-sub: #CBB98D; --head-line: #665428;
+  }
+  body, header, .card, .vorgaben, nav { transition: background-color 0.35s ease, background 0.35s ease, border-color 0.35s ease; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+  body {
+    background: var(--chalk);
+    color: var(--ink);
+    font-family: 'Barlow', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    background: linear-gradient(160deg, var(--head1) 0%, var(--head2) 60%, var(--head3) 100%);
+    color: var(--chalk);
+    padding: 44px 24px 36px;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; }
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.85rem;
+    color: var(--head-accent);
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    margin: 6px 0 10px;
+  }
+  h1 .amp { color: var(--signal); }
+  .header-sub { color: var(--head-sub); font-size: 0.95rem; max-width: 60ch; }
+
+  /* Fortschritt */
+  .progress-wrap { margin-top: 22px; max-width: 480px; }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.8rem; color: #D8B47E; margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 8px; background: #4A3A28; border-radius: 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: var(--signal);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  .view-tabs {
+    display: flex; gap: 10px; margin-top: 24px;
+  }
+  .view-tabs button {
+    border-color: var(--head-line) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 1.05rem;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--head-line);
+    background: transparent;
+    color: var(--head-sub);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .view-tabs button:hover { color: #fff; }
+  .view-tabs button.active {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: var(--head2);
+  }
+  .vorgaben {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--signal);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+  .vorgaben .vorgaben-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    color: var(--matte);
+    margin-bottom: 4px;
+  }
+  .vorgaben p { font-size: 0.95rem; white-space: pre-line; }
+  .vorgaben-liste {
+    margin: 2px 0 0 18px;
+    font-size: 0.92rem;
+  }
+  .vorgaben-liste li { margin-bottom: 3px; }
+  .elemente-liste {
+    margin: 2px 0 0 22px;
+    font-size: 0.95rem;
+  }
+  .elemente-liste li { margin-bottom: 5px; padding-left: 4px; }
+  .elemente-liste li::marker { font-weight: 600; color: var(--matte); }
+  .sl-kern {
+    font-weight: 600;
+    font-size: 0.98rem;
+    margin-bottom: 10px;
+  }
+  .sl-intro { font-size: 0.8rem; color: var(--muted); margin-top: 10px; }
+  .sl-allgemein { margin-bottom: 36px; }
+  .pflicht-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    color: #fff; background: var(--matte);
+    padding: 3px 12px; border-radius: 999px;
+    align-self: center;
+  }
+  .tracklist {
+    grid-column: 1 / -1;
+    background: linear-gradient(170deg, var(--head1), var(--head2) 45%, var(--head3));
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    color: var(--chalk);
+  }
+  .tracklist-head h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.5rem; text-transform: uppercase;
+  }
+  .tracklist-hinweis { font-size: 0.85rem; color: var(--head-sub); margin-top: 2px; }
+  .tracklist-player { margin-top: 14px; }
+  .tracklist-player iframe {
+    width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 10px; display: block;
+  }
+  .tracks { list-style: none; margin-top: 14px; }
+  .track {
+    all: unset;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .track:hover, .track:focus-visible { background: rgba(255,255,255,0.08); }
+  .track.active { background: rgba(255,255,255,0.14); }
+  .track.active .track-titel { color: var(--signal); font-weight: 600; }
+  .track-nr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; color: var(--head-sub); text-align: center;
+  }
+  .track-titel { font-size: 0.95rem; }
+  .track-play { text-align: center; color: var(--head-sub); font-size: 0.8rem; opacity: 0; transition: opacity 0.12s; }
+  .track:hover .track-play, .track.active .track-play { opacity: 1; color: var(--signal); }
+  .lz-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .lz-card {
+    all: unset;
+    box-sizing: border-box;
+    display: flex; flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(38,48,30,0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    min-height: 130px;
+  }
+  .lz-card:hover, .lz-card:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(38,48,30,0.12);
+    border-color: var(--matte);
+  }
+  .lz-card-nr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--signal);
+  }
+  .lz-card-thema {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin: 6px 0 8px;
+  }
+  .lz-card-meta {
+    margin-top: auto;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .lz-back {
+    all: unset;
+    box-sizing: border-box;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 0.9rem;
+    color: var(--matte);
+    cursor: pointer;
+    padding: 4px 0;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+  .lz-back:hover, .lz-back:focus-visible { text-decoration: underline; }
+  .lz-detail-head {
+    display: flex; align-items: baseline; gap: 14px;
+    border-bottom: 6px solid var(--matte);
+    padding-bottom: 8px;
+    margin-bottom: 22px;
+  }
+  .lz-detail-nr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--signal);
+  }
+  .lz-detail-head h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+  .lz-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .lz-col-main, .lz-col-side { display: flex; flex-direction: column; gap: 18px; }
+  .lz-box { margin-bottom: 0; }
+  .lz-full { margin-bottom: 18px; }
+  .lz-box-fehler { border-left-color: #C0663C; }
+  .lz-box-mr { border-left-color: var(--matte); }
+  .lz-box-hs { border-left-color: #8A6E2F; background: #FBF8EE; }
+  .lz-box-schule { border-left-color: #8A6E2F; }
+  .lz-box-merken {
+    border-left-color: var(--signal);
+    background: linear-gradient(135deg, #FBF5E2, #F6EDD2);
+  }
+  body.view-lz .lz-box-hs { background: #FAF9F0; }
+  @media (max-width: 820px) {
+    .lz-grid { grid-template-columns: 1fr; }
+  }
+  .lz-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .lz-arrows { display: flex; align-items: center; gap: 10px; }
+  .lz-arrow {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--card);
+    font-size: 1.1rem; color: var(--matte);
+    transition: background 0.15s, color 0.15s;
+  }
+  .lz-arrow:hover, .lz-arrow:focus-visible { background: var(--matte); color: #fff; }
+  .lz-pos {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; color: var(--muted); font-size: 0.95rem;
+  }
+  .lz-phasen {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin-bottom: 18px;
+  }
+  .lz-phase {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+    background: var(--card);
+    border: 1px solid var(--matte);
+    color: var(--matte-dark);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .lz-phase-arrow { color: var(--signal); font-weight: 700; }
+  .lz-stepper { list-style: none; margin-top: 8px; counter-reset: step; }
+  .lz-stepper li {
+    counter-increment: step;
+    position: relative;
+    padding: 0 0 16px 44px;
+  }
+  .lz-stepper li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--matte); color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lz-stepper li:not(:last-child)::after {
+    content: "";
+    position: absolute; left: 13px; top: 30px; bottom: 2px;
+    width: 2px; background: var(--line);
+  }
+  .lz-step-uebung { display: block; font-weight: 600; font-size: 0.93rem; }
+  .lz-step-grund { display: block; font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
+  .lz-kv { list-style: none; }
+  .lz-kv li {
+    display: grid; grid-template-columns: 110px 1fr; gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.88rem;
+  }
+  .lz-kv li:last-child { border-bottom: none; }
+  .lz-kv-key {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    font-size: 0.78rem;
+    color: var(--matte);
+    padding-top: 2px;
+  }
+  .lz-merksatz { font-weight: 600; font-style: italic; }
+  .lz-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+  .lz-tabelle th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: var(--matte);
+    text-align: left;
+    padding: 6px 10px 6px 0;
+    border-bottom: 2px solid var(--line);
+  }
+  .lz-tabelle td {
+    padding: 8px 10px 8px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .lz-tabelle tr:last-child td { border-bottom: none; }
+  .sl-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .sl-videos .card { box-shadow: 0 2px 10px rgba(51,38,26,0.06); }
+  .video-slot.playlist-slot button.thumb {
+    display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, var(--head1), var(--head1) 14px, var(--head2) 14px, var(--head2) 28px);
+  }
+  .video-slot.playlist-slot .pl-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.95rem; color: var(--chalk);
+    background: rgba(51,38,26,0.85);
+    padding: 8px 18px; border-radius: 999px;
+    border: 1px solid var(--head-line);
+  }
+  /* ---------- Sticky Nav ---------- */
+  nav {
+    position: static;
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 4px rgba(51,38,26,0.06);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 10px 24px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .card-geraet {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    color: var(--matte);
+  }
+  .chip.active { background: var(--matte); color: #fff; border-color: var(--matte); }
+  .chip.active .count { color: #EBD9BC; }
+  .chip {
+    cursor: pointer;
+    font: inherit;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--chalk);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 14px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .chip:hover, .chip:focus-visible { background: var(--matte); color: #fff; border-color: var(--matte); }
+  .chip .count { color: var(--muted); font-weight: 600; margin-left: 4px; }
+  .chip:hover .count, .chip:focus-visible .count { color: #EBD9BC; }
+  .search-box { margin-left: auto; }
+  .search-box input {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--chalk);
+    color: var(--ink);
+    width: 200px;
+    outline-offset: 2px;
+  }
+  .search-box input:focus-visible { outline: 2px solid var(--matte); }
+
+  /* ---------- Sections ---------- */
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  section { margin-bottom: 56px; scroll-margin-top: 70px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 14px;
+    border-bottom: 6px solid var(--matte);
+    padding-bottom: 6px;
+    margin-bottom: 22px;
+  }
+  .section-head h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    letter-spacing: 0.02em;
+  }
+  .section-head .sec-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* ---------- Cards ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    content-visibility: auto;
+    contain-intrinsic-size: 400px 540px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 10px rgba(51,38,26,0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover {
+    box-shadow: 0 6px 18px rgba(51,38,26,0.10);
+    transform: translateY(-2px);
+  }
+  .video-slot {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #241A10;
+  }
+  .video-slot.no-video {
+    display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, #EFE6D5, #EFE6D5 12px, #E9DEC9 12px, #E9DEC9 24px);
+  }
+  .video-slot.no-video span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.85rem; color: var(--muted);
+    background: var(--card); padding: 6px 14px; border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .video-slot button.thumb {
+    all: unset;
+    cursor: pointer;
+    position: absolute; inset: 0;
+    display: block; width: 100%; height: 100%;
+  }
+  .video-slot button.thumb:focus-visible { outline: 3px solid var(--signal); outline-offset: -3px; }
+  .video-slot img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: opacity 0.15s;
+  }
+  .video-slot button.thumb:hover img { opacity: 0.85; }
+  .play-badge {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px; height: 42px;
+    background: rgba(51,38,26,0.85);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .play-badge::after {
+    content: "";
+    border-style: solid;
+    border-width: 9px 0 9px 16px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 3px;
+  }
+  .video-slot button.thumb:hover .play-badge { background: var(--signal); }
+  .video-slot iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0;
+  }
+
+  .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .card-title-row { display: flex; align-items: flex-start; gap: 8px; }
+  .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.15;
+    flex: 1;
+  }
+  .status-dot {
+    flex-shrink: 0;
+    width: 10px; height: 10px; border-radius: 50%;
+    margin-top: 6px;
+    background: var(--line);
+  }
+  .status-dot.done { background: var(--signal); }
+
+  .field label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    color: var(--matte);
+    margin-bottom: 3px;
+  }
+  .field p { font-size: 0.92rem; white-space: pre-line; }
+  .field p.empty {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.85rem;
+  }
+  .card { transform-style: preserve-3d; }
+  .card-reveal { position: relative; display: flex; flex-direction: column; flex: 1; }
+  .quiz-head {
+    display: none;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .quiz-head h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.25rem; line-height: 1.15;
+  }
+  body.quiz-mode #content .quiz-head { display: block; }
+  .card-cover {
+    display: none;
+    position: absolute; inset: 0;
+    z-index: 5;
+    cursor: pointer;
+    overflow: hidden; /* Nebel-Panels enden exakt an der Cover-Kante (= Oberkante Player) */
+    background: rgba(255,255,255,0.01); /* Hit-Test-Dichtung an den Panel-Nähten */
+    --mx: -9999px; --my: -9999px;
+  }
+  body.quiz-mode #content .card-cover { display: block; }
+  .card-cover.open { pointer-events: none; }
+  .cp {
+    position: absolute; inset: -4%;
+    backdrop-filter: blur(24px) saturate(135%);
+    -webkit-backdrop-filter: blur(24px) saturate(135%);
+    background:
+      radial-gradient(ellipse 60% 45% at 28% 30%, rgba(255,255,255,0.42), transparent 70%),
+      radial-gradient(ellipse 55% 50% at 72% 62%, rgba(255,255,255,0.34), transparent 72%),
+      radial-gradient(ellipse 70% 55% at 50% 85%, rgba(255,255,255,0.26), transparent 75%),
+      linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.10));
+  }
+  .cp-t { clip-path: polygon(-5% -5%, 105% -5%, 50% 50%); }
+  .cp-r { clip-path: polygon(105% -5%, 105% 105%, 50% 50%); }
+  .cp-b { clip-path: polygon(-5% 105%, 105% 105%, 50% 50%); }
+  .cp-l { clip-path: polygon(-5% -5%, -5% 105%, 50% 50%); }
+  @keyframes fog-t {
+    40% { transform: translate(-6%, -45%) rotate(-4deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(10%, -125%) rotate(-9deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-r {
+    40% { transform: translate(45%, 5%) rotate(5deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(125%, -8%) rotate(11deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-b {
+    40% { transform: translate(7%, 45%) rotate(3deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(-10%, 125%) rotate(8deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  @keyframes fog-l {
+    40% { transform: translate(-45%, -6%) rotate(-5deg) scale(1.12); opacity: 0.55; filter: blur(4px); }
+    100% { transform: translate(-125%, 9%) rotate(-10deg) scale(1.3); opacity: 0; filter: blur(14px); }
+  }
+  .card-cover.open .cp-t { animation: fog-t 0.9s ease-out 0s forwards; }
+  .card-cover.open .cp-r { animation: fog-r 0.9s ease-out 0.08s forwards; }
+  .card-cover.open .cp-b { animation: fog-b 0.9s ease-out 0.05s forwards; }
+  .card-cover.open .cp-l { animation: fog-l 0.9s ease-out 0.12s forwards; }
+    .quiz-toggle {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    font-size: 1rem;
+    padding: 8px 14px 8px 16px;
+    border-radius: 999px;
+    background: var(--signal);
+    color: var(--head2);
+    box-shadow: 0 2px 10px rgba(51,38,26,0.22);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .quiz-toggle:hover, .quiz-toggle:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(51,38,26,0.3);
+  }
+  .qt-track {
+    width: 38px; height: 20px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.22);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .qt-knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+    transition: left 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  .quiz-toggle[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--chalk);
+  }
+  .quiz-toggle[aria-pressed="true"] .qt-track { background: var(--signal); }
+  .quiz-toggle[aria-pressed="true"] .qt-knob { left: 20px; }
+  .quiz-toggle[aria-pressed="true"] .qt-eye { opacity: 0.55; }
+    .reck-note {
+    grid-column: 1 / -1;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: #111;
+    font-size: 0.92rem;
+    font-style: italic;
+    padding: 2px 4px 0;
+    margin-bottom: -6px;
+  }
+  .reck-note svg { flex-shrink: 0; margin-top: 2px; }
+  .feedback-bar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .feedback-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.9rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .feedback-bar input {
+    flex: 1;
+    font: inherit; font-size: 0.95rem;
+    padding: 11px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink);
+    outline-offset: 2px;
+  }
+  .feedback-bar input:focus-visible { outline: 2px solid var(--matte); }
+  .feedback-bar button {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    width: 44px; height: 44px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--matte); color: #fff;
+    font-size: 1.05rem;
+    transition: background 0.15s;
+  }
+  .feedback-bar button:hover, .feedback-bar button:focus-visible { background: var(--matte-dark); }
+  @media (max-width: 640px) {
+    .feedback-bar { flex-wrap: wrap; }
+    .feedback-label { width: 100%; }
+  }
+  .quelle {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .yt-link {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .yt-link:hover { color: var(--matte); text-decoration: underline; }
+
+  .no-results {
+    text-align: center; color: var(--muted); padding: 60px 0;
+    font-size: 1rem; display: none;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .search-box { margin-left: 0; width: 100%; }
+    .search-box input { width: 100%; }
+    .nav-inner { padding: 8px 14px; gap: 6px; }
+    .chip { font-size: 0.82rem; padding: 4px 11px; }
+    .quiz-toggle { font-size: 0.9rem; padding: 7px 12px 7px 14px; width: 100%; justify-content: center; }
+    main { padding: 24px 14px 60px; }
+    header { padding: 32px 16px 26px; }
+    /* Backdrop-Blur ist auf Mobil-GPUs teuer — reduzieren */
+    .cp {
+      backdrop-filter: blur(13px) saturate(120%);
+      -webkit-backdrop-filter: blur(13px) saturate(120%);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">Turnseminar · IFS Münster</div>
+    <h1>Turnseminar</h1>
+    <p class="header-sub">Helfen &amp; Sichern (Prüfung) und Studienleistung — alle Videos, Griffe und Vorgaben an einem Ort.</p>
+    <div class="view-tabs" id="view-tabs">
+      <button type="button" data-view="hs" class="active">Helfen &amp; Sichern</button>
+      <button type="button" data-view="sl">Studienleistung</button>
+      <button type="button" data-view="lz">Klausur-Lernzettel</button>
+    </div>
+      </div>
+</header>
+
+<nav>
+  <div class="nav-inner" id="nav-chips">
+    <button type="button" id="quiz-toggle" class="quiz-toggle" aria-pressed="false" title="Ablauf & Merkmale abdecken — zum Selbstabfragen">
+      <svg class="qt-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span class="qt-label">Abfragemodus</span>
+      <span class="qt-track"><span class="qt-knob"></span></span>
+    </button>
+    <div class="search-box">
+      <input type="search" id="search" placeholder="Element suchen …" aria-label="Videos durchsuchen">
+    </div>
+  </div>
+</nav>
+
+<main id="content"></main>
+<main id="content-sl" hidden></main>
+<main id="content-lz" hidden></main>
+<p class="no-results" id="no-results">Kein Element gefunden. Tippfehler oder falsches Gerät?</p>
+
+<div class="feedback-bar">
+  <span class="feedback-label">Anmerkungen und Korrekturen hier:</span>
+  <input type="text" id="feedback-input" placeholder="Nachricht schreiben …" aria-label="Anmerkung oder Korrektur">
+  <button type="button" id="feedback-send" aria-label="Per E-Mail senden">➤</button>
+</div>
+<footer>Interne Lernhilfe für Teilnehmende des Turnseminars (IFS Münster) · nicht zur öffentlichen Verbreitung · Videos: IFS-YouTube-Playlists (nur verlinkt/eingebettet) · Quellen je Lernzettel angegeben</footer>
+
+<script>
+/* ==========================================================================
+   DATEN — hier pflegst du alles.
+   Pro Video ein Objekt:
+     id:       YouTube-Video-ID (nicht anfassen)
+     geraet:   Gerät/Kategorie (bestimmt die Gruppierung)
+     titel:    Anzeigename
+     ablauf:   Beschreibung des Ablaufs beim Helfen/Sichern ("" = noch offen)
+     merkmale: Besondere Merkmale / worauf achten ("" = noch offen)
+   Zeilenumbrüche in Texten mit \n. Reihenfolge innerhalb eines Geräts = Reihenfolge hier.
+   ========================================================================== */
+const VIDEOS = [
+  // ---------- Boden ----------
+  { id: "P0NiU8Nr5dw", geraet: "Boden", titel: "1 · Handstand abrollen",
+    ablauf: "1. Zwei Helfer beidseits: ganzer Klammergriff am Oberschenkel.\n2. Übenden im Handstand halten – Zeit zur Orientierung geben.\n3. Kleiner Schritt in Rollrichtung, Beine mitnehmen (Vorverlagern des Körpers).\n4. Beim Abrollen die Beine oben halten → langsames, kontrolliertes Abrollen.\n5. Beim Aufstehen helfen: Stand vor dem Turnenden, innere Hand an der Hand, äußere am Ellenbogen.",
+    merkmale: "Aktives Entgegengehen, Zugreifen und Mitgehen. Das Obenhalten verhindert zu frühes Anhocken – nimmt dem Übenden aber das eigene Vorverlagern ab: Hilfe konsequent abbauen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "BNHEPU33ejA", geraet: "Boden", titel: "2 · Rad in den Handstand",
+    ablauf: "1. Helfer steht versetzt neben dem Turner — das Rad wird vor dem Helfer geturnt (Blick des Turners weg vom Helfer).\n2. Turnernahe Hand greift vor Bewegungsbeginn seitlich an die Hüfte — halber gedrehter Klammergriff (Seite des vorderen Beins).\n3. Mit dem Handaufsatz greift die zweite Hand auf der gegenüberliegenden Hüftseite — ganzer Klammergriff.\n4. Die Hände bleiben an der Hüfte, der Griff öffnet sich mit der Bewegung: Rotation führen, Wegklappen verhindern.\n5. Körper gerade über die Unterstützungsfläche bringen, bis zum sicheren Stand begleiten.",
+    merkmale: "Helferstand: fest, schulterbreit, Beine leicht gebeugt — der Griff FÜHRT das Rad. Zweck: Rotationshilfe um die Tiefenachse + Gleichgewichtshilfe (aufrechte Position erhalten).",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "CnCs30cFPFk", geraet: "Boden", titel: "3 · Rolle rückwärts in den Handstand",
+    ablauf: "1. Aus der Rolle rw. die Hände neben dem Kopf aufsetzen (Finger zu den Schultern).\n2. Helfer stehen seitlich, Blick zueinander.\n3. Im Moment des Überrollens: Beine senkrecht nach oben ziehen (Zughilfe im Klammergriff am Oberschenkel).\n4. Handstand sichern.\n5. Mit einer Hand am Bauch den Turnenden absetzen lassen und aufrichten.",
+    merkmale: "Reihenfolge aus dem Script: erst dynamische Hüftstreckung (vor der Lotrechten!), dann Armstreckung – im Moment der Armstreckung muss die Hüfte gestreckt sein. Zug erst geben, wenn die Arme aktiv drücken, sonst Nackenbelastung.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "tFY30RneLko", geraet: "Boden", titel: "5 · Kippe in den Handstand",
+    ablauf: "1. Übender nimmt die Kipplage ein, Helfer stehen seitlich bereit.\n2. Explosiver Kippstoß: Hüfte, Arme und BWS gleichzeitig strecken → KSP hebt über die Stützstellen.\n3. Helfer sichern den Handstand mit Klammergriff an den Oberschenkeln — schnelle und deutliche Entlastung als Ziel.",
+    merkmale: "Der KSP muss während der gesamten Kippbewegung senkrecht über den Stützstellen bleiben; Beinspannung ist Voraussetzung für die Impulsübertragung.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "88aqVLqw_K8", geraet: "Boden", titel: "6 · Überschlag Zielübung (HSÜ vorwärts)",
+    ablauf: "1. Zwei Helfer beidseits in Position gehen.\n2. Sobald die Hände aufsetzen: innere Hand stützt im LWS-Bereich (Finger zeigen zu den Füßen).\n3. Äußere Hand fasst im ½ Drehklammergriff den Oberarm nahe des Schultergelenks.\n4. Dreh-Zug-Schubhilfe durch den Überschlag geben.\n5. Mitgehen bis in den sicheren Stand.",
+    merkmale: "Dem KSP entgegengehen, nicht erst tief fallen lassen. Früher Kontakt am Oberarm, um eine Schultervorverlagerung zu unterbinden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "tgR8qActv3k", geraet: "Boden", titel: "8 · Flick Flack",
+    ablauf: "1. Helfer kniet seitlich neben dem Übenden.\n2. Turnernahe Hand unter den unteren Rücken (LWS), turnerferne unter die Oberschenkelrückseite.\n3. Beim Absprung nach hinten-oben heben.\n4. Über die eigenen Hände drehen lassen (Dreh-Stützhilfe) und die Landung sichern.",
+    merkmale: "Absprung geht nach hinten-oben aus der Rücklage. Sicheres Halten im 'Toilettensitz'. Fokus auf die Einnahme der Sitzhaltung vor der Flugphase.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "2EAWjfjJdtE", geraet: "Boden", titel: "29 · Wandsalto",
+    ablauf: "1. Übender steht ca. eine halbe Beinlänge vor der Wand/Sprossenwand.\n2. Zwei Helfer fassen im 1/1-Drehklammergriff rw. an den Oberarmen.\n3. Wand 1–2 Schritte hochlaufen: erster Schritt auf Hüfthöhe, Absprungschritt kräftig.\n4. Abdrücken und rückwärts überschlagen.\n5. Griff erst im sicheren Stand lösen.",
+    merkmale: "Der Griff wird bis zum sicheren Stand zu keinem Zeitpunkt gelöst. Ansatz des Drehklammergriffs rw. vorher separat üben. Seitliche Bewegung an die des Turnenden anpassen, um Raum für den Salto zu geben.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "", geraet: "Boden", titel: "4 · Handstandabrollen über die Brust",
+    ablauf: "1. Zwei Helfer beidseits: ganzer Klammergriff am Oberschenkel.\n2. Übenden im Handstand halten.\n3. Leicht vertikal herablassen — Tempo des Turners beachten.\n4. Horizontale Bewegung im Herablassen dazunehmen.",
+    merkmale: "Auf die Bewegung des Turners achten: Neben dem vertikalen Herablassen die horizontale Komponente einbringen, damit der Turner in die Überstreckung im Rücken gehen kann, ohne dass der Handstützaufsatz im Weg ist.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "10WRrpXmgV4", geraet: "Boden", titel: "7 · Tragen über die Schulter (HSÜ-Vorübung)",
+    ablauf: "1. Zwei Helfer Schulter an Schulter, kniend mit Blickrichtung zum Turnenden.\n2. Sobald die Hände aufsetzen: innere Hand stützt im LWS-Bereich (Finger zeigen zu den Füßen).\n3. Äußere Hand fasst im ½ Drehklammergriff den Oberarm nahe des Schultergelenks.\n4. Die Hand an der LWS trägt den Turnenden über die Schulter.\n5. Mitgehen am Oberarm bis in den sicheren Stand.",
+    merkmale: "Höhe des Oberkörpers der Sichernden an die Körpergröße des Turnenden anpassen. Früher Kontakt am Oberarm (nicht an der Schulter), um eine Schultervorverlagerung zu unterbinden. Erst bremsender, dann tragender Kontakt an der LWS. Füße der Sichernden zur Seite schieben — schafft eine Landefläche.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  // ---------- Sprung ----------
+  { id: "4SRr5AJiKec", geraet: "Sprung", titel: "23 · Hocke — Einführung Hilfestellung",
+    ablauf: "1. Zwei Helfer positionieren sich an der Landeseite des Kastens.\n2. Griffansatz zuerst in Ruhe/Zeitlupe am Übenden üben.\n3. Beim Sprung: ganzen Klammergriff am Oberarm ansetzen, sobald die Hände stützen.\n4. Griff bis zur sicheren Landung halten, in Bewegungsrichtung mitgehen.",
+    merkmale: "Gefahrenmomente bei Stützsprüngen (Bruckmann): Übungsstätte · Absprunghilfen · unzureichende Hilfe · Selbstüberschätzung · fehlende Voraussetzungen. Schneller Kontakt beim Handaufsatz ist wichtig — gerade bei erhöhter Geschwindigkeit. Schultervorverlagerung mit der turnernahen Hand kontrollieren.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "m0-31Q-uCD8", geraet: "Sprung", titel: "23 · Hocke Zielübung",
+    ablauf: "1. Kräftiger beidbeiniger Absprung vom Brett, weites Vorgreifen der Hände.\n2. Helfer beidseits an der Landeseite: ganzer Klammergriff am Oberarm beim Stützen.\n3. Abstemmen von den Händen mit Anhocken begleiten.\n4. Mitgehen bis zur Landung, dann Griff lösen.",
+    merkmale: "Hände müssen deutlich abdrücken (Gegenrotation) – nicht „durchhocken“. Hilfestellung nur langsam abbauen und in eine Bewegungssicherung übergehen lassen.",
+    quelle: "Script van Bentem, Hocke über den Kasten" },
+  { id: "LDpHSBOI5Ug", geraet: "Sprung", titel: "24 · Handstandsprungüberschlag",
+    ablauf: "1. Zwei Helfer stehen sich gegenüber an der Landeseite des Kastens.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Stützphase und zweite Flugphase begleiten.\n4. Landehilfe bis zum sicheren Stand — Griff am Oberarm bis zum Stillstand halten.",
+    merkmale: "Schultervorverlagerung mit der turnernahen Hand vermeiden. Deutlich bremsende Wirkung der Hand an der LWS, um ein Überdrehen zu verhindern.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  // ---------- Reck ----------
+  { id: "NqQQB6SNzHU", geraet: "Reck", titel: "9 · Aufschwung",
+    ablauf: "1. Helfer steht seitlich am Reck.\n2. Eine Hand hebt/stützt am unteren Rücken.\n3. Andere Hand führt die Oberschenkel zur Stange, bis die Hüfte anliegt.\n4. Aufrichten in den Stütz begleiten.\n5. Sanftes Herablassen an Oberschenkel und LWS nach der Vorwärtsrolle um die Stange.",
+    merkmale: "In Phase 2 unterstützt die Hand am Oberschenkel das Aufrichten bis in den neutralen Stütz. Die Hand am Oberarm sichert primär vor dem Überdrehen — zum Aufrichten des Oberkörpers nur nutzen, wenn keine Überdreh-Gefahr besteht.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "iS1d5hHhxvA", geraet: "Reck", titel: "10 · Umschwung rückwärts",
+    ablauf: "1. Phase 1: Helfer seitlich — Umschwung an Oberschenkel (turnerferne Hand) und LWS (turnernahe Hand) geleiten und Richtung Stange drücken.\n2. Hüftkontakt während der gesamten Rotation halten.\n3. Phase 2: Turnerferne Hand sichert am Oberarm vor Überdrehung; turnernahe Hand unterstützt am Oberschenkel das Aufrichten und hält den Körper an der Stange.",
+    merkmale: "Die Hand am Oberarm sichert in Phase 2 primär vor dem Überdrehen — Aufrichten nur, wenn keine Gefahr besteht. Ohne Körperspannung des Turnenden ist die Bewegung kaum zu unterstützen. Immer vor der Stange sichern, Arm unter der Stange.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "Sm2lcUQarYE", geraet: "Reck", titel: "11 · Umschwung vorwärts",
+    ablauf: "1. W — Helfer steht seitlich, Arme in W-Position: turnernahe Hand mit der Handkante am Oberarm/Schultergelenk.\n2. M — Turnerferne Hand am Oberschenkel, wandert Richtung LWS.\n3. C — Turnenden in gleicher Handstellung um die Stange führen und aufrichten; der Sichernde geht NICHT unter die Stange!\n4. A — Abgang: nach der Vorwärtsrolle in die Sitzhaltung.",
+    merkmale: "WMCA-Sicherung. Kritisch ist der Hüft-Stangen-Kontakt während der gesamten Drehung — geht er verloren, kippt der Übende ab. Schnelles Umgreifen, kein Unterlaufen der Stange.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "9kDeahmWY3w", geraet: "Reck", titel: "12 · Spreizumschwung",
+    ablauf: "1. Turnender nimmt die Spreizposition ein — aufhelfen, Ausbalancieren unterstützen.\n2. Sichernde stehen seitlich zueinander hinter Stange und Turnendem: turnernahe Hand im halben gedrehten Klammergriff unter der Stange her ans Handgelenk.\n3. Turnerferne Hand ebenfalls unter die Stange — bereit für frühen Kontakt am Oberarm.\n4. Beim Umschwung: früher Kontakt der turnerfernen Hand hinten am Oberarm, um den Turnenden auszurichten.\n5. Beim Überschwung: turnerferne Hand umgreifen — gedrehter Klammergriff am vorderen Oberarm bremst die Rotation.",
+    merkmale: "Gesichert wird, solange die Handgelenke des Turnenden an der Stange gehalten werden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "D9m3T1y0ieg", geraet: "Reck", titel: "13 · Unterschwung Stand",
+    ablauf: "1. Helfer steht seitlich an der Landeseite.\n2. In der Streckphase: turnernahe Hand stützt an der BWS, turnerferne am Oberschenkel (Hub in Flugrichtung).\n3. Mitgehen bis zum sicheren Stand.",
+    merkmale: "Erst die Hüftstreckung nach vorne-oben, dann das Grifflösen — Hilfe nicht zu früh ansetzen, sonst wird die Streckung blockiert. Lange Tragezeit für ein positives Turngefühl.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "Xq4-MZ54BpA", geraet: "Reck", titel: "14 · Kombination Auf-, Um-, Unterschwung",
+    ablauf: "1. Aufschwung: Hub an Gesäß/Oberschenkeln zur Stange.\n2. Umschwung: Hüfte an der Stange halten.\n3. Unterschwung: Stütz in der Streckphase, dann Landehilfe.\n4. Griffe in den Übergängen wechseln, ohne die Bewegung zu unterbrechen.",
+    merkmale: "Elemente einzeln üben. Griffwechsel vorher trocken durchgehen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "WkwRnygUDsE", geraet: "Reck", titel: "15 · Schub an den Beinen (Vorübung Kippe)",
+    ablauf: "1. Helfer mit Blickrichtung ('Leuchten') zur Stange, breiter Stand.\n2. Ganzer Klammergriff am Fußgelenk.\n3. 1–3-mal Schwung aufbauen, dann horizontal schieben.\n4. Griff halten, um eine Überdrehung zu vermeiden.",
+    merkmale: "Ohne Körperspannung, gestreckte Beine und gestreckte Arme keine Chance.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "5n4ElunKsCM", geraet: "Reck", titel: "16 · Liegehangkippe",
+    ablauf: "1. Übender nimmt Rücklage/Liegehang auf dem Längskasten ein, Griff an der Stange.\n2. Klappmesser in die Kipplage (Schienbeine an die Stange).\n3. Kippstoß aus dem Liegehang — Hüftwinkel erst spät öffnen ('Rasur' der Schienbeine).\n4. Helfer geben Schubhilfe an LWS/Oberschenkeln in den Stütz (C-Sicherung).",
+    merkmale: "Der Kasten nimmt die Schwungproblematik heraus — volle Konzentration auf den Kippstoß. Hüftwinkel erst spät öffnen. Helfer unterqueren die Stange nicht.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "MyqvTBfqtgM", geraet: "Reck", titel: "17 · Kippe Zielübung (Laufkippe)",
+    ablauf: "1. Turner schwingt nach vorne in die Überstreckung — erster Kontakt der Helfer an Oberschenkel & LWS.\n2. Schienbeine an die Stange führen.\n3. Im Kippstoß: Schubhilfe an Gesäß/unterem Rücken Richtung Stütz.\n4. Aufrichten in den Stütz begleiten.",
+    merkmale: "Kippstoß = dynamische Hüftstreckung mit anschließender Fixierung des Hüftwinkels; die Hilfe genau in den toten Punkt hinein geben.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  // ---------- Barren ----------
+  { id: "cbxsYEbDI4M", geraet: "Barren", titel: "18 · Kehre",
+    ablauf: "1. Helfer steht im Außenquerstand an der Landeseite.\n2. ½ Klammergriff der turnerfernen Hand am Trizeps ansetzen; turnernahe Hand an die LWS, Finger Richtung Gesäß — Unterstützung im Schwung.\n3. Beine schwingen im Vorschwung über den Holm zur Landeseite: tragender Moment an der LWS, die turnerferne Hand dient als Zughilfe für die Seitwärtsbewegung.\n4. Mitgehen bis zur Landung.",
+    merkmale: "Der Oberarmgriff gibt Stütz- und Gleichgewichtshilfe, ohne die Beinbewegung zu stören; die zweite Hand kann Bremshilfe im LWS-Bereich geben. Im Schulkontext die Hand an der LWS seitlich drehen. Barrenhöhe anpassen, damit der Helfer Kraft übertragen kann.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "9F8QbYuWQJU", geraet: "Barren", titel: "18 · Wende",
+    ablauf: "1. Helfer steht an der Landeseite: turnerferne Hand im Klammergriff am Oberarm, turnernahe am unteren Bauch, Finger zeigen nach unten.\n2. Beim Schwingen unterstützt die Bauchhand die Bewegungshöhe, die Armhand stabilisiert in alle vier Richtungen.\n3. Beim Abgang: Bauchhand hebt, Armhand zieht.\n4. Mitgehen, Landung sichern.",
+    merkmale: "Der Oberarmgriff gibt Stütz- und Gleichgewichtshilfe, ohne die Beinbewegung zu stören. Im Schulkontext die Hand am Bauch seitlich drehen. Barrenhöhe anpassen, damit der Helfer Kraft übertragen kann.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "wYDbFS1tGkc", geraet: "Barren", titel: "19 · Oberarmkippe",
+    ablauf: "1. Aus dem Vorschwung auf die Oberarme ablegen, Kipplage einnehmen (KSP über den Holmen).\n2. Helfer positioniert sich seitlich/unterhalb.\n3. Kippstoß: schnellkräftige Hüftstreckung nach vorne-oben, Hüftwinkel fixieren, Hände drücken auf die Holme.\n4. Schubhilfe an Gesäß/unterem Rücken in den Stütz geben.",
+    merkmale: "Hüftwinkel fixieren, nicht in die Überstreckung gehen (Unterschied zum Nackenüberschlag!). Das Ablegen vorher separat mit Hilfe üben; für Vorstufen Matte über die Holme legen.",
+    quelle: "Script van Bentem, Oberarmkippe" },
+  // ---------- Balken ----------
+  { id: "ExFR0SIZN0Q", geraet: "Balken", titel: "20 · Rolle vorwärts (Balken)",
+    ablauf: "1. Zwei Helfer beidseits des Balkens, Blick zueinander.\n2. Turnernahe Hand im ½-Drehklammergriff am Oberarm (Zug-, Dreh-, Gleichgewichtshilfe).\n3. Turnerferne Hand unterstützt am Rücken das richtungsgenaue Einrollen.\n4. Beim Überrollen des Rückens: turnernahe Hand wechselt in den 1/1 Klammergriff am Oberarm; die turnerferne Hand bremst erst die Rotation und wandert dann zur Stabilisierung seitlich an die Hüfte.\n5. Aufrichten unterstützen: Armhand am Oberarm/Ellenbogen, turnerferne Hand als Zughilfe am Unterarm.",
+    merkmale: "Methodik nach dem Prinzip der verminderten Lernhilfe: Bank → umgedrehte Bank/Übungsbalken → Balken mit Mattenberg, Höhe langsam reduzieren. Höhe des Balkens und Körperausrichtung während der Sicherung für optimale Kraftübertragung anpassen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "U74yhngYBpI", geraet: "Balken", titel: "21 · Rad (Minibalken)",
+    ablauf: "1. Helfer steht im Querstand hinter dem Balken auf Höhe der Stützphase.\n2. Turnernahe Hand greift seitlich an die Hüfte — halber gedrehter Klammergriff.\n3. Mit dem Handaufsatz greift die zweite Hand auf der gegenüberliegenden Hüftseite — ganzer Klammergriff.\n4. Die Hände bleiben an der Hüfte, der Griff öffnet sich mit der Bewegung: Rotation führen, Wegklappen verhindern.\n5. Gleichgewicht bis zum sicheren Stand sichern.",
+    merkmale: "Aufbau analog zur Rolle vw. nach dem Prinzip der verminderten Lernhilfe (Linie am Boden → Bank → Balken).",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "1oRkvJRaNB4", geraet: "Balken", titel: "22 · Überschlag Abgang (Balken)",
+    ablauf: "1. Helfer steht an der Landeseite neben dem Balkenende.\n2. Griffe wie beim HSÜ am Boden: ½ Drehklammergriff am Oberarm + Stützhilfe im LWS-Bereich.\n3. Überschlag vom Balkenende begleiten, in Bewegungsrichtung mitgehen — die Hand an der LWS wirkt deutlich bremsend.\n4. Landehilfe bis zum Stand.",
+    merkmale: "Erhöhte Ausgangslage gibt mehr Zeit zum Überschlagen, verlangt aber exaktes Mitgehen in Bewegungsrichtung. Durch die größere Höhe steigt das Überdreh-Risiko — die Hand an der LWS muss deutlich bremsender und kontrollierender wirken. Schultervorverlagerung mit der turnernahen Hand vermeiden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  // ---------- Ringe ----------
+  { id: "", geraet: "Ringe", titel: "30 · Abgang Salto an den Ringen",
+    ablauf: "1. Vorübung: Aus dem Beugesitz auf dem Mattenberg überdrehen rw., Hände an den kopfhohen Ringen; zwei Helfer unterstützen im Drehklammergriff rw.\n2. Zielübung: Übender läuft mit gestreckten Armen und Griff an den reichhohen Ringen an und turnt den Salto rw.\n3. Zwei Helfer erfassen beidseits die Oberarme im 1/1-Klammergriff.\n4. Mitlaufen, ohne den Griff zu lösen – bis zum sicheren Stand.",
+    merkmale: "Griffwahl ist ein Tradeoff: 1/1-Klammergriff = bessere Schubhilfe und sicherer Halt in der ersten Bewegungsphase; 1/1-Klammerdrehgriff rw. = bessere Rotationshilfe und besserer Halt in der zweiten Phase. Griff wird zu keinem Zeitpunkt gelöst – die Helfer laufen mit.",
+    quelle: "Script van Bentem, Salto rw. als Abgang von den schwingenden Ringen" },
+  // ---------- Gerätekombination ----------
+  { id: "7tRMXyDBUQ4", geraet: "Gerätekombination", titel: "25 · Nackenüberschlag Zielübung",
+    ablauf: "1. Einrollen in die Kipplage am Kastenende — zunächst nur das Einrollen üben, Helfer üben dabei den Griffansatz.\n2. Griff in der Bewegung ansetzen: turnernahe Hand im ½-Drehklammergriff am Oberarm, andere Hand stützt an der LWS.\n3. Hüfte des Turnenden absinken lassen; dann dynamische Hüftstreckung nach vorne-oben, die Hände drücken vom Kasten ab.\n4. Oberarmgriff erst im sicheren Stand lösen.",
+    merkmale: "Beim Einrollen Balancehilfe über den Griff geben. Wieder gilt: lange, getragene Flugphase ermöglichen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "gLm719xatTU", geraet: "Gerätekombination", titel: "26 · Hechtüberschlag Zielübung",
+    ablauf: "1. Vom Kasten ins Minitrampolin eingehen — leichte Hüftbeugung schon auf dem Kasten.\n2. Im Tuch starke Hüftbeugung einnehmen; der Handaufsatz erfolgt erst NACH dem Verlassen des Trampolins.\n3. Beine schnellen dynamisch nach vorne in die Überstreckung, dann dynamischer Handabdruck.\n4. Zwei Helfer beidseits mit den HSÜ-Griffen (½ Drehklammergriff Oberarm + LWS-Stütz).",
+    merkmale: "Häufigster Fehler: Hände werden zu nah vor dem Trampolin aufgesetzt — das Beweglichkeits-Kraft-Verhältnis stimmt nicht mehr, es entsteht das Fehlerbild Rolle. Ziel: gleichmäßiger 3er-Rhythmus Sprung–Handaufsatz–Landung, gestreckte Beine & Arme.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "vcApyHBe52A", geraet: "Gerätekombination", titel: "27 · Hechtüberschlag — Vorübung (Springen in den Handstand)",
+    ablauf: "1. Dreimal im Minitrampolin federn, Hüfte gebeugt halten.\n2. Beim dritten Federn: Rumpfwinkel dynamisch auflösen – Beine schnellen nach vorne bis in die Überstreckung.\n3. Zwei Helfer sichern beidseits mit den HSÜ-Griffen.",
+    merkmale: "Schult isoliert die kritische Aktion des Hechtüberschlags: die Hüftstreckung aus der Beugung in die Überstreckung. Kommt kein Überschlag zustande: aus dem Handstand zurückstoßen. Richtige Entfernung des Handaufsatzes berücksichtigen.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+  { id: "p7LDUMoBbkA", geraet: "Gerätekombination", titel: "28 · Salto mit Handfassung",
+    ablauf: "1. Zwei Hilfen reichen dem Übenden die turnernahe Hand (Handfassung) und begleiten die Sprunghöhe.\n2. Die turnerferne Hand geht bei der Auftaktbewegung mit nach oben und bremst an der LWS.\n3. Handfassung nie lösen, in Bewegungsrichtung mitgehen.",
+    merkmale: "Mitgehen, damit der Turnende nicht in Rücklage landen muss. Spannung in der Handfassung; beim Springen in der Höhe begleiten, um keine Sprungenergie einzuschränken. Zielrichtung ca. 45° ansetzen, um eine Rollbewegung zu vermeiden.",
+    quelle: "IFS-Seminar, praxiskorrigiert (Stand 11.07.26)" },
+];
+
+/* Reihenfolge der Geräte-Abschnitte */
+const GERAETE = ["Boden", "Sprung", "Reck", "Barren", "Stufenbarren", "Balken", "Gerätekombination"];
+
+/* ==========================================================================
+   Ab hier: Rendering. Muss nicht angefasst werden.
+   ========================================================================== */
+const content = document.getElementById("content");
+const navChips = document.getElementById("nav-chips");
+const searchBox = document.getElementById("search");
+let activeGeraet = null;
+
+function nrOf(v) { const m = v.titel.match(/^(\d+)/); return m ? parseInt(m[1], 10) : 999; }
+
+function fieldHTML(label, text) {
+  const empty = !text.trim();
+  return `<div class="field">
+    <label>${label}</label>
+    <p class="${empty ? "empty" : ""}">${empty ? "Noch offen — Beschreibung folgt." : text}</p>
+  </div>`;
+}
+
+function thumbHTML(v) {
+  return `<button class="thumb" aria-label="Video abspielen: ${v.titel}">
+    <img loading="lazy" referrerpolicy="no-referrer"
+         src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"
+         onerror="if(!this.dataset.alt){this.dataset.alt=1;this.src='https://img.youtube.com/vi/${v.id}/mqdefault.jpg';}else{this.style.display='none';}"
+         alt="Vorschaubild: ${v.titel}">
+    <span class="play-badge"></span>
+  </button>`;
+}
+
+function render() {
+  const sorted = [...VIDEOS].sort((a, b) => nrOf(a) - nrOf(b));
+  const sec = document.createElement("section");
+  sec.innerHTML = `
+    <div class="section-head">
+      <h2>Elementeliste A+B</h2>
+      <span class="sec-count">${sorted.length} Videos · ${new Set(sorted.map(nrOf)).size} Elemente</span>
+    </div>
+    <div class="grid">
+      ${sorted.map(v => `${v.geraet === "Reck" && nrOf(v) === 9 ? `<div class="reck-note"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M4 2 C 10 14, 16 20, 20 27" stroke="#111" stroke-width="1.6" stroke-linecap="round"/><path d="M13 24 L20 27 L19 19" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Wenn möglich vom Reck immer Vorwärtsrolle-Sitzabgang ermöglichen.</span></div>` : ""}${nrOf(v) === 22 ? `<div class="reck-note note-ueberschlag"><svg width="26" height="30" viewBox="0 0 26 30" fill="none"><path d="M4 2 C 10 14, 16 20, 20 27" stroke="#111" stroke-width="1.6" stroke-linecap="round"/><path d="M13 24 L20 27 L19 19" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Schultervorverlagerung ist das häufigste Fehlerbild — beim Sichern am Arm gegenwirken!</span></div>` : ""}
+        <article class="card" data-geraet="${v.geraet}" data-search="${(v.geraet + " " + v.titel).toLowerCase()}">
+          ${v.id ? `<div class="video-slot" data-id="${v.id}">${thumbHTML(v)}</div>` : `<div class="video-slot no-video"><span>Kein Video in der Playlist</span></div>`}
+          <div class="card-body">
+            <div class="card-geraet">${v.geraet}</div>
+            <div class="card-title-row">
+              <h3>${v.titel}</h3>
+              <span class="status-dot ${v.ablauf.trim() && v.merkmale.trim() ? "done" : ""}"
+                    title="${v.ablauf.trim() && v.merkmale.trim() ? "Beschreibung vollständig" : "Beschreibung offen"}"></span>
+            </div>
+            ${fieldHTML("Ablauf", v.ablauf)}
+            ${fieldHTML("Besondere Merkmale", v.merkmale)}
+            ${v.quelle ? `<p class="quelle">Quelle: ${v.quelle}</p>` : ""}
+            ${v.id ? `<a class="yt-link" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>` : ""}
+          </div>
+        </article>
+      `).join("")}
+    </div>`;
+  content.replaceChildren(sec);
+
+  // Filter-Chips
+  document.querySelectorAll(".chip").forEach(c => c.remove());
+  const searchWrap = navChips.querySelector(".search-box");
+  const geraete = [...new Set(VIDEOS.map(v => v.geraet))];
+  const mkChip = (label, count, geraet) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip" + (activeGeraet === geraet ? " active" : "");
+    b.innerHTML = count == null ? label : `${label}<span class="count">${count}</span>`;
+    b.addEventListener("click", () => { activeGeraet = geraet; render(); applyFilter(); });
+    navChips.insertBefore(b, searchWrap);
+  };
+  mkChip("Alle", VIDEOS.length, null);
+  geraete.forEach(g => mkChip(g, VIDEOS.filter(v => v.geraet === g).length, g));
+
+  applyFilter();
+}
+
+function applyFilter() {
+  decorateCards();
+  const q = searchBox.value.trim().toLowerCase();
+  let any = false;
+  document.querySelectorAll(".card").forEach(card => {
+    const hit = (!q || card.dataset.search.includes(q)) &&
+                (!activeGeraet || card.dataset.geraet === activeGeraet);
+    card.style.display = hit ? "" : "none";
+    if (hit) any = true;
+  });
+  const note2 = document.querySelector(".note-ueberschlag");
+  if (note2) {
+    const relevant = [...document.querySelectorAll('.card[data-geraet="Balken"], .card[data-geraet="Sprung"]')].some(c => c.style.display !== "none");
+    note2.style.display = relevant ? "" : "none";
+  }
+  const note = document.querySelector(".reck-note:not(.note-ueberschlag)");
+  if (note) {
+    const reckVisible = [...document.querySelectorAll('.card[data-geraet="Reck"]')].some(c => c.style.display !== "none");
+    note.style.display = reckVisible ? "" : "none";
+  }
+  document.getElementById("no-results").style.display = any ? "none" : "block";
+}
+
+/* Click-to-Load: Thumbnail → Iframe erst bei Klick (beide Ansichten, Videos + Playlists) */
+document.addEventListener("click", e => {
+  const btn = e.target.closest("button.thumb");
+  if (!btn) return;
+  const slot = btn.closest(".video-slot");
+  const id = slot.dataset.id, list = slot.dataset.list;
+  const iframe = document.createElement("iframe");
+  iframe.src = id
+    ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${list ? "&list=" + list : ""}`
+    : `https://www.youtube-nocookie.com/embed/videoseries?list=${list}`;
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+  iframe.allowFullscreen = true;
+  iframe.title = "YouTube-Video";
+  slot.replaceChildren(iframe);
+});
+
+searchBox.addEventListener("input", applyFilter);
+
+
+/* ==========================================================================
+   STUDIENLEISTUNG — Vorgaben transkribiert aus "Studienleistung Vorgaben.pdf".
+   vorgaben-Texte hier editieren. videos: type "video" (mit optionaler list für
+   Playlist-Navigation im Player) oder "playlist" (ganze Playlist einbetten).
+   ========================================================================== */
+const SL_ALLGEMEIN = {
+  intro: "Die dargelegten Aufgaben gelten ab dem SoSe 2025 laut Beschlussfassung der Fachkonferenz Turnen vom 26.03.2025.",
+  kern: "An den folgenden sechs Geräten müssen 4 Übungen gezeigt werden. Der Bereich Sprung ist Pflicht. Zwei Geräte können weggelassen werden. Eines dieser beiden Geräte muss dann in der Prüfung im Bereich Geräte Technik Kür live vor Ort demonstriert werden.",
+  regeln: [
+    "Bewertet wird die Demonstrationsfähigkeit der einzelnen Fertigkeiten. Die Übungen müssen dazu annähernd fehlerfrei gezeigt werden.",
+    "Die Übung muss flüssig ohne Leerschwünge oder Zwischenschritte geturnt werden.",
+    "Die beiden Prüfungsaufgaben müssen als Video in Teams eingereicht werden. Eine Anleitung findet man in der Ordnung (Link im Original-PDF)."
+  ]
+};
+
+const STUDIENLEISTUNG = [
+  { geraet: "Sprung", pflicht: true,
+    bedingungen: [
+      "Brettabstand von mindestens 1 m (Lotrechte vom Gerät)",
+      "Höhe des Tisches beträgt mind. 1,30 m",
+      "Es sind keine weiteren Hilfsmittel für den Absprung erlaubt (Matten etc.)",
+      "Es werden alle Phasen bewertet (Absprung, 1. Flugphase, Stützphase, 2. Flugphase, Landung)",
+      "Die Stützphase muss innerhalb des vorderen Drittels am Ergojet erfolgen",
+      "Es muss eine deutliche erste und zweite Flugphase gezeigt werden"
+    ],
+    elemente: [
+      "Handstützsprungüberschlag über den Ergojet mit Landung auf Mattenberg in der Schiffchenposition (mit Absprung vom Minitrampolin)",
+      "oder: Sprunghocke / Sprunggrätsche mit Absprung vom Reutherbrett",
+      "oder: Handstützsprungüberschlag mit Absprung vom Reutherbrett oder Minitrampolin"
+    ],
+    elementeHinweis: "Ein Sprung nach Wahl:",
+    videos: [
+      { type: "video", id: "0aMQSvM1b_w", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 1 (P3)" },
+      { type: "video", id: "lRDscI1f7Nc", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 2 (P4)" },
+      { type: "video", id: "kaG6HV6IjeU", list: "PL2Xx0Y9OxlDqedCEj82HvSmcsnpkB3G23", titel: "Sprung — Video 3 (P7)" } ] },
+  { geraet: "Schwingende Ringe",
+    bedingungen: [
+      "Ringe müssen reichhoch eingestellt werden: Greifen der Ringe im Zehenstand unter der Lotrechten (Hacken dürfen im Hang in der Lotrechten den Boden nicht berühren)",
+      "Für den Fußaufsatz ist eine Querlinie unter der Lotrechten der Ringe einzuzeichnen",
+      "Der Fußaufsatz beim Schwingen muss jeweils kurz vor und hinter der Linie erfolgen"
+    ],
+    elemente: [
+      "Schwungverstärkung 3-mal (Vor- und Rückschwung zählt als eine Schwungverstärkung)",
+      "Einlegen in die Kipplage am Ende des Vorschwungs",
+      "Schwingen im Beugesturzhang (zurück und vor)",
+      "Auslegen am Ende des Vorschwungs in den Langhang",
+      "Schwungverstärkung",
+      "Abgang am Ende des Rückschwunges"
+    ],
+    videos: [
+      { type: "video", id: "cAxAYmpj_bE", list: "PL2Xx0Y9OxlDowa6rVvcfccfmbvjFIVOiz", titel: "Ringe — Übungsverbindung" } ] },
+  { geraet: "Reck",
+    bedingungen: [ "Reckstange mind. schulterhoch" ],
+    elemente: [
+      "Aufschwung",
+      "eine Umschwungbewegung (vl. vw. / vl. rw. / Spreizumschwung, halbe Drehung)",
+      "Hohes Rückschwingen in den freien Stütz",
+      "Absprung in den Seitstand mit Griff am Reck",
+      "Unterschwung aus dem Stand in den Seitstand"
+    ],
+    videos: [
+      { type: "video", id: "xuFRkY_p27I", list: "PL2Xx0Y9OxlDq7VHtfSjqFyFky0yeSxjIE", titel: "Reck — Übungsverbindung" } ] },
+  { geraet: "Schwebebalken",
+    bedingungen: [
+      "Gerätehöhe mind. hüfthoch (gemessen ab Mattenoberkante bis Gerätoberkante)",
+      "Die Landung beim Abgang muss hinter der vorgegebenen Markierung erfolgen (nah am Balken, da nach oben und nicht nach vorne gesprungen werden soll)",
+      "Keine unnötigen Schritte — die Übung muss passend geplant werden"
+    ],
+    elemente: [
+      "Aufhocken nach Anlauf und Absprung vom Reutherbrett in den Hockstand, Aufrichten in den einbeinigen Stand (Gewicht auf dem hinteren Bein)",
+      "Standwaage",
+      "2 Schritte",
+      "Halbe Drehung im Ballenstand",
+      "Halbe Drehung auf einem Bein mit Schwungbeineinsatz (Rückschwingen des vorderen Beines) und Halten des nach vorne geführten Beines",
+      "Pferdchensprung",
+      "Abgang Hocksprung"
+    ],
+    videos: [
+      { type: "tracklist", titel: "Balken — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["PMW20eZ-j9U","Balken P3"],["CKdJe6FRZcY","Balken P4"],["Jyd9acmABi4","Balken P5"],
+          ["7Yq248A4FSY","Balken P6"],["2iiIlbRhI_I","Balken P7"],["R0aRLI1rq0M","Balken P8"]] } ] },
+  { geraet: "Parallelbarren",
+    bedingungen: [
+      "Gerätehöhe: mind. schulterhoch beim Stand in der Barrengasse",
+      "Brettabstand: das Brett darf nicht unter den Holmen stehen"
+    ],
+    elemente: [
+      "Außenquerstand auf dem Reutherbrett",
+      "Sprung in den Stütz und direktes Durchschwingen der Beine nach vorne in den Grätschsitz",
+      "Aufschwingen aus dem Grätschsitz in den Oberarmstand",
+      "Absenken in den Grätschsitz",
+      "Zusammenführen der Beine und Schwungverstärkung (Rück-, Vor-, Rückschwingen)",
+      "Wende als Abgang am Ende"
+    ],
+    videos: [
+      { type: "tracklist", titel: "Barren — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["9czGUKHxunY","Barren P3"],["5Ubigx3e9bw","Barren P4"],["98rtJneYGe4","Barren P5"],
+          ["wClUcroG9oc","Barren P6"],["GD-PiFk42gM","Barren P7"],["Q2vcp29IWdY","Barren P8"]] } ] },
+  { geraet: "Kombi",
+    bedingungen: [
+      "Bis Körpergröße 1,60 m: Kastenhöhe 4,5-teilig · Körpergröße 1,61–1,89 m: Kastenhöhe 5-teilig · ab Körpergröße 1,90 m: Kastenhöhe 6-teilig"
+    ],
+    elemente: [
+      "Aufrollen auf den Längskasten vom Hallenboden aus",
+      "Hocksprung aus dem Minitrampolin heraus (Landung im ersten Drittel der Matte)",
+      "Strecksprung mit Drehung in Richtung Niedersprungmatten",
+      "Rad von der Matte runter auf den Hallenboden (Hände werden auf dem Boden aufgesetzt)",
+      "Rolle vw. auf die Niedersprungmatte (ohne zusätzliche Schritte)",
+      "Strecksprung ¼-Drehung in Richtung Kasten",
+      "Von der Landestelle Anlauf zur Fechterkehre über den Querkasten in den Querstand zum Kasten"
+    ],
+    videos: [
+      { type: "tracklist", titel: "Boden — P-Übungen (Bauteile)",
+        hinweis: "Kein offizielles Video der vollständigen Bewegungsausführung — die Playlist zeigt die einzelnen Bauteile.",
+        tracks: [
+          ["4QsBSyfj8p4","Boden Pflicht"],["lNU4pcqbIwI","Boden P3"],["hGQOpk2Y5lI","Boden P4"],
+          ["zdyZPJz5vMQ","Boden P5"],["xxJui4m6mTw","Boden P6"],["G5fAYwPruW0","Boden P7"],["CJOEVQ7u5tQ","Boden P8"]] } ] },
+];
+
+function renderSL() {
+  const el = document.getElementById("content-sl");
+  el.innerHTML = `
+    <div class="vorgaben sl-allgemein">
+      <div class="vorgaben-label">Studienleistung Turnen Teil A+B · L2, LH, LF · Stand 01.05.2025</div>
+      <p class="sl-kern">${SL_ALLGEMEIN.kern}</p>
+      <ul class="vorgaben-liste">${SL_ALLGEMEIN.regeln.map(r => `<li>${r}</li>`).join("")}</ul>
+      <p class="sl-intro">${SL_ALLGEMEIN.intro}</p>
+    </div>
+    ${STUDIENLEISTUNG.map(s => `
+      <section>
+        <div class="section-head">
+          <h2>${s.geraet}</h2>
+          ${s.pflicht ? '<span class="pflicht-badge">Pflicht</span>' : ''}
+        </div>
+        <div class="vorgaben">
+          <div class="vorgaben-label">Geräteaufbau &amp; Bedingungen</div>
+          <ul class="vorgaben-liste">${s.bedingungen.map(b => `<li>${b}</li>`).join("")}</ul>
+          <div class="vorgaben-label" style="margin-top:12px">Elemente${s.elementeHinweis ? " — " + s.elementeHinweis : ""}</div>
+          <ol class="elemente-liste">${s.elemente.map(x => `<li>${x}</li>`).join("")}</ol>
+        </div>
+        <div class="sl-videos">
+          ${s.videos.map(v => v.type === "video" ? `
+            <article class="card">
+              <div class="video-slot" data-id="${v.id}" data-list="${v.list || ""}">
+                <button class="thumb" aria-label="Video abspielen: ${v.titel}">
+                  <img loading="lazy" referrerpolicy="no-referrer"
+                       src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"
+                       onerror="if(!this.dataset.alt){this.dataset.alt=1;this.src='https://img.youtube.com/vi/${v.id}/mqdefault.jpg';}else{this.style.display='none';}"
+                       alt="Vorschaubild: ${v.titel}">
+                  <span class="play-badge"></span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="card-title-row"><h3>${v.titel}</h3></div>
+                <a class="yt-link" href="https://www.youtube.com/watch?v=${v.id}${v.list ? "&list=" + v.list : ""}" target="_blank" rel="noopener">Auf YouTube öffnen ↗</a>
+              </div>
+            </article>` : `
+            <article class="tracklist">
+              <div class="tracklist-head">
+                <h3>${v.titel}</h3>
+                <p class="tracklist-hinweis">${v.hinweis}</p>
+              </div>
+              <div class="tracklist-player" hidden></div>
+              <ol class="tracks">
+                ${v.tracks.map(([id, t], i) => `
+                  <li><button type="button" class="track" data-track-id="${id}">
+                    <span class="track-nr">${i + 1}</span>
+                    <span class="track-titel">${t}</span>
+                    <span class="track-play">▶</span>
+                  </button></li>`).join("")}
+              </ol>
+            </article>`).join("")}
+        </div>
+      </section>`).join("")}`;
+}
+
+/* Tracklist: Klick auf Track lädt den Player oben in der Box */
+document.addEventListener("click", e => {
+  const btn = e.target.closest("button.track");
+  if (!btn) return;
+  const box = btn.closest(".tracklist");
+  const player = box.querySelector(".tracklist-player");
+  player.hidden = false;
+  player.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${btn.dataset.trackId}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube-Video"></iframe>`;
+  box.querySelectorAll(".track").forEach(t => t.classList.toggle("active", t === btn));
+  player.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+/* Tab-Wechsel */
+document.getElementById("view-tabs").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-view]");
+  if (!btn) return;
+  const view = btn.dataset.view;
+  document.querySelectorAll("#view-tabs button").forEach(b => b.classList.toggle("active", b === btn));
+  document.body.classList.toggle("view-sl", view === "sl");
+  document.body.classList.toggle("view-lz", view === "lz");
+  document.getElementById("content").hidden = view !== "hs";
+  document.getElementById("content-sl").hidden = view !== "sl";
+  document.getElementById("content-lz").hidden = view !== "lz";
+  document.querySelector("nav").style.display = view === "hs" ? "" : "none";
+  window.scrollTo({ top: 0 });
+});
+
+
+/* ==========================================================================
+   KLAUSUR-LERNZETTEL — 14 Themen nach Klausurvorbereitung SoSe26.
+   Quellen: Klausurvorbereitung Dittrich, Protokolle (Rollen, dyn. Verbinden),
+   Script van Bentem, Learnweb-Material, Gerling/Bruckmann (Standard).
+   ========================================================================== */
+const LZ_KLAUSUR = "60 Minuten · genau 3 Aufgaben · keine Hilfsmittel · Primärliteratur: Gerling & Bruckmann. Aufgabe 1: Fehleranalyse & Korrekturübungen · Aufgabe 2: Schulkontext (Ängste, Differenzierung, Sicherheit, Turnen ohne Hilfe) · Aufgabe 3: Methodische Reihe für ein ggf. unbekanntes Element (mind. 5 Stufen, begründet, mit H&S).";
+
+const LERNZETTEL = [
+{ nr: 1, thema: "Grundlagen, Geräte & Schulsport",
+  phasen: [],
+  technik: ["Grundelemente: Rollen · Stützen · Schwingen · Springen · Balancieren · Hangeln","Jede Zielfertigkeit = Kombination dieser Grundformen","Körperspannung = Grundvoraussetzung: nur ein gespannter Körper überträgt Impulse","Kraftzirkel als Turn-Vorbereitung: Partnerübungen, eigenes Körpergewicht, geringer Aufbau","Klausur-Feinheit: Beim Kraftzirkel ist eine MR NICHT sinnvoll — Übungen betreffen verschiedene Muskelgruppen, keine steigende Schwierigkeit (Seminar!)"],
+  fehler: [["Handstandübung Wand: kein rechter Winkel","Angst vorüberzukippen, falsche Wahrnehmung","Beine strecken · Kopf zwischen die Schultern · aus den Armen rausdrücken"],["Liegestütz: Arme nach außen gedreht","Gewohnheit, mangelnde Kraft","Arme eng am Körper · bei wenig Kraft Knie aufsetzen"],["Hektische, unsaubere Ausführung","Kraft reicht für die Übung nicht","Abgestufte Form wählen (nur halten statt heben) · Tempo raus"]],
+  mr: [],
+  hs: [["Regel","Sichern ist Pflicht bei Überkopf-Elementen und neuen Fertigkeiten"],["Schubkarre","An den Knöcheln halten — nie an Füßen oder Knien · Bewegung begleiten gegen Wegrutschen"],["Kraftzirkel","Übungen vorher besprechen · Partnervertrauen · bei nachlassender Kraft Füße absetzen"],["Details","Griffe, Prinzipien, Loslass-Kriterien → Zettel 12"]],
+  schule: [["Kraftzirkel","Ab Klasse 7 · Intensität anpassen · vorher kein Geräteturnen in dieser Form"],["Differenzierung","Jede Übung einzeln vereinfachbar (Liegestütz auf Knien, Tempo variieren)"],["Risiko","Gering: eigenes Körpergewicht, Pause jederzeit — aber Erwärmung + Besprechung Pflicht"],["Aufsicht","Aufbau kontrollieren · Hilfe organisieren · Haftung bei Verstoß; SuS gesetzlich unfallversichert"]],
+  extra: "Körperspannung zuerst — fast jede Klausurantwort kann damit beginnen.",
+  quellen: "Seminarprotokoll Kraftzirkel 16.04. · Klausurvorbereitung" },
+
+{ nr: 2, thema: "Boden — Rollen",
+  phasen: ["Anlauf / Hocke","Handaufsatz","Eintauchen (Kinn zur Brust)","Abrollen über runden Rücken","Aufstehen ohne Hände"],
+  technik: ["Sprungrolle/Flugrolle = Rolle mit deutlicher Flugphase + Distanzüberwindung","Rolle rw.: Hände drücken neben dem Kopf → Nackenentlastung","Seminar-Erkenntnis: Handaufsatz + Streckung sind die echten Stellschrauben — Kinn/runder Rücken kommen meist intuitiv"],
+  fehler: [["Schiefe Rolle","Unsymmetrischer Handaufsatz","Stützfähigkeit trainieren · Handaufsatz auf Markierung"],["Purzelbaum / Beine angehockt","Keine Streckung, keine Spannung","Bild: 'Wie in eine Kerze gehen' · Beine vor einem Band strecken"],["Kopf setzt zuerst auf","Angst, Unwissen","Kinn auf die Brust · Übung: auf Kasten knien, Hinterkopf/Nacken bewusst zuerst aufsetzen"],["Steckenbleiben","Zu wenig Bein-/Armabdruck","Kräftiger Abstoß aus der Hocke · schiefe Ebene als Schwunghilfe"]],
+  mr: [["Rückenschaukel aus dem Hocksitz","Abrollerfahrung über den Rücken, Blick zu den Knien"],["Rückenschaukel in den Stand (ohne Hände)","Schwung in die Aufstehbewegung mitnehmen — nimmt Angst"],["Rolle aus der Hocke, ggf. mit Hilfe","Grundbewegung; Hilfe sichert korrekte Ausführung"],["Rolle vw. von der schiefen Ebene / aus dem Stand","Schwung halten · bewusstes Abrollen und Abdrücken"],["Flugrolle über Partner/Hindernis","Absprung, Flugweg, kontrollierte Landung in die Rolle"],["Flugrolle mit Anlauf vom Brett","Zielform: Flugphase · Spannung · paralleler Handaufsatz"]],
+  hs: [["Griff","Eine Hand zwischen die Schulterblätter · andere an den Oberschenkel"],["Position","Seitlich, leicht versetzt auf Hüfthöhe — bewegt sich mit"],["Ablauf","Einrollen unterstützen → leichtes Schieben an Rücken/Hüfte → Aufrichten am Oberschenkel sichern"],["Rolle rw.","Hebehilfe an der Hüfte exakt beim Überrollen (Nackenentlastung)"]],
+  schule: [["Stufe","Rolle vw. jede Altersklasse · saubere Rolle rw. + Flugrolle eher ältere Stufen"],["Inhaltsfelder","'Bewegung gestalten' · 'Wagnis und Risiko erleben'"],["Vereinfachen","Rückenschaukel · schiefe Ebene · Rolle aus der Hocke"],["Praxis-Falle","Ball unterm Kinn behindert die Beinstreckung — kontraproduktiv"]],
+  extra: "Purzelbaum-Diagnose: fehlende Streckung — nicht fehlender runder Rücken.",
+  quellen: "Seminarprotokolle Rollen 21.04. + 16.04." },
+
+{ nr: 3, thema: "Sprung — Hocke, Grätsche, HSSÜ",
+  phasen: ["Anlauf","Absprung (beidbeinig, nach OBEN)","1. Flugphase","Stützphase — vorderes Drittel","2. Flugphase","Weiche Landung"],
+  technik: ["Hocke: Knie zur Brust · Gegenrotation durch aktiven Handabdruck","Grätsche: Beine spreizen · Oberkörper aufrichten","HSSÜ: Überschlag über Handstandposition — 1. UND 2. Flugphase deutlich (SL-Kriterium)","Merksatz Seminar: 'Erst hochspringen, dann Hände aufsetzen, aus den Schultern schieben, klein machen'"],
+  fehler: [["Keine Flugphase (Hände sofort nach dem Brett)","Brett zu nah am Gerät","Brett schrittweise wegstellen · Anlaufenergie mitnehmen"],["Hohlkreuz in der 1. Flugphase","Fehlende Spannung, Kopf im Nacken","C-Plus-Position trainieren · Bauch-/Gesäßspannung im Sprung"],["Hüfte knickt vor dem Stütz ein","Fokus zu früh aufs Hocken","Strecksprünge vom Brett auf hohe Mattenlage"],["Einsinken in den Schultern (kein Abdruck)","Schwacher Schultergürtel + Hemmung, sich wegzustoßen","Schubkarre · Hasenhüpfer · Fokus 'lange Arme'"],["Abbruch / Verweigern vor dem Gerät","Ängste (s. Schulkontext)","Gerät wechseln (Bock statt Kasten) · Mattenberg · Schaumstoffwürfel in Lücken"]],
+  mr: [["Hasenhüpfer auf dem Bodenläufer","Rhythmus von Stütz und Abdruck + Anhocken kennenlernen"],["Bockspringen über den Partner","Gewicht auf die Arme verlagern, aktiv abdrücken — vertraute Hilfe"],["Anlauf + beidbeiniger Absprung auf Weichboden","Absprungdynamik: nach oben statt nach vorne"],["Aufknien → Aufhocken auf Kasten/Mattenberg","Gerätgewöhnung ohne Überqueren · Timing Handstütz/Beine"],["Hocke mit doppelter Klammerhilfe (versch. Kastenhöhen)","Gesamtbewegung: psychologische Hürde mit Sicherheitsnetz"],["Zielform mit sauberer 1. + 2. Flugphase","Dynamik und Weite steigern, Technik festigen"]],
+  hs: [["Griff","Doppelte Klammerhilfe: beide Hände umschließen den Oberarm, Finger innen"],["Stand","Ausfallschritt, inneres Bein vorne → 'Führungsschiene' beidseits am Gerät"],["Ablauf","Entgegenkommen + früh fassen · Auftrieb unterstützen · bei Landung synchron einen Schritt zurück"],["Bild","Schultern bleiben zusammen 'wie siamesische Zwillinge' · später eine Hilfe ausreichend"],["Variante (Seminar)","Beide Helfer frontal HINTER dem Gerät, Schulter an Schulter ('Schultersperre' gegen Durchbrechen), Schrittstellung inneres Bein vor, Stützgriff mit Daumen über Daumen"]],
+  schule: [["Ängste-Systematik (Aufgabe 2!)","Körperlich: Aufprallangst · Räumlich: 'Blindflug' ohne Sicht auf Landung · Material: Misstrauen ins Brett · Sozial: Blamage-Angst · Gegenteil: Übermut → Technikfehler"],["Abbau","Bock statt Kasten (durchsehen!) · Mattenberg · niedrigste Höhe · Sprung durch die Lücke"],["Stufen","Einführung am Kasten Sek I (erst Mattenberg) · Sprungtisch primär Sek II"],["Organisation","Rutschfester Aufbau · klare Lauf-/Rückwege · nur EINE Person am Gerät"]],
+  extra: "Kreide-Trick: optimalen Handaufsatz aufs Gerät malen — Timing wird sichtbar.",
+  quellen: "Seminarprotokolle Sprunghocke 04.05. (×2, dort: STB & WIMASU 2025) + 06.05. · Script van Bentem" },
+
+{ nr: 4, thema: "Reck — Auf-, Um- & Unterschwung",
+  phasen: ["Absprung","Schwungbeineinsatz","Hüfte zur Stange","Aufrichten in den Stütz"],
+  technik: ["Konstanten des Aufschwungs: Festhalten + Hüftbeugung — alles andere ist variabel (Script)","Prinzip der Hilfe: KSP (Hüfte) an die Drehachse (Stange) bringen (Gerling)","Unterschwung: erst Hüftstreckung nach vorne-oben, dann Grifflösen","Griffarten: Ristgriff (rw.) · Kammgriff (vw.) · Kreuzgriff (Drehungen)","Rückschwung-MR (freier Stütz): Liegestütz Brett → Liegestütz Ringe → voll geführt → am höchsten Punkt auffangen → auf Kästen schwingen → frei mit Feedback"],
+  fehler: [["Turner schwingt von der Stange weg","Zu viel Schwung über die Beine","Zuruf: 'Zieh deine Hüfte an die Stange'"],["Hängebauchschwein / Rücken hängt durch","Keine Körperspannung","'Mach dich starr wie ein Brett' · Schiffchen üben"],["Beine klappen auseinander","Nicht aneinandergepresst","'Drück deine Füße dicht aneinander'"],["Zu geringe Schwungweite","Angst, zu wenig Kraft","Mit Ziel schwingen: Füße auf zwei hohe Kästen"]],
+  mr: [["Aufstützen: Stütz → Hüfthang → wieder aufstützen + Hängen","Rumpf-/Armstreckerkraft und Haltekraft der Hände"],["Stützwandern + Laufen im Hang bis zur Körperstreckung","Stützkraftausdauer mit Gewichtsverlagerung und Grifflösen"],["In den Stütz springen mit schnellem Aufrichten","Aufrichten als Kernaktion isolieren"],["Aufschwung von erhöhtem Absprung (Kasten)","Hüfte startet näher an der Stange — Vereinfachung"],["Aufschwung mit Hebehilfe","Gesamtbewegung mit Hilfe, Konstanten sichern"],["Kombination Auf–Um–Unterschwung, Hilfe abbauen","Zielverbindung + Griffwechsel automatisieren"]],
+  hs: [["Aufschwung (Gerling)","Beide Hände unter die Hüfte: KSP 'hochtragen' → ferne Hand an den Oberschenkel (Rotation) → nahe Hand an den OBERARM"],["Warum Oberarm?","An der Schulter rutscht man leicht ab — Oberarm ist sicher und unproblematisch bei Kindern"],["Helfertechnik","Dicht am Turner stehen · in die Knie gehen, Kraft aus den Beinen (Rückenschonung)"],["Unterschwung (2 Helfer)","Kommandos + Startzeichen! Turnerferne Hand am Oberschenkel unterm Gesäß · turnernahe wandert von der Lende zu den Schulterblättern · begleiten + 'weit gehen' — Turner landet ZWISCHEN den Helfern"]],
+  schule: [["Grundschule (Kl. 3/4)","Stützen/Hängen am brusthohen Reck · Hilfe übernimmt die Lehrkraft"],["Vereinfachung","Aufschwung vom Kasten herunter — Hüfte näher an der Stange"],["Regel","'Wenn ein Reck beturnt wird, ist die Matte darunter tabu'"],["HS-Staffelung","Auf-/Umschwung-Hilfe: Mittelstufe · Unterschwung-Hilfe erst ab Klasse 10 (zu komplex, vorher Lehrkraft)"],["Methodik-Tipp","Beobachtungsaufträge gegen typische Fehlerbilder vergeben"]],
+  extra: "Klausurfrage 'Konstanten?': Festhalten + Hüftbeugung. Auswendig.",
+  quellen: "Seminarprotokolle Reck 27.04. (dort: Gerling 2024) + 29.04. + H&S Unterschwung/Salto 18.05. + 20.05." },
+
+{ nr: 5, thema: "Handstand & Variationen",
+  phasen: ["Ausfallschritt (lang!)","Abdrücken / Aufschwingen","Handstand — Körper in Linie","Kontrollierter Abgang (abrollen / zurücksteigen)"],
+  technik: ["Linie: Hände schulterbreit · Schultern über Händen · Hüfte über Schultern","Aktiv 'aus den Schultern rausdrücken' / 'den Boden wegdrücken' — Balance kommt aus dem FINGERDRUCK","Abrollen-MR (Seminar): Handstandliegestütz an der Wand → liegend/stehend vom Kasten ablassen + abrollen → Bauch zur Wand mit Weichboden vor den Händen → frei, Mattenhöhe schrittweise senken","Lernvoraussetzungen fürs Abrollen (Gerling): Haltekraft der Armstrecker · Aufschwingen in den Handstand · Rolle vw."],
+  fehler: [["Banane / Hohlkreuz","Keine Rumpfspannung; Schulter zu weit vor","'Schiffchen' · Bauchnabel einziehen · 'Körper wie ein Brett'"],["Eingesunkene Schultern","Nicht aktiv nach oben geschoben","'Boden wegdrücken / aus den Schultern rausdrücken'"],["Hände zu nah an den Füßen","Angst, kleiner Ausfallschritt","'Großes Turnen': langer Ausfallschritt, Hände weit vorne"],["Nur Abrollen statt Handstand","Zu weit nach vorne, keine Streckung","Seil-Trick: Seil auf Handstandhöhe spannen — Füße müssen es berühren"],["'Klatschen' statt Abrollen","Ellenbogen werden nicht gebeugt, Hüftwinkel bleibt offen (Angst)","Erhöhung hinter den Händen (kürzerer Ablassweg) · Rampe mit negativer Steigung"],["Instabile Balance","Zu viel Schwung, Fingerdruck unbekannt","Bewusste Arbeit mit Fingerdruck · Wand-/Partnerübungen"]],
+  mr: [["Stützübungen: Schwan · Plank · Schubkarre","Stütz-, Arm- und Schulterkraft als Fundament"],["Kopfstand (Knie erst auf die Oberarme)","Gleichgewicht im Stütz, Überkopf-Gewöhnung"],["Rechter Winkel / L-Sitz an der Wand","Aus den Schultern stützen, Belastung auf den Händen"],["Handstand an der Wand","Technikmerkmale: Schiffchen, Rausdrücken, 'leises' Turnen"],["Lösen von der Wand / Handstand mit Klammergriff","Erste freie Balance mit Rückmeldung, ohne Umkipp-Gefahr"],["Freier Handstand + Abrollen als Erweiterung","Selbstständigkeit; Abrollen ist zugleich der Notausgang"]],
+  hs: [["Griff","Lockerer Klammergriff auf Höhe der Oberschenkel, seitlich stehend"],["Aufschwing-Hilfe","Eine Hand an Hüfte/Oberschenkel (unterstützt), andere am Rücken (verhindert Überschlagen)"],["Rahmen-Technik","Partner bildet mit den Armen einen Rahmen um die Beine → fast freies Stehen mit Korrektur"],["Abrollen-Trick","Im Handstand an der Reckstange halten, langsam ablassen und abrollen — Timing-Gefühl"]],
+  schule: [["Stufen","Jede Altersstufe mit eigenem Ziel: Wand unten · frei mit Hilfe oben"],["Ohne Hilfe wenn","Abrollen sitzt · Spannung sichtbar · Aufschwingen dosiert"],["Sicherheit","Matte fürs freie Stehen · Abstand · klare Organisation · Hand-/Nackengelenke mobilisieren"],["Warnzeichen","Angehaltener Atem + Übermotivation → Pause, bevor die Kraft schwindet"]],
+  extra: "Balance-Geheimnis: Fingerdruck. Und der Seil-Trick erzwingt den echten Handstand vor dem Abrollen.",
+  quellen: "Seminarprotokolle Handstand 28./30.04. (3 Gruppen) + Handstandabrollen 30.04. + 09. (dort: Gerling) + 19.05." },
+
+{ nr: 6, thema: "Rad & Radwende",
+  phasen: ["Ausfallschritt seitwärts","Hand","Hand — auf einer Linie","Fuß","Fuß — Schrittstellung"],
+  technik: ["Rad = Handstützüberschlag SEITWÄRTS: in der Bewegung die Lotrechte einnehmen (Seminar-Definition)","Rhythmus: Hand–Hand–Fuß–Fuß · vorderes Bein zieht AKTIV von Beginn bis Fußaufsatz","Radwende: Hände entgegen der Laufrichtung (T-Stellung), beidbeinige Landung rücklings → Tor zu Flick Flack & Salto rw.","Radwende-MR (Seminar): Handstand 3 s halten → Rad auf Linie → beidbeinige Landung → T-Stellung im 3er-Schritt → Hand + Fuß zusammenführen → Tempo an der Wand → schnell mit gleichzeitigem Handaufsatz"],
+  fehler: [["Hinteres Bein holt das vordere ein","Kein Schwung, vorderes Bein zieht nicht","Bewusst gegrätscht halten · vorderes Bein aktiv ziehen — bis zum Fußaufsatz"],["Arme knicken ein","Fehlende Schulter-/Körperspannung im Stütz","Hasenohrenrad: Socke zwischen Kopf und Oberarm einklemmen — erzwingt gestreckte, enge Arme"],["Hüftwinkel bleibt / keine Lotrechte","Spannung fehlt oder Angst, oben umzukippen","'Handstand umfallen' (¼ → 180° Drehung) üben · Beine Richtung Decke schieben"],["Radwende: Hände nicht in T-Stellung","Zweiter Arm greift nicht über","Schnelles Nachgreifen des zweiten Arms trainieren"],["Radwende: Schwungverlust, Strecksprung aus Kraft","Beine fallen ab, Füße kommen nacheinander","Beine schnell + gleichzeitig zum Boden · über die Schultern abdrücken · Arme nach der Landung aktiv hoch"]],
+  mr: [["Freier Handstand — gefilmt (Slow motion)","Ist-Stand + Fehlerbilder sichtbar machen (Video-Feedback)"],["Handstand umfallen: ¼, dann 180° Drehung zur Fußlandung","'Gute Seite' finden · Lotrechte mit voller Streckung erreichen"],["Spätes Drehen: wie zum Handstand ansetzen, erst im letzten Moment eindrehen","Langer Bewegungsweg · gerades Rad auf der Linie · verhindert frühes Seitkippen"],["Aktives Ziehen des vorderen Beins auf der Linie","Schwungquelle des Rads isolieren"],["Hasenohrenrad + Olé-Rad (feste Landung, Arme hoch, Blick zurück)","Armstreckung erzwingen · Spannung bis zum Ende · Anschlussfähigkeit"],["Olé-Rad mit Anhüpfer, dann mit Anlauf","Dynamik und Flugphase — Vorbereitung fürs Weiterturnen/Radwende"]],
+  hs: [["Wo?","Versetzt neben dem Turner — das Rad wird VOR dem Helfer geturnt (Blick des Turners weg vom Helfer)"],["Wann/Wie?","Turnernahe Hand greift VOR Bewegungsbeginn (Seite des vorderen Beins) · zweite Hand mit dem Handaufsatz · ganzer Klammergriff seitlich an der Hüfte, öffnet sich mit der Bewegung"],["Wozu?","Rotation um die Tiefenachse führen · Wegklappen verhindern · Körper über die Unterstützungsfläche bringen"],["Helferstand","Fest, schulterbreit, Beine leicht gebeugt — der Griff FÜHRT das Rad"]],
+  schule: [["Einstieg","Ideal für Klasse 5: fast alle haben Rad-Vorerfahrung — Technik spielerisch verpacken (Hasenohren-/Olé-Rad)"],["Radwende","Ab Klasse 3/4 über das Rad einleitbar; Sek I: Ziel darf Partizipation + Radwende in den Stand sein, nicht Schwungaufbau"],["Sicherheit","Linie am Hallenboden nur für Sichere — Anfänger auf Bodenläufer/Turnmatten, Seile statt Linien"],["Oberstufe","Fokus auf Fehlerkorrektur + Rad als Ausgangspunkt für Radwende/komplexere Elemente"]],
+  extra: "Hasenohrenrad: Die fallende Socke ist der ehrlichste Fehlerdetektor der Turnhalle.",
+  quellen: "Seminarprotokoll Rad 21.05. (7-Fragen-Helferschema) + Radwende 02.06." },
+
+{ nr: 7, thema: "Flick Flack",
+  phasen: ["Rücklage (Einleitung)","Absprung nach hinten-oben","1. Flugphase (überstreckt)","Stütz — Arme gestreckt","Kurbet / Abdruck","Landung"],
+  technik: ["Voraussetzungen: Schulterbeweglichkeit · Spannung · Sprungkraft · Handstand + Brücke","Kernidee: Absprung aus der Rücklage nach hinten-oben — nicht nach oben"],
+  fehler: [["Zu wenig Rücklage","Angst, rückwärts 'ins Nichts' zu springen","Fallübung rücklings auf Mattenberg · 'Stuhl-Position' · Helfer geben Sicherheit"],["Kopf nach vorne / in den Nacken","Orientierungssuche, fehlendes Vertrauen","Wandsalto/Überdrehen rw. — Kopfposition unter voller Sicherung"],["Arme im Stütz gebeugt","Passives Ankommen statt aktivem Abdruck","Handstand-Hüpfen · Stützkraft · Hilfe trägt die Stützphase"]],
+  mr: [["Brücke + Spannungsschulung","Schulteröffnung und Überstreckung als Basis"],["Rücklage-Fallübungen auf den Mattenberg","Absprungrichtung psychisch + motorisch anbahnen"],["Überdrehen rw. / Wandsalto mit Drehklammergriff","Rückwärtsrotation voll gesichert erfahren"],["Flick Flack vom Podest auf Weichboden, 2 Helfer","Mehr Zeit, weiche Landung, volle Hilfe"],["Flick Flack am Boden, Hilfe schrittweise abbauen","Zielform mit kontrolliertem Abbau"]],
+  hs: [["Griff","Turnernahe Hand unter LWS · turnerferne unter Oberschenkel"],["Aktion","Heben + über die eigenen Hände drehen"],["Regel","Stützlose Phase komplett tragen — bei SuS immer zu zweit"]],
+  schule: [["Eignung","Nur leistungsstarke Sek II / AG"],["Ohne Hilfe","Stütz gestreckt + Rücklage-Absprung + Orientierung stabil"],["Klausur-Klassiker","Fehler + Vorübungen: Rücklage-Fall · Überdrehen rw. · Stützkraft"]],
+  extra: "'Nach hinten-oben' — die drei Wörter, die den Flick Flack erklären.",
+  quellen: "Script van Bentem (Salto rw./Wandsalto, Überschlag-Griffe) · Klausurvorbereitung · Standard nach Gerling/Bruckmann" },
+
+{ nr: 8, thema: "Salto vorwärts & rückwärts",
+  phasen: ["Anlauf / Federn","Absprung — blockiert, nach oben","Anhocken ('kleines Paket')","Rotation","Öffnen + Landung"],
+  technik: ["vw.: Rotation durch Hüftbeugung + Armzug bei blockiertem Absprung","rw.: Absprung nach oben · andere Einleitung + Blickverhalten","Zwingende Vorfertigkeiten: Rolle · Sprungkraft · Spannung · Überkopf-Orientierung","Seminar-Kniff: Helfer zählen das Federn im Trampolin an (1–2–3) → gemeinsamer Start"],
+  fehler: [["Blick nach unten aufs Trampolin","Unsicherheit beim Absprung, Angst vor Kontrollverlust","'Nach vorne zur Wand schauen'"],["Seitliches Rotieren","Ungleicher Beineinsatz · Kopf zur Seite · einseitige Gewichtsverlagerung","Beide Beine gleich stark · Arme parallel · Blick geradeaus — Hilfe verhindert das Ausbrechen"],["Gestreckte Beine / langsames Drehen","Beine nicht aktiv herangezogen","'Kleines Paket machen' — Beine schnell heranziehen"]],
+  mr: [["Strecksprung vom Kasten ins Trampolin, Landung auf Matte","Trampolin-Gewöhnung + sicheres Landen"],["Kleine Rolle ohne Hände aus gehockter Position (mit Handfassung)","Minimale Höhe, erste Rotationsidee, Vertrauen"],["Geführter Salto aus dem Stand (nur federn, nicht springen)","Rotation bei kontrollierter Höhe"],["Salto mit Schwung und Hüpfen — Helfer 'rasten auf Schulterhöhe ein'","Höhe steigern, Bewegungsablauf komplett erkunden"],["Salto vom Kasten ins Trampolin auf die Matte","Eigenständiger Versuch, Hilfe wird passiver (nur Rückenhand)"]],
+  hs: [["Salto vw. (Trampolin)","Helfer seitlich, turnernaher Fuß auf dem Trampolineisen · Handfassung + turnerferne Hand mittig am Rücken (Schulterblätter)"],["Prinzip","Mitschwingen! Schwung gleichmäßig begleiten, Anzählen übernehmen"],["Salto rw. (Ringe-Abgang)","1/1 Klammergriff an den Oberarmen, mitlaufen, nie lösen"],["Griff-Tradeoff","Klammergriff = Schub (Phase 1) · Drehklammergriff rw. = Rotation (Phase 2)"]],
+  schule: [["Einstieg","Salto-Hilfe ist einfach + konstant → ab ca. Klasse 8 einführbar"],["Motivation","Trampolin ist beliebt — auf Wunsch der SuS unbedingt machen (mit HS!)"],["Bedingungen","Weichboden · Raumhöhe · Niveau der Lerngruppe kennen · freiwillig"],["Spannungsfeld","Salto = viel Angst UND viel Spaß — die MR löst beides"]],
+  extra: "Mitgehen, nie zurückziehen — und den Start immer anzählen (1–2–3).",
+  quellen: "Seminarprotokolle Salto vw. 18.05. + 20.05. · Script van Bentem" },
+
+{ nr: 9, thema: "Schwebebalken",
+  phasen: ["Angang","Balancieren / Schritte","Sprünge + Drehungen","Statik (Standwaage)","Abgang — nach oben, nah am Balken"],
+  technik: ["Balancesicherung: Blickpunkt am Balkenende FIXIEREN · Arme in Seithalte · gerader Fußaufsatz","Elemente: Pferdchensprung · ½ Drehung im Ballenstand · Standwaage · Rad/Überschlag als Höchstform","Übung ohne unnötige Schritte planen (SL-Kriterium)"],
+  fehler: [["Wackeln/Fallen bei der Drehung","Fehlendes Gleichgewicht, Unsicherheit, mangelnde Konzentration","Blick nach vorne fixieren · Drehung erst langsam · zunächst am Boden oder auf niedrigem Balken"],["Sprünge abgebrochen oder nur klein","Hemmung + Angst vor dem Herunterfallen","Kleine Sprünge am Boden beginnen, schrittweise auf den Balken übertragen · Blick nach vorne"],["Arme hängen / rudern","Arme nicht als Balancierhilfe verstanden","Seithalte als feste Regel · Gegenstand balancieren"],["Verkrampfung, steife Bewegung","Höhenangst","Höhenprogression zurückschalten · Matten erhöhen · Erfolge auf sicherer Höhe"]],
+  mr: [["Linie am Boden: gehen, drehen, Standwaage, kleine Sprünge","Alle Elemente ohne Höhenrisiko"],["Umgedrehte Langbank / Übungsbalken","Schmale Fläche, minimale Höhe (verminderte Lernhilfe)"],["Niederbalken mit Mattenumbau, Elemente einzeln","Reale Breite, entschärfte Höhe"],["Elementverbindungen auf dem Niederbalken","Übungsplanung ohne unnötige Schritte"],["Hüfthoher Balken: erst Handreichung, dann frei","Zielhöhe mit abnehmender Unterstützung"]],
+  hs: [["Rolle vw.","Beidseits: ½-Drehgriff Oberarm + Stütz am Rücken → Wechsel in 1/1 Klammer"],["Rad / HSÜ","Stützgriff Hüfte bzw. HSÜ-Griffe am Balkenende"],["Niedrigschwellig","Handreichung als Gleichgewichtshilfe"],["Über-Kopf-Regel","Bei Überkopfelementen auf dem Balken ist Hilfestellung Pflicht"]],
+  schule: [["Stufe","Balancieren GS · Elemente ab ca. Klasse 7 (Sek I) · Rad/Überschlag nur Könner"],["Pflicht","Matten links, rechts und an den Enden · Abstand zwischen Turnenden"],["Progression","Boden → Bank → Niederbalken → hüfthoch — Unsicherheiten methodisch abbauen"],["Klima","Motivieren + anfeuern ist hier besonders wichtig · regelmäßiges Feedback gegen Fehlerbilder"]],
+  extra: "Höhenangst ist DER limitierende Faktor — Wahlhöhen anbieten, Blick nach vorne fixieren.",
+  quellen: "Seminarprotokoll Balken/HSÜ-Vorübungen 11.05. · Script van Bentem · Klausurvorbereitung" },
+
+{ nr: 10, thema: "Parallelbarren",
+  phasen: ["Außenquerstand","Sprung in den Stütz","Schwingen — aus der Schulter","Element (Grätschsitz / Oberarmstand)","Abgang: Wende / Kehre"],
+  technik: ["Schwung kommt aus dem Schultergelenk — nicht aus dem Hüftknick","Oberarmstand: Oberarme auf den Holmen · Hände umfassen · leichte Bogenspannung","Aufbau: Holme schulterhoch · Brett nie unter den Holmen (SL)"],
+  fehler: [["Oberarmstand: Schultern rutschen vor","Falscher Stützpunkt, Ellenbogen zu offen","Ellenbogenwinkel begrenzen · Griff körpernah · erst statisch mit Hilfe"],["Kein Bogen / Hüfte bricht ab","Fehlende Spannung","Spannungsübungen · Aufschwingen gegen Helferhand als Ziel"],["Schwingen aus dem Hüftknick","Schwungprinzip nicht verstanden, Angst vor Amplitude","Fußführung durch Partner · bewusst lange Körperlinie"]],
+  mr: [["Stützeln + Stützwandern in der Gasse (niedrig)","Stützkraft und Gerätvertrauen"],["Schwingen mit kleiner Amplitude","Schwungprinzip aus der Schulter"],["Sprung in den Stütz → Durchschwingen in den Grätschsitz","Stütz–Schwung–Sitz verbinden (SL-Element)"],["Aufschwingen in den Oberarmstand mit Klammergriff","Überkopfelement voll gesichert · Absenken als Ausgang"],["Zielverbindung mit Schwungverstärkung + Wende ab","SL-Verbindung mit abnehmender Hilfe"]],
+  hs: [["Wende / Kehre","Außenquerstand Landeseite · Klammergriff am turnernahen Oberarm"],["Oberarmstand","Klammergriff an Ober-/Unterschenkeln gegen Überkippen"],["Oberarmkippe","Schubhilfe Gesäß/LWS im Kippstoß · Matte über die Holme für Vorstufen"]],
+  schule: [["Geeignet","Stützschwingen · Grätschsitz · Wende/Kehre · Oberarmstand mit Hilfe"],["Fortgeschritten","Oberarmkippe"],["Sicherheit","Matten in + neben der Gasse · Holmbreite anpassen"]],
+  extra: "Schwingen = Schulterpendel. Wer aus der Hüfte knickt, schwingt nicht.",
+  quellen: "Studienleistungs-Vorgaben (Elemente) · Script van Bentem (Kreishockwende, Oberarmkippe) · Klausurvorbereitung" },
+
+{ nr: 11, thema: "Ringe",
+  phasen: ["Ruhiger Hang","Schwungverstärkung (Fußaufsatz an Linie)","Kipplage — am Vorschwung-Ende","Beugesturzhang","Auslegen in den Langhang","Abgang am Rückschwung-Ende"],
+  technik: ["Ruhig hängen ≠ aktiv schwingen: Schwung braucht rhythmischen Körpereinsatz","Aufbau SL: reichhoch · Querlinie unter der Lotrechten · Fußaufsatz vor/hinter der Linie","Hohe Anforderung an Schulter + Arm — keine passive Haltung"],
+  fehler: [["Unkontrolliertes Pendeln","Kein rhythmischer Körpereinsatz, kein Fußaufsatz-Timing","Linie als Taktgeber · Schwungverstärkung isoliert zählen (3×)"],["Ringe wandern auseinander","Arme nicht körpernah, keine Schulterspannung","Ringe aktiv zum Körper drücken · statische Halteübungen"],["Kipplage misslingt","Einlegen zu spät, zu wenig Bauchkraft","Timing: Einlegen AM Vorschwung-Ende · Kipplage niedrig vorüben"]],
+  mr: [["Hängen + Griffgewöhnung an niedrigen Ringen","Grifffestigkeit und Vertrauen ohne Schwung"],["Schwingen mit Fußaufsatz an der Linie","Rhythmus und Schwungaufbau kontrolliert"],["Einlegen in die Kipplage (niedrig, mit Hilfe)","Kernelement isoliert und gesichert"],["Beugesturzhang: zurück und vor schwingen","Überkopfposition dynamisch stabilisieren"],["Verbindung mit Auslegen + Abgang","Zielverbindung der Studienleistung"]],
+  hs: [["Grundsicherung","Matten unter dem gesamten Schwingbereich"],["Organisation","Einer schwingt · Abstand · Abgang auf Kommando"],["Salto-Abgang","1/1 Klammergriff Oberarme · mitlaufen (→ Zettel 8)"]],
+  schule: [["Voraussetzung","Hang-/Stützkraft (Sek I aufwärts · vorher Tau/Sprossenwand)"],["Motivation","Flug- und Schwungerlebnis"],["Regeln","Strenge Organisation zwingend"]],
+  extra: "Timing-Regel: Einlegen AM Ende des Vorschwungs — nicht danach.",
+  quellen: "Studienleistungs-Vorgaben (Aufbau + Elemente) · Script van Bentem (Ringe-Abgang) · Klausurvorbereitung" },
+
+{ nr: 12, thema: "Helfen & Sichern — Theorie",
+  phasen: ["Helfen — aktiv begleiten","Bewegungssicherung","Selbstständig turnen"],
+  technik: ["Helfen = Bewegung aktiv begleiten, Gelingen ermöglichen","Sichern = Bereitschaft, im Fehlerfall Verletzungen verhindern","4 Grundprinzipien: richtiger Ort (KSP-nah) · Zeitpunkt (entgegengehen) · Kraft (tragen, dosiert) · Griff (vorher üben)","Script-Dreiklang: Entgegengehen → Zugreifen → Mitgehen","Seminar-Zusatz: klare Absprache + eindeutige Kommandos/Startzeichen VOR Übungsbeginn; Bewegungsablauf muss den Helfern bekannt sein"],
+  fehler: [["Täuschende Sicherheit","Helfer nimmt zu viel Muskelarbeit ab","Bewegung wird nie selbst erlernt → begleiten statt übernehmen"],["Falsche Helferposition","Zu weit weg vom Gerät, nicht seitlich versetzt","Position pro Element kennen · Stand festigen · Raum fürs Turnen lassen"],["Hochdrücken statt Sichern","Ziel missverstanden","Ziel ist, die Bewegung zu BEGLEITEN"],["Zu frühes Loslassen","Bewegungsende falsch eingeschätzt","Begleitung bis zum sicheren Stand — sonst Unsicherheit bei der Landung"],["Fehlender Halt","Unvollständiger Griff","Erinnerung an den vollständigen Klammergriff"]],
+  mr: [["Griffe am statischen Partner kennenlernen","Griffsicherheit ohne Zeitdruck"],["Griffansatz an zeitlupenhafter Bewegung (Rübertragen)","Timing + Position erleben — der Übende 'wird geturnt'"],["Helfen bei einfachen Elementen unter Anleitung","Verantwortung risikoarm übernehmen"],["Helfen bei dynamischen Elementen, Lehrkraft als Zweithilfe","Krafteinsatz + Mitgehen bei realem Tempo"],["Selbstständig sichern + Hilfeabbau entscheiden","Urteilsfähigkeit: Sicherung oder Hilfe?"]],
+  hs: [["Loslassen erst wenn","Stabile Endposition · mehrfach fehlerfrei · Notausgang beherrscht · Übender fordert es ein"],["Konsequenzen","Zu spät → Sturz auf Kopf/Nacken · falscher Ort → Gelenkzerrung · zu viel Kraft → nie selbst gelernt"],["Griffdetail (Seminar)","Oberarm statt Schulter greifen — an der Schulter rutscht man ab · Daumen zu den Fingern, nicht spreizen"],["Helfer-Ergonomie","In die Knie gehen, Kraft aus den Beinen — Rückenschonung"]],
+  schule: [["Unterrichtsinhalt","Griffe demonstrieren · an Standbildern üben · feste Helferpaare"],["Staffelung","Einfache Hilfen (Handstand, Aufschwung) früh · komplexe (Unterschwung) erst Oberstufe — vorher Lehrkraft"],["Mehrwert","Vertrauen · Verantwortung · Kommunikation"],["Grenze","Lehrkraft bleibt Ersthelfer bei kritischen Elementen"]],
+  extra: "Definition parat: 'Helfen begleitet aktiv — Sichern verhindert Verletzungen.'",
+  quellen: "Script van Bentem · Seminarprotokolle 18.05. + 19.05. + 20.05. (Helferfehler) · Klausurvorbereitung" },
+
+{ nr: 13, thema: "Methodische Reihen — Theorie & Transfer",
+  phasen: [],
+  technik: ["Definition: begründete Folge von Lernschritten zur Zielfertigkeit","Prinzipien: einfach→schwer · bekannt→unbekannt · Grobform→Feinform · gesichert→frei","Merkmale guter MR: klares Ziel · ≥5 Stufen · Begründung je Stufe · H&S je Stufe · Fehler antizipiert · differenzierbar · funktionale Vorformen"],
+  fehler: [["Stufen ohne Zielbezug","Übungen nach Verfügbarkeit statt Funktion","Funktionsprüfung je Stufe: Welche Teilkomponente übt das?"],["Zu große Sprünge","Grobform zu früh eingefordert","Zwischenstufe einziehen: Höhe · Tempo · Hilfe · Gerät erleichtern"],["H&S fehlt in der Reihe","MR nur technisch gedacht","Je Stufe: Wer sichert wo mit welchem Griff? Wann Abbau?"]],
+  mr: [["Voraussetzungen sichern (Spannung, Stütz, Grundform)","Ohne Fundament keine Zielbewegung — Einstieg, der immer passt"],["Kernaktion isoliert, erleichtert (Teilbewegung)","Die EINE kritische Aktion (Kippstoß, Hüftstreckung) einzeln"],["Gesamtbewegung erleichtert (Schräge, Erhöhung, Gerätehilfe)","Grobform ermöglichen, Erfolgserlebnis"],["Gesamtbewegung mit Hilfe unter Normalbedingungen","Feinform anbahnen · Griff benennen"],["Selbstständig mit Sicherung, dann frei","Hilfeabbau nach Kriterien"]],
+  hs: [["Faustregel","Frühe Stufen: keine Hilfe nötig · Mitte: aktive Hilfe · Spät: Sicherung"],["Angabe je Stufe","Griff + Helferposition + Abbaukriterium"]],
+  schule: [["Verzahnung","MR ↔ Fehlerbilder ↔ H&S — exakt das prüft Aufgabe 3"]],
+  extra: "Vor der Klausur 1–2 unbekannte Elemente durchspielen: Kopfstand · Nackenkippe · Schwungstemme · Felgaufschwung.",
+  quellen: "Klausurvorbereitung (Aufgabe 3) · Script van Bentem (Lerngelegenheiten-Struktur) · Protokoll-MRs als Belegbeispiele" },
+
+{ nr: 14, thema: "Akrobatik, 3er-Turnen & Gestaltung",
+  phasen: [],
+  technik: ["Belastung nur auf Schulter-/Beckengürtel — nie auf der freien Wirbelsäule","Synchron-Qualität: Timing · einheitliche Ausführung · Formation · gemeinsamer Rhythmus","Übergänge = gestalterisches Bindegewebe: Endposition A = Startposition B"],
+  fehler: [["Pyramide kollabiert / Schmerzen","Last auf Wirbelsäule, Aufbau ohne Kommando","Belastungspunkte zeigen · festes Auf-/Abbau-Kommando · Abbau umgekehrt"],["Asynchrones Turnen","Kein Taktgeber, verschiedene Tempi","Laut gemeinsam zählen · Tempo am Langsamsten orientieren · vereinfachen"],["Stockende Übergänge","Folgeelement nicht antizipiert","Übergänge isoliert + in Zeitlupe · Zwischenpositionen definieren"]],
+  mr: [["Vertrauens- und Spannungsübungen zu zweit","Kommunikation + Körperkontrolle als Basis"],["Grundfiguren (Bank, Stuhl) mit Kommandos","Belastungspunkte + Absprachen ritualisieren"],["Kleine Pyramiden zu dritt, dritte Person sichert","Rollenwechsel: jeder lernt alle Perspektiven"],["Synchronfolge aus 2–3 Elementen mit Zählen","Timing + Formation vor Schwierigkeit"],["Mini-Choreografie in 3er-Gruppen mit Präsentation","Gestaltung · Selbstorganisation · Kürkriterien erleben"]],
+  hs: [["Kommandos","Auf-/Abbau nur auf Absprache · Abbau in umgekehrter Reihenfolge"],["Sicherung","Dritte Person an der Hüfte des Obermanns · Matten unter Figuren"],["Verbindungen","H&S-Regeln der Einzelelemente gelten weiter"]],
+  schule: [["Heterogenität","Jede Rolle zählt: Kraft · Balance · Kreativität · Organisation"],["Kürbewertung","Schwierigkeit · Ausführung · Synchronität · Gestaltung"],["Musik-Einstieg","Elemente sichern → zählen/klatschen → Musik mit Beat → frei"]],
+  extra: "Kleingruppen mit Freunden senken Hemmungen — Protokoll-Reflexion.",
+  quellen: "Seminarprotokoll dynamisches Verbinden 11.06. · Stundenvorbereitung 3er-Turnen/Synchron · Klausurvorbereitung" },
+];
+
+let lzCurrent = null;
+
+function renderLZ() {
+  lzCurrent = null;
+  const el = document.getElementById("content-lz");
+  el.innerHTML = `
+    <div class="vorgaben sl-allgemein">
+      <div class="vorgaben-label">Klausur · 24.07. · 16:00–17:00</div>
+      <p>${LZ_KLAUSUR}</p>
+    </div>
+    <div class="section-head"><h2>Themen wählen</h2><span class="sec-count">14 Lernzettel · Pfeiltasten ← → zum Blättern</span></div>
+    <div class="lz-menu">
+      ${LERNZETTEL.map((l, i) => `
+        <button type="button" class="lz-card" data-lz="${i}">
+          <span class="lz-card-nr">${l.nr < 10 ? "0" + l.nr : l.nr}</span>
+          <span class="lz-card-thema">${l.thema}</span>
+          <span class="lz-card-meta">${[
+            l.fehler.length ? l.fehler.length + " Fehlerbilder" : "",
+            l.mr.length ? l.mr.length + " MR-Stufen" : "",
+            l.hs.length ? "H&S" : "",
+            l.schule.length ? "Schulkontext" : ""
+          ].filter(Boolean).join(" · ")}</span>
+        </button>`).join("")}
+    </div>`;
+}
+
+function kvList(pairs) {
+  return `<ul class="lz-kv">${pairs.map(([k, v]) => `<li><span class="lz-kv-key">${k}</span><span>${v}</span></li>`).join("")}</ul>`;
+}
+
+function renderLZDetail(i) {
+  lzCurrent = i;
+  const l = LERNZETTEL[i];
+  const prev = (i + LERNZETTEL.length - 1) % LERNZETTEL.length;
+  const next = (i + 1) % LERNZETTEL.length;
+  const el = document.getElementById("content-lz");
+  el.innerHTML = `
+    <div class="lz-nav">
+      <button type="button" class="lz-back" id="lz-back">← Alle Themen</button>
+      <div class="lz-arrows">
+        <button type="button" class="lz-arrow" data-goto="${prev}" title="${LERNZETTEL[prev].thema}">←</button>
+        <span class="lz-pos">${l.nr} / ${LERNZETTEL.length}</span>
+        <button type="button" class="lz-arrow" data-goto="${next}" title="${LERNZETTEL[next].thema}">→</button>
+      </div>
+    </div>
+    <div class="lz-detail-head">
+      <span class="lz-detail-nr">${l.nr < 10 ? "0" + l.nr : l.nr}</span>
+      <h2>${l.thema}</h2>
+    </div>
+    ${l.phasen.length ? `<div class="lz-phasen">${l.phasen.map(p => `<span class="lz-phase">${p}</span>`).join('<span class="lz-phase-arrow">→</span>')}</div>` : ""}
+    ${l.technik.length ? `<div class="vorgaben lz-box lz-full"><div class="vorgaben-label">Kernwissen</div>
+      <ul class="vorgaben-liste">${l.technik.map(t => `<li>${t}</li>`).join("")}</ul></div>` : ""}
+    <div class="lz-grid">
+      <div class="lz-col-main">
+        ${l.fehler.length ? `<div class="vorgaben lz-box lz-box-fehler"><div class="vorgaben-label">Fehleranalyse · Aufgabe 1</div>
+          <table class="lz-tabelle"><thead><tr><th>Fehler</th><th>Ursache</th><th>Korrektur</th></tr></thead>
+          <tbody>${l.fehler.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+        ${l.mr.length ? `<div class="vorgaben lz-box lz-box-mr"><div class="vorgaben-label">Methodische Reihe · Aufgabe 3</div>
+          <ol class="lz-stepper">${l.mr.map(r => `<li><span class="lz-step-uebung">${r[0]}</span><span class="lz-step-grund">${r[1]}</span></li>`).join("")}</ol></div>` : ""}
+      </div>
+      <div class="lz-col-side">
+        ${l.hs.length ? `<div class="vorgaben lz-box lz-box-hs"><div class="vorgaben-label">Helfen &amp; Sichern</div>${kvList(l.hs)}</div>` : ""}
+        ${l.schule.length ? `<div class="vorgaben lz-box lz-box-schule"><div class="vorgaben-label">Schulkontext · Aufgabe 2</div>${kvList(l.schule)}</div>` : ""}
+        ${l.extra ? `<div class="vorgaben lz-box lz-box-merken"><div class="vorgaben-label">Merken</div><p class="lz-merksatz">${l.extra}</p></div>` : ""}
+        ${l.quellen ? `<p class="quelle">Quellen: ${l.quellen}</p>` : ""}
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0 });
+}
+
+document.addEventListener("click", e => {
+  const card = e.target.closest(".lz-card");
+  if (card) { renderLZDetail(parseInt(card.dataset.lz, 10)); return; }
+  const arrow = e.target.closest(".lz-arrow");
+  if (arrow) { renderLZDetail(parseInt(arrow.dataset.goto, 10)); return; }
+  if (e.target.closest("#lz-back")) { renderLZ(); window.scrollTo({ top: 0 }); }
+});
+
+/* Pfeiltasten: nur in der Lernzettel-Detailansicht */
+document.addEventListener("keydown", e => {
+  if (lzCurrent === null || document.getElementById("content-lz").hidden) return;
+  if (e.target.matches("input, textarea")) return;
+  if (e.key === "ArrowRight") renderLZDetail((lzCurrent + 1) % LERNZETTEL.length);
+  if (e.key === "ArrowLeft") renderLZDetail((lzCurrent + LERNZETTEL.length - 1) % LERNZETTEL.length);
+});
+
+/* Touch-Swipe auf Mobilgeräten */
+let lzTouchX = null;
+document.getElementById("content-lz").addEventListener("touchstart", e => { lzTouchX = e.changedTouches[0].clientX; }, { passive: true });
+document.getElementById("content-lz").addEventListener("touchend", e => {
+  if (lzCurrent === null || lzTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lzTouchX;
+  if (Math.abs(dx) > 60) renderLZDetail((lzCurrent + (dx < 0 ? 1 : LERNZETTEL.length - 1)) % LERNZETTEL.length);
+  lzTouchX = null;
+}, { passive: true });
+
+renderLZ();
+
+renderSL();
+
+render();
+
+/* ---------- Karten-Kippen + Peephole mit Schweif ---------- */
+const hoverFine = window.matchMedia("(hover: hover)").matches;
+const motionOK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let tiltCard = null;
+
+/* Peephole-Engine (nur Desktop/Maus): Canvas-Maske mit 2-s-Schweif, parallel auf mehreren Karten */
+const peep = {
+  map: new Map(), raf: null,
+  canvas: document.createElement("canvas"),
+  HOLD: 2000, FADE: 650, R: 26, SCALE: 0.25
+};
+function peepReset(cover, entry) {
+  const panels = entry ? entry.panels : [...cover.querySelectorAll(".cp")];
+  panels.forEach(p => { p.style.maskImage = ""; p.style.webkitMaskImage = ""; });
+  peep.map.delete(cover);
+}
+function peepClearAll() {
+  for (const [cover, entry] of [...peep.map]) peepReset(cover, entry);
+}
+function peepLoop() {
+  peep.raf = null;
+  const now = performance.now();
+  for (const [cover, entry] of [...peep.map]) {
+    entry.points = entry.points.filter(pt => now - pt.t < peep.HOLD + peep.FADE);
+    const cr = cover.isConnected ? cover.getBoundingClientRect() : { width: 0 };
+    if (!entry.points.length || cover.classList.contains("open") || cr.width < 2) { peepReset(cover, entry); continue; }
+    const s = peep.SCALE, W = Math.max(2, Math.round(cr.width * s)), H = Math.max(2, Math.round(cr.height * s));
+    const A = peep.canvas;
+    A.width = W; A.height = H;
+    const a = A.getContext("2d");
+    a.fillStyle = "#000"; a.fillRect(0, 0, W, H);
+    a.globalCompositeOperation = "destination-out";
+    for (const pt of entry.points) {
+      const age = now - pt.t;
+      const al = age < peep.HOLD ? 1 : Math.max(0, 1 - (age - peep.HOLD) / peep.FADE);
+      const x = pt.x * s, y = pt.y * s;
+      const r = peep.R * s * 2.2;
+      const g = a.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, `rgba(0,0,0,${al})`);
+      g.addColorStop(0.55, `rgba(0,0,0,${al * 0.9})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      a.fillStyle = g;
+      a.beginPath(); a.arc(x, y, r, 0, 6.2832); a.fill();
+    }
+    const uA = `url(${A.toDataURL()})`;
+    for (const p of entry.panels) {
+      p.style.webkitMaskImage = uA; p.style.maskImage = uA;
+      p.style.webkitMaskSize = "100% 100%"; p.style.maskSize = "100% 100%";
+    }
+  }
+  if (peep.map.size) peep.raf = requestAnimationFrame(peepLoop);
+}
+
+document.addEventListener("pointermove", e => {
+  const card = e.target.closest(".card");
+  if (tiltCard && tiltCard !== card) { tiltCard.style.transform = ""; tiltCard = null; }
+  if (!card) return;
+  const cover = card.querySelector(".card-cover");
+  const covered = cover && document.body.classList.contains("quiz-mode") && !cover.classList.contains("open");
+  if (covered) {
+    card.style.transform = "";
+    if (hoverFine && e.pointerType !== "touch") {
+      let entry = peep.map.get(cover);
+      if (!entry) { entry = { panels: [...cover.querySelectorAll(".cp")], points: [] }; peep.map.set(cover, entry); }
+      const cr = cover.getBoundingClientRect();
+      const x = e.clientX - cr.left, y = e.clientY - cr.top;
+      const last = entry.points[entry.points.length - 1];
+      if (!last || Math.hypot(x - last.x, y - last.y) > 5) entry.points.push({ x, y, t: performance.now() });
+      else last.t = performance.now();
+      if (!peep.raf) peep.raf = requestAnimationFrame(peepLoop);
+    }
+    return;
+  }
+  if (!hoverFine || !motionOK) return;
+  tiltCard = card;
+  const rct = card.getBoundingClientRect();
+  const px = (e.clientX - rct.left) / rct.width - 0.5;
+  const py = (e.clientY - rct.top) / rct.height - 0.5;
+  card.style.transform = `perspective(800px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg)`;
+});
+/* ---------- Abdecken-Modus: Quiz-Head + Liquid-Glass-Cover ---------- */
+function decorateCards() {
+  document.querySelectorAll("#content .card").forEach(card => {
+    if (card.querySelector(".card-reveal")) return;
+    const reveal = document.createElement("div");
+    reveal.className = "card-reveal";
+    while (card.firstChild) reveal.appendChild(card.firstChild);
+    const head = document.createElement("div");
+    head.className = "quiz-head";
+    const titel = reveal.querySelector("h3") ? reveal.querySelector("h3").textContent : "";
+    head.innerHTML = `<span class="card-geraet">${card.dataset.geraet || ""}</span><h3>${titel}</h3>`;
+    const cover = document.createElement("div");
+    cover.className = "card-cover";
+    cover.innerHTML = '<div class="cp cp-t"></div><div class="cp cp-r"></div><div class="cp cp-b"></div><div class="cp cp-l"></div>';
+    reveal.appendChild(cover);
+    card.append(head, reveal);
+  });
+}
+
+document.getElementById("quiz-toggle").addEventListener("click", () => {
+  const on = document.body.classList.toggle("quiz-mode");
+  document.getElementById("quiz-toggle").setAttribute("aria-pressed", on);
+  document.querySelectorAll(".card-cover.open").forEach(c => c.classList.remove("open"));
+  peepClearAll();
+});
+
+/* Klick aufs Cover: zu allen vier Seiten verfließen */
+document.addEventListener("click", e => {
+  const cover = e.target.closest(".card-cover");
+  if (cover && document.body.classList.contains("quiz-mode")) {
+    peepReset(cover, peep.map.get(cover));
+    cover.classList.add("open");
+  }
+});
+
+/* Feedback: öffnet das Mailprogramm mit vorbefüllter Nachricht */
+function sendFeedback() {
+  const inp = document.getElementById("feedback-input");
+  const text = inp.value.trim();
+  if (!text) { inp.focus(); return; }
+  location.href = "mailto:nojomcdybo@icloud.com?subject=" + encodeURIComponent("Anmerkung Turnseminar-Website") + "&body=" + encodeURIComponent(text);
+}
+document.getElementById("feedback-send").addEventListener("click", sendFeedback);
+document.getElementById("feedback-input").addEventListener("keydown", e => { if (e.key === "Enter") sendFeedback(); });
+</script>
+</body>
+</html>
