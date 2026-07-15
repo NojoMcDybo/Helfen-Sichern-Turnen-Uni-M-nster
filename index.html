@@ -47,6 +47,19 @@
     --head1: #46391A; --head2: #3B3015; --head3: #322810;
     --head-accent: #E4C878; --head-sub: #CBB98D; --head-line: #665428;
   }
+  /* Probeklausuren: warmes Weinrot */
+  body.view-kl {
+    --chalk: #F8EEEB;
+    --ink: #3B2022;
+    --matte: #973E46;
+    --matte-dark: #782F36;
+    --signal: #DE8D77;
+    --line: #EAD4CF;
+    --card: #FFFBFA;
+    --muted: #99726F;
+    --head1: #482227; --head2: #3C1D21; --head3: #331A1D;
+    --head-accent: #EFA890; --head-sub: #D3A9A3; --head-line: #6B3A3E;
+  }
   body, header, .card, .vorgaben, nav { transition: background-color 0.35s ease, background 0.35s ease, border-color 0.35s ease; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -306,6 +319,76 @@
   @media (max-width: 820px) {
     .lz-grid { grid-template-columns: 1fr; }
   }
+  .kl-kopf {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    font-size: 0.88rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--matte);
+    background: var(--card);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 18px;
+  }
+  .kl-timer { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
+  #kl-time {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--matte-dark);
+  }
+  .kl-timer button {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    font: inherit; font-size: 0.8rem;
+    padding: 3px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--matte);
+    color: var(--matte);
+    transition: background 0.15s, color 0.15s;
+  }
+  .kl-timer button:hover, .kl-timer button:focus-visible { background: var(--matte); color: #fff; }
+  .kl-aufgabe { margin-bottom: 18px; }
+  .kl-aufgabe-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .kl-punkte {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    background: var(--matte); color: #fff;
+    border-radius: 999px;
+    padding: 3px 12px;
+    white-space: nowrap;
+  }
+  .kl-frage p { margin: 8px 0; font-size: 0.93rem; }
+  .kl-loesung-toggle {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: var(--signal);
+    color: var(--head2);
+    transition: filter 0.15s;
+  }
+  .kl-loesung-toggle:hover, .kl-loesung-toggle:focus-visible { filter: brightness(0.94); }
+  .kl-loesung { margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .kl-videos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .video-pill {
+    display: inline-block;
+    font-size: 0.85rem; font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--matte);
+    color: var(--matte-dark);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .video-pill span { font-weight: 400; color: var(--muted); }
+  .video-pill:hover, .video-pill:focus-visible { background: var(--matte); color: #fff; }
+  .video-pill:hover span { color: rgba(255,255,255,0.75); }
   .lz-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .lz-arrows { display: flex; align-items: center; gap: 10px; }
   .lz-arrow {
@@ -790,6 +873,7 @@
       <button type="button" data-view="hs" class="active">Helfen &amp; Sichern</button>
       <button type="button" data-view="sl">Studienleistung</button>
       <button type="button" data-view="lz">Klausur-Lernzettel</button>
+      <button type="button" data-view="kl">Probeklausuren</button>
     </div>
       </div>
 </header>
@@ -810,6 +894,7 @@
 <main id="content"></main>
 <main id="content-sl" hidden></main>
 <main id="content-lz" hidden></main>
+<main id="content-kl" hidden></main>
 <p class="no-results" id="no-results">Kein Element gefunden. Tippfehler oder falsches Gerät?</p>
 
 <div class="feedback-bar">
@@ -1296,9 +1381,11 @@ document.getElementById("view-tabs").addEventListener("click", e => {
   document.querySelectorAll("#view-tabs button").forEach(b => b.classList.toggle("active", b === btn));
   document.body.classList.toggle("view-sl", view === "sl");
   document.body.classList.toggle("view-lz", view === "lz");
+  document.body.classList.toggle("view-kl", view === "kl");
   document.getElementById("content").hidden = view !== "hs";
   document.getElementById("content-sl").hidden = view !== "sl";
   document.getElementById("content-lz").hidden = view !== "lz";
+  document.getElementById("content-kl").hidden = view !== "kl";
   document.querySelector("nav").style.display = view === "hs" ? "" : "none";
   window.scrollTo({ top: 0 });
 });
@@ -1524,9 +1611,9 @@ function renderLZDetail(i) {
 }
 
 document.addEventListener("click", e => {
-  const card = e.target.closest(".lz-card");
+  const card = e.target.closest(".lz-card[data-lz]");
   if (card) { renderLZDetail(parseInt(card.dataset.lz, 10)); return; }
-  const arrow = e.target.closest(".lz-arrow");
+  const arrow = e.target.closest(".lz-arrow[data-goto]");
   if (arrow) { renderLZDetail(parseInt(arrow.dataset.goto, 10)); return; }
   if (e.target.closest("#lz-back")) { renderLZ(); window.scrollTo({ top: 0 }); }
 });
@@ -1550,6 +1637,299 @@ document.getElementById("content-lz").addEventListener("touchend", e => {
 }, { passive: true });
 
 renderLZ();
+
+/* ================= PROBEKLAUSUREN ================= */
+const KLAUSUREN = [
+{ nr: 1, fokus: "Barren I — Rolle vorwärts",
+  a1: { element: "Handstand", tabelle: [
+    ["Hohlkreuz / Banane","'Käfer-Spannung': Schiffchen-Wettbewerb · bauchzugewandt an die Wand 'kleben'","Plank-/Vakuum-Progression · Videofeedback zur Körperlinie · Becken bewusst kippen"],
+    ["Eingesunkene Schultern","'Drück den Boden weg wie ein Riese' · Schubkarren-Spiele","Handstand-Shrugs an der Wand · Schulterkraft gezielt trainieren"],
+    ["Hände zu nah am Fuß","'Großes Turnen': über einen Fluss/eine Linie steigen · Zielmarken für die Hände","Ausfallschritt-Länge messen und standardisieren · Rhythmus-Cue"],
+    ["Zu wenig / zu viel Aufschwung","Aufschwingen gegen die Helferhand: 'Berühr meine Hand mit den Füßen'","Wandabstands-Progression · Fokus auf dosiertes Schwungbein"],
+    ["Kopf im Nacken / falscher Blick","Bild: 'Schau durch das Fenster zwischen deinen Händen'","Kopfposition isometrisch vorüben (Doppelkinn-Cue) · Partner-Feedback"]] },
+  a2: { frage: "Eine Schülerin weigert sich, die Rolle rückwärts auszuführen. Wie gehen Sie als Lehrperson vor?",
+    loesung: [
+      "Weigerung ernst nehmen — Angst ist ein Schutzmechanismus, kein Fehlverhalten; niemals zwingen",
+      "Ursache klären: Druck auf den Nacken? Orientierungsverlust rückwärts? Soziale Angst vor Blamage?",
+      "Nacken entlasten: Rolle rw. die schiefe Ebene hinab (Hüftöffnung durch Gefälle) · Hände-Drücken-Technik betonen",
+      "Vorstufen anbieten: Rückenschaukel · Kerze · auf dem Kasten Hinterkopf/Nacken bewusst ablegen",
+      "Hebehilfe an der Hüfte beim Überrollen als Sicherheitsanker (Partner- oder Lehrerhilfe)",
+      "Differenzieren: Wahlaufgabe zulassen, Erfolg auf niedriger Stufe sichtbar machen, Zeit geben"] },
+  a3: { element: "Rolle vorwärts am Barren (M-Element)",
+    mr: [
+      ["Rolle vw. am Boden auf der Mattenbahn wiederholen","Grundform und Rotationsgefühl als Voraussetzung sichern"],
+      ["Rolle vw. auf schmaler, erhöhter Fläche (Bank/Kastendeckel mit Matte)","Anpassung an die schmale Stützfläche, präziser symmetrischer Armeinsatz"],
+      ["Am niedrigen Barren: aus dem Grätschsitz vorbeugen, Oberarme auf die Holme, einrollen (Ellenbogen auswärts!)","Kernaktion Einrollen + Holmkontakt isoliert, ohne volle Rotation"],
+      ["Rolle vw. mit Mattenauflage über den Holmen, aus dem Grätschsitz","Gesamtbewegung erleichtert: durchgehende Kontaktfläche nimmt die Angst"],
+      ["Rolle vw. Holm zu Holm in den Grätschsitz mit zwei Helfern","Zielbewegung unter realen Bedingungen mit voller Hilfe"],
+      ["Aus dem Vorschwung / mit Anschlusselement, Hilfe → Sicherung","Verbindungsfähigkeit; Hilfeabbau nach Kriterien"]],
+    hs: [["Position","Beide Helfer seitlich außen an den Holmen, auf Höhe der Schultern des Turners"],["Griff","½-Drehklammergriff am Oberarm; zweite Hand stützt an Rücken/Gesäß und führt das Einrollen"],["Ablauf","Beim Überrollen Wechsel in den 1/1 Klammergriff am Oberarm — Gewicht tragen, bis der Grätschsitz stabil ist"],["Regel","Ellenbogen des Turners müssen auswärts zeigen (Sturzschutz) — vor Beginn kontrollieren"]],
+    videos: [["7OVosNQ0FfY","Methodische Übungsreihe: Rolle vw. am Barren","Uni Frankfurt"],["w2wcgRzLTJQ","Rollen auf dem Barren mit Hilfestellung","KNSU"]] } },
+
+{ nr: 2, fokus: "Barren II — Handstand abrollen",
+  a1: { element: "Flick Flack", tabelle: [
+    ["Zu wenig Rücklage im Absprung","Mutspiel: rücklings auf den Mattenberg fallen lassen","Wandsitz-/Fall-Drill mit Partner · Video-Winkelkontrolle der Rücklage"],
+    ["Kopf geht zuerst in den Nacken","Überdrehen rw. mit Drehklammergriff als 'Rückwärts-Zauber'","Kopf-neutral-Cue: Blick erst spät zu den Händen · Wandsalto-Drill"],
+    ["Absprung nach oben statt hinten-oben","Rückwärts über eine Schnur springen","Sprungrichtungs-Drills mit Bodenmarkierung · Standweitsprung rw. messen"],
+    ["Arme gebeugt in der Stützphase","Schubkarren-Rennen · Handstand-'Stempeln'","Handstand-Hüpfen · Stützkraftprogramm für die Schulter"],
+    ["Keine Kurbet / Beine schlagen nicht durch","'Delfin-Beine' aus dem Handstand an der Wand","Kurbet-Drill vom Kasten auf den Weichboden · Spannungs-Timing"]] },
+  a2: { frage: "Ab wann kann der Handstand in der Schule ohne Hilfestellung geübt werden? Nennen Sie mindestens 3 Kriterien und begründen Sie.",
+    loesung: [
+      "Notausgang beherrscht: Abrollen (oder sicheres Zurücksteigen) muss automatisiert sein — der kontrollierte Ausgang macht den freien Handstand erst sicher",
+      "Sichtbare Körperspannung: Linie ohne Hohlkreuz — sonst droht Überschlagen/Kollaps",
+      "Dosiertes Aufschwingen: kein Überschlagen über die Lotrechte hinaus",
+      "Rahmenbedingungen: Matte, ausreichender Abstand, klare Organisationsform",
+      "Freiwilligkeit + realistische Selbsteinschätzung — Angst zeigt an, dass Hilfe noch nötig ist"] },
+  a3: { element: "Handstand abrollen am Barren",
+    mr: [
+      ["Handstand abrollen am Boden absichern","Der Bewegungsablauf ist die zwingende Voraussetzung (Ellenbogenbeugen + Kinn zur Brust)"],
+      ["Oberarmstand am Barren mit Klammergriff","Überkopfposition am Gerät gewöhnen (aus der Studienleistung bekannt)"],
+      ["Absenken aus dem Oberarmstand in den Grätschsitz","Kontrolliertes Ablassen als Vorform der Rollbewegung"],
+      ["Abrollen aus dem Oberarmstand mit Mattenauflage über den Holmen, zwei Helfer","Rollbewegung mit durchgehender Kontaktfläche — Angstabbau"],
+      ["Abrollen in den Grätschsitz ohne Mattenauflage, mit Hilfe","Reale Holmsituation; Tempo bestimmt der Turner"],
+      ["Aus dem Handstand (statt Oberarmstand) abrollen, mit Sicherung","Steigerung zur schweren Form mit gestreckten Armen"]],
+    hs: [["Griff","Beidseits ganzer Klammergriff am Oberschenkel — Handstand zunächst stabil halten"],["Ablauf","Leicht vertikal ablassen (Tempo des Turners!), dann die horizontale Komponente dazunehmen, damit der Rücken abrollen kann"],["Wechsel","Turnerferne Hand wandert an Rücken/LWS und bremst, turnernahe bleibt am Oberschenkel bis zum stabilen Sitz"],["Regel","Nie ruckartig ablassen — der Turner gibt das Tempo vor"]],
+    videos: [["plPRmhDcxvA","Abrollen aus dem Oberarmstand in den Grätschsitz","Sport Freaks"],["XwaOxxfCRwk","Oberarmstand am Barren mit Hilfe","KNSU"]] } },
+
+{ nr: 3, fokus: "Barren III — Schwungstemme",
+  a1: { element: "Hüftaufschwung am Reck", tabelle: [
+    ["Hüfte kommt nicht zur Stange","Aufschwung vom Kastendeckel ('vom Berg') — Weg verkürzen","Beinheben im Hang · Cue: 'Die Hüfte küsst die Stange'"],
+    ["Arme strecken durch / Körper hängt","'Halte dich fest wie ein Affe' — Klimmzug-Haltespiele","Isometrische Klimmhang-Haltezeiten · Armbeugung bewusst halten"],
+    ["Schwungbein zu schwach / falsches Timing","Schwungbein-Kicks gegen die Helferhand als Ziel","Schwungbein isoliert im Zählrhythmus · Videoanalyse"],
+    ["Kopf im Nacken beim Aufrichten","'Schau auf deine Knie'","Kinnführung + Aufrichten aus dem Stütz separat üben"],
+    ["Kein Aufrichten in den Stütz","Stützwippen auf der brusthohen Stange","Stützkraft (Dips) · Handgelenke 'überdrücken' gezielt üben"]] },
+  a2: { frage: "Viele Schüler*innen haben Höhenangst auf dem Schwebebalken. Welche Übungen, Hilfsmittel und Differenzierungen eignen sich, um Balkenelemente angstfrei zu trainieren?",
+    loesung: [
+      "Höhenprogression als Grundprinzip: Linie am Boden → umgedrehte Bank → Niederbalken → hüfthoch (verminderte Lernhilfe)",
+      "Wahlhöhen parallel anbieten — jede*r übt auf der eigenen Stufe (Differenzierung über Material)",
+      "Gefühlte Fallhöhe senken: seitliche Mattenlage erhöhen statt Balken senken",
+      "Technik-Anker gegen die Angst: Blickpunkt am Balkenende fixieren, Arme in Seithalte",
+      "Handreichung als niedrigschwellige Gleichgewichtshilfe; feste Helferpaare",
+      "Keine Zwangssituationen: Tempo und Höhenwahl bleiben bei den SuS, Erfolge dokumentieren"] },
+  a3: { element: "Schwungstemme vorwärts am Barren",
+    mr: [
+      ["Schwingen im Oberarmhang mit wachsender Amplitude","Schwungquelle sichern; Schulter-/Oberarmauflage gewöhnen"],
+      ["Spannungs- und Stemmkraft isoliert: Stützeln, Schiffchen, Armdruck gegen Helferwiderstand","Die Kernaktion (explosiver Armdruck) ohne Bewegungsdruck üben"],
+      ["Hoher Vorschwung mit betonter Hüftstreckung ('Füße über Holmhöhe')","Timing erfahren: Der Stemm-Moment liegt im toten Punkt des Vorschwungs"],
+      ["Schwungstemme in den Grätschsitz mit zwei Helfern","Reduzierte Zielposition: weniger Höhe nötig, klarer Erfolgsmoment"],
+      ["Schwungstemme in den Stütz mit abnehmender Hilfe","Zielbewegung; Schub wird schrittweise zurückgenommen"],
+      ["Verbindung: Absenken in den Oberarmhang → Schwungstemme, mit Sicherung","Kürfähigkeit (Gestaltungsvorgabe!) und Hilfeabbau"]],
+    hs: [["Position","Beide Helfer seitlich außen, auf Höhe des toten Punkts des Vorschwungs"],["Griff/Aktion","Flächiger Schub unter Gesäß/Oberschenkelrückseite — exakt in den toten Punkt hinein (analog Kippstoß)"],["Zweite Hand","Sichert am Oberarm gegen Zurückpendeln in den Oberarmhang"],["Regel","Nicht unter die Holme greifen; Schub endet, sobald der Stütz erreicht ist"]],
+    videos: [["QzXqWRVJXrk","Schwungstemme — Methodische Reihe","IfS TÜtorial Turnen"],["TjEg0gPT4TA","Stemme vorwärts — Barren","Sport Freaks"]] } },
+
+{ nr: 4, fokus: "Barren IV — Schwebestütz",
+  a1: { element: "Rolle vorwärts (Boden)", tabelle: [
+    ["Schiefe Rolle","Rollen im 'Tunnel' zwischen Kastenteilen · Linienbahn","Handaufsatz auf Markierung · Symmetrie-Feedback per Partner"],
+    ["Purzelbaum statt Rolle (Beine gebeugt)","Bild 'Kerze anzünden' · Band mit den Füßen berühren","Beinstreckung mit Ziellinie · gezielte Spannungsarbeit"],
+    ["Kopf setzt zuerst auf","Auf dem Kasten Hinterkopf/Nacken bewusst ablegen","Kinn-Brust-Cue kognitiv verankern · Rolle bergab zur Entlastung"],
+    ["Steckenbleiben (kein Schwung)","Rolle die schiefe Ebene hinunter ('Rutschbahn')","Kräftiger Abdruck-Drill aus der Hocke · Rhythmusarbeit"],
+    ["Aufstehen mit Händen","'Zauberhände': Hände halten ein Tuch / liegen auf den Oberschenkeln","Fersen nah ansetzen · Rumpfkraft (Klappmesser) aufbauen"]] },
+  a2: { frage: "Welche pädagogischen Ziele rechtfertigen den Einsatz des Saltos im Schulsport, und unter welchen Bedingungen ist er lehrbar?",
+    loesung: [
+      "Wagniserziehung: kalkulierbare Grenzerfahrung mit realem Überwindungsmoment",
+      "Körperkontrolle und Rotationskompetenz als übertragbare Bewegungskompetenz",
+      "Hohe Motivation (Trampolin!) — attraktives Zielelement bindet auch Turn-Skeptiker",
+      "Soziales Lernen: Helfen & Sichern wird beim Salto unmittelbar bedeutsam",
+      "Bedingungen: Weichboden + Raumhöhe · gesicherte Vorfertigkeiten (Rolle, Sprungkraft, Spannung, Überkopf-Orientierung)",
+      "Kompetente, geübte Hilfestellung (Handfassung/Klammergriff) · Freiwilligkeit — nie Pflichtelement · Lehrkraft bleibt Ersthelfer"] },
+  a3: { element: "Schwebestütz am Barren",
+    mr: [
+      ["Stütz- und Rumpffundament: Stützeln, Liegestütz, Klappmesser, Beinhalte","Ohne Stützkraft + Hüftbeugekraft ist die Haltung unmöglich (vgl. IFS-Lernvoraussetzungen 04/06/10)"],
+      ["Winkelstütz (L-Sitz) am Boden zwischen zwei Kastenteilen, 3–5 s halten","Die Zielhaltung in sicherer, niedriger Umgebung isolieren"],
+      ["Winkelstütz am Barrenende","Transfer an den Holm: Griff, Handgelenke, Balance der Haltung"],
+      ["Beine aus dem Winkelstütz Richtung Waagerechte anheben, kurz halten — Helfer stützt die Unterschenkel","Annäherung an den Schwebestütz mit dosierter Entlastung"],
+      ["Schwebestütz 2 s frei halten, kontrolliert absenken","Zielhaltung mit definiertem Haltekriterium"],
+      ["Schwebestütz mit anschließendem Schwingen","Die Gestaltungsvorgabe der Barrenkür — Haltung dynamisch verlassen"]],
+    hs: [["Griff","Eine Hand flächig unter den Unterschenkeln: Last dosiert übernehmen und schrittweise abgeben"],["Zweite Hand","Am oberen Rücken gegen das Zurückfallen in die Rücklage"],["Abbau","Entlastung sekundenweise reduzieren ('täuschende Sicherheit' vermeiden — nicht dauerhaft tragen)"],["Position","Seitlich am Barrenende, stabiler Stand"]],
+    videos: [["coHZAhrcAGU","Lernvoraussetzung 10: Schwebestütz","IFS Münster Turnen"],["kYPsr_JUtGc","Pflichtübungen Barren","Schwäbischer Turnerbund"]] } },
+
+{ nr: 5, fokus: "Reck — Sohlwellenumschwung",
+  a1: { element: "Handstützsprungüberschlag (Sprung)", tabelle: [
+    ["Absprung flach nach vorne","Strecksprünge über das 'Lava-Band' auf eine Erhöhung","Absprungwinkel per Video kontrollieren · kurze Brettkontakte drillen"],
+    ["Hüfte knickt in der 1. Flugphase ein","'Flieg wie ein Pfeil' über eine erhöhte Schnur","C-Plus-Position drillen · Spannungslauf in den Handstand"],
+    ["Kopf im Nacken","'Schau durch das Fenster zwischen deinen Händen'","Kopf-neutral-Cue isoliert am Boden · Videofeedback"],
+    ["Arme geben im Stütz nach","Schubkarre auf den Kasten · 'Stempel'-Spiel","Handstand-Hüpfen auf Erhöhung · Schulter-Endkraft trainieren"],
+    ["Keine 2. Flugphase / Landung kippt","Überschlag vom höheren Kasten auf den Mattenberg (mehr Flugzeit)","Abdruck-Timing schulen · Landeschule mit fixiertem Blick"]] },
+  a2: { frage: "Beschreiben Sie, wie Sie eine Turnstunde für eine Klasse mit sehr heterogenen Voraussetzungen differenzieren.",
+    loesung: [
+      "Material: parallele Höhen/Gerätevarianten (Kastenstufen, Balken-Wahlhöhen, Brett vs. Minitramp)",
+      "Aufgabe: Elementfamilien mit Stufenwahl (P-Logik) — alle arbeiten am selben Thema, jede*r auf eigener Stufe",
+      "Soziale Form: feste Helferpaare, Expertengruppen, Beobachtungsaufträge für Wartende",
+      "Zeit: Stationsbetrieb mit Wahlstationen statt Gleichschritt",
+      "Hilfe als reguläres Angebot etablieren — nicht als Schwäche markieren",
+      "Bewertung am individuellen Fortschritt orientieren, Erfolge sichtbar machen"] },
+  a3: { element: "Sohlwellenumschwung am Reck",
+    mr: [
+      ["Aufgrätschen in den Sohlenstand an brusthoher Stange, Griff fest","Grundposition sichern: Sohlen aktiv gegen die Stange pressen, Gewicht spüren"],
+      ["Aus dem Sohlenstand rückwärts absitzen (Hüfte tief, Arme gestreckt) und zurückziehen","Vertrauen in Griff + Sohlendruck; die Rücklage-Position gefahrlos erfahren"],
+      ["Aufgrätschen–Sohlwellenunterschwung: Abdruck aus den Sohlen in den Stand","Halbe Rotation + Abdruckgefühl — das M-Element als logische Vorform"],
+      ["Sohlwellenumschwung rw. mit zwei Helfern an niedriger Stange","Ganze Rotation mit voller Sicherung; Hüftwinkel bleibt geschlossen"],
+      ["Mit abnehmender Hilfe: Fokus Sohlendruck + Kopf neutral","Feinform; typische Fehlerquellen (Fußrutschen, frühes Öffnen) gezielt kontrollieren"],
+      ["Steigerung: Verbindung oder ½ Drehung","Kürfähigkeit und Variation"]],
+    hs: [["Kernregel","Gesichert wird, solange die Hände an der Stange sind (vgl. Spreizumschwung!)"],["Griff","Turnernahe Hand im halben gedrehten Klammergriff unter der Stange her ans Handgelenk — sichert gegen Grifflösen"],["Zweite Hand","Führt an Schulter/Oberarm durch die Rotation und bremst ein Überdrehen"],["Regel","Helfer unterlaufen die Stange nicht; Position seitlich hinter der Stange"]],
+    videos: [["gyHIGoeFdb4","Sohlwelle vorwärts lernen — Tutorial","Turnen Daheim"],["imrvHfWyVLs","Sohlwellumschwung","Massis Tube"]] } },
+
+{ nr: 6, fokus: "Balken — Handstand",
+  a1: { element: "Sprunghocke", tabelle: [
+    ["Keine 1. Flugphase","Brett Schritt für Schritt vom Kasten wegrücken ('der Fluss wird breiter')","Anlauftempo halten · Absprungdistanz standardisieren"],
+    ["Absprung nach vorne statt oben","Strecksprung-Ziele über dem Brett (Luftballon berühren)","Absprungwinkel-Feedback · Arme aktiv nach vorne-oben"],
+    ["Schultern hinter der Hüfte","Bockspringen über den Partner · Hasenhüpfer-Staffel","Vorgreif-Drills über die Bank · niedrige Höhe + verlässliche Hilfe"],
+    ["Einsinken in den Schultern","Schubkarren-Spiele · 'starke Arme'","Stützkraftprogramm · Cue 'lange Arme, aktiv wegdrücken'"],
+    ["Harte / unsichere Landung","'Lande leise wie eine Katze'","Landeschule isoliert: Niedersprünge, Knieflexion, Sicherheitsstand"]] },
+  a2: { frage: "Wie führen Sie Schüler*innen systematisch an das Helfen & Sichern heran?",
+    loesung: [
+      "H&S als eigenständigen Unterrichtsinhalt behandeln — demonstrieren, benennen, begründen",
+      "Stufung: Griffe am Standbild üben → Partner in Zeitlupe 'turnen' (Rübertragen) → einfache Elemente → dynamische Elemente mit Lehrkraft als Zweithilfe",
+      "Feste Helferpaare und Rituale (Absprache, Startkommando, Blickkontakt)",
+      "Loslass-Kriterien explizit thematisieren: stabile Endposition, mehrfach fehlerfrei, Notausgang beherrscht",
+      "Typische Helferfehler besprechen: zu spät, falscher Ort, Hochdrücken statt Begleiten, zu frühes Loslassen",
+      "Grenze klar ziehen: Bei kritischen Elementen bleibt die Lehrkraft Ersthelfer — sozialer Mehrwert (Vertrauen, Verantwortung) trotzdem benennen"] },
+  a3: { element: "Handstand auf dem Schwebebalken",
+    mr: [
+      ["Handstand am Boden mit sicherem Notausgang (Abrollen / Zurücksteigen)","Zwingende Voraussetzung — ohne Ausgang keine Höhe"],
+      ["Handstand mit Handaufsatz auf einer Balkenbreiten-Markierung (Tape/Linie)","Präzision der Stützfläche unter Bodenbedingungen"],
+      ["Handstand auf der umgedrehten Bank / dem Übungsbalken mit Klammergriff","Schmale reale Fläche bei minimaler Höhe (verminderte Lernhilfe)"],
+      ["Niederbalken mit Mattenumbau, zwei Helfer","Reale Balkenbreite, entschärfte Fallhöhe"],
+      ["Hüfthoher Balken: Helfer stehen auf seitlicher Mattenerhöhung","Zielhöhe; die Erhöhung sichert die Kraftübertragung der Helfer"],
+      ["Haltezeit 2 s + kontrollierter Ausgang, Hilfe → Sicherung","Zielform mit definiertem Kriterium und Hilfeabbau"]],
+    hs: [["Griff","Beidseitiger 1/1-Klammergriff an den Oberschenkeln — gegen Überkippen in beide Richtungen"],["Höhenanpassung","Helferposition an die Balkenhöhe anpassen (Mattenberg!) — sonst keine Kraftübertragung möglich"],["Ablauf","Aufschwingen dosiert begleiten, im Stand stabilisieren, den Ausgang (Zurücksteigen/Abrollen zum Boden) aktiv führen"],["Regel","Kein Rucken; Blick des Turners zwischen die Hände"]],
+    videos: [["4lZj27S2lmw","Handstand Schwebebalken — Methodische Reihe","IfS TÜtorial Turnen"],["xGaAJ9mVG60","Handstand Balken — Helfen & Sichern","IfS TÜtorial Turnen"]] } },
+];
+
+let klCurrent = null;
+let klTimer = { rest: 3600, iv: null };
+
+function klStopTimer() { if (klTimer.iv) { clearInterval(klTimer.iv); klTimer.iv = null; } }
+function klFmt(s) { return String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0"); }
+
+function renderKL() {
+  klCurrent = null; klStopTimer(); klTimer.rest = 3600;
+  const el = document.getElementById("content-kl");
+  el.innerHTML = `
+    <div class="vorgaben sl-allgemein">
+      <div class="vorgaben-label">So übst du richtig</div>
+      <p>Jede Übungsklausur folgt exakt dem Layout der Probeklausur: 60 Minuten, 3 Aufgaben, keine Hilfsmittel. <strong>Erst schreiben, dann aufklappen</strong> — die Musterlösungen sind bewusst verdeckt. Timer starten, Aufgabe auf Papier bearbeiten, danach abgleichen.</p>
+    </div>
+    <div class="section-head"><h2>Übungsklausur wählen</h2><span class="sec-count">6 Klausuren · Pfeiltasten ← → zum Blättern</span></div>
+    <div class="lz-menu">
+      ${KLAUSUREN.map((k, i) => `
+        <button type="button" class="lz-card" data-kl="${i}">
+          <span class="lz-card-nr">0${k.nr}</span>
+          <span class="lz-card-thema">Übungsklausur ${k.nr}</span>
+          <span class="lz-card-meta">A1 ${k.a1.element} · A2 Schulturnen · A3 ${k.a3.element.split(" (")[0]}</span>
+        </button>`).join("")}
+    </div>`;
+}
+
+function klAufgabe(nummer, titel, punkte, frageHtml, loesungHtml) {
+  return `
+    <div class="vorgaben kl-aufgabe">
+      <div class="kl-aufgabe-head">
+        <div class="vorgaben-label">Aufgabe ${nummer} · ${titel}</div>
+        <span class="kl-punkte">${punkte}</span>
+      </div>
+      <div class="kl-frage">${frageHtml}</div>
+      <button type="button" class="kl-loesung-toggle">Musterlösung anzeigen</button>
+      <div class="kl-loesung" hidden>${loesungHtml}</div>
+    </div>`;
+}
+
+function renderKLDetail(i) {
+  klCurrent = i; klStopTimer(); klTimer.rest = 3600;
+  const k = KLAUSUREN[i];
+  const prev = (i + KLAUSUREN.length - 1) % KLAUSUREN.length;
+  const next = (i + 1) % KLAUSUREN.length;
+  const el = document.getElementById("content-kl");
+
+  const a1 = klAufgabe(1, "Fehleranalyse und Korrektur", "15 Punkte",
+    `<p><strong>a)</strong> Nennen Sie die 5 typischen technischen Fehler beim <strong>${k.a1.element}</strong>. <em>(5 P.)</em></p>
+     <p><strong>b)</strong> Beschreiben Sie pro Fehler je eine Korrekturübung für den <strong>Kinderbereich</strong> und eine für den <strong>Erwachsenenbereich</strong>. <em>(10 P.)</em></p>`,
+    `<table class="lz-tabelle"><thead><tr><th>Fehler</th><th>Korrektur — Kinderbereich</th><th>Korrektur — Erwachsenenbereich</th></tr></thead>
+     <tbody>${k.a1.tabelle.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`);
+
+  const a2 = klAufgabe(2, "Schulturnen", "10 Punkte",
+    `<p>${k.a2.frage}</p>`,
+    `<ul class="vorgaben-liste">${k.a2.loesung.map(x => `<li>${x}</li>`).join("")}</ul>`);
+
+  const a3 = klAufgabe(3, "Transferaufgabe", "15 Punkte",
+    `<p><strong>a)</strong> Entwickeln Sie eine methodische Reihe zum Erlernen: <strong>${k.a3.element}</strong>. Ordnen Sie die Übungen vom Einfachen zum Schwierigen und vom Differenzierten zum Komplexen — und begründen Sie jede Stufe. <em>(10 P.)</em></p>
+     <p><strong>b)</strong> Beschreiben Sie die personengebundene Hilfestellung. <em>(5 P.)</em></p>`,
+    `<div class="vorgaben-label">a) Methodische Reihe</div>
+     <ol class="lz-stepper">${k.a3.mr.map(r => `<li><span class="lz-step-uebung">${r[0]}</span><span class="lz-step-grund">${r[1]}</span></li>`).join("")}</ol>
+     <div class="vorgaben-label" style="margin-top:14px">b) Personengebundene Hilfestellung</div>
+     <ul class="lz-kv">${k.a3.hs.map(([a,b]) => `<li><span class="lz-kv-key">${a}</span><span>${b}</span></li>`).join("")}</ul>
+     <div class="vorgaben-label" style="margin-top:14px">Videos zum Element</div>
+     <div class="kl-videos">${k.a3.videos.map(([id,t,c]) => `<a class="video-pill" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">▶ ${t} <span>· ${c}</span></a>`).join("")}</div>`);
+
+  el.innerHTML = `
+    <div class="lz-nav">
+      <button type="button" class="lz-back" id="kl-back">← Alle Klausuren</button>
+      <div class="lz-arrows">
+        <button type="button" class="lz-arrow" data-klgoto="${prev}" title="Übungsklausur ${KLAUSUREN[prev].nr}">←</button>
+        <span class="lz-pos">${k.nr} / ${KLAUSUREN.length}</span>
+        <button type="button" class="lz-arrow" data-klgoto="${next}" title="Übungsklausur ${KLAUSUREN[next].nr}">→</button>
+      </div>
+    </div>
+    <div class="lz-detail-head">
+      <span class="lz-detail-nr">0${k.nr}</span>
+      <h2>Übungsklausur ${k.nr}</h2>
+    </div>
+    <div class="kl-kopf">
+      <span>Seminar Turnen A+B · Übungsklausur</span>
+      <span>60 Minuten · 3 Aufgaben · keine Hilfsmittel</span>
+      <span class="kl-timer">
+        <span id="kl-time">60:00</span>
+        <button type="button" id="kl-start">Start</button>
+        <button type="button" id="kl-reset">Reset</button>
+      </span>
+    </div>
+    ${a1}${a2}${a3}`;
+  window.scrollTo({ top: 0 });
+}
+
+document.addEventListener("click", e => {
+  const card = e.target.closest("[data-kl]");
+  if (card) { renderKLDetail(parseInt(card.dataset.kl, 10)); return; }
+  const arrow = e.target.closest("[data-klgoto]");
+  if (arrow) { renderKLDetail(parseInt(arrow.dataset.klgoto, 10)); return; }
+  if (e.target.closest("#kl-back")) { renderKL(); window.scrollTo({ top: 0 }); return; }
+  const tog = e.target.closest(".kl-loesung-toggle");
+  if (tog) {
+    const box = tog.nextElementSibling;
+    box.hidden = !box.hidden;
+    tog.textContent = box.hidden ? "Musterlösung anzeigen" : "Musterlösung verbergen";
+    return;
+  }
+  if (e.target.closest("#kl-start")) {
+    const btn = document.getElementById("kl-start");
+    if (klTimer.iv) { klStopTimer(); btn.textContent = "Start"; }
+    else {
+      btn.textContent = "Pause";
+      klTimer.iv = setInterval(() => {
+        klTimer.rest = Math.max(0, klTimer.rest - 1);
+        const t = document.getElementById("kl-time");
+        if (t) t.textContent = klFmt(klTimer.rest);
+        if (klTimer.rest === 0) { klStopTimer(); btn.textContent = "Start"; }
+      }, 1000);
+    }
+    return;
+  }
+  if (e.target.closest("#kl-reset")) {
+    klStopTimer(); klTimer.rest = 3600;
+    document.getElementById("kl-time").textContent = "60:00";
+    document.getElementById("kl-start").textContent = "Start";
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (klCurrent === null || document.getElementById("content-kl").hidden) return;
+  if (e.target.matches("input, textarea")) return;
+  if (e.key === "ArrowRight") renderKLDetail((klCurrent + 1) % KLAUSUREN.length);
+  if (e.key === "ArrowLeft") renderKLDetail((klCurrent + KLAUSUREN.length - 1) % KLAUSUREN.length);
+});
+
+renderKL();
+
 
 renderSL();
 
